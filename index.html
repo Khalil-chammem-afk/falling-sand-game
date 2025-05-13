@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Falling Sand Game</title>
+    <style>
+        :root {
+            --bg-primary: #1a1b1e;
+            --bg-secondary: #2c2d31;
+            --bg-tertiary: #32333a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent-color: #4a9eff;
+            --border-color: #3a3b40;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        #gameContainer {
+            margin: 40px 0 0 0;
+            position: relative;
+            max-width: 820px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        canvas {
+            border: 2px solid var(--border-color);
+            background-color: #000;
+            width: 800px;
+            height: 600px;
+            display: block;
+            border-radius: 0;
+            box-shadow: 0 8px 24px var(--shadow-color);
+        }
+
+        #infoDisplay {
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--bg-tertiary);
+            padding: 8px 20px;
+            border-radius: 0;
+            font-size: 14px;
+            display: none;
+            z-index: 2;
+            box-shadow: 0 4px 12px var(--shadow-color);
+            backdrop-filter: blur(8px);
+        }
+
+        #toolbar {
+            margin: 30px 0 0 0;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--bg-secondary);
+            border-radius: 0;
+            width: 100%;
+            max-width: 820px;
+            box-sizing: border-box;
+            padding: 0;
+            box-shadow: 0 8px 24px var(--shadow-color);
+        }
+
+        .tab-row {
+            display: flex;
+            width: 100%;
+            background: var(--bg-tertiary);
+            border-radius: 0;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border-color);
+            padding: 4px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px 0;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: transparent;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 0;
+            margin: 0 4px;
+        }
+
+        .tab:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab.active {
+            background: var(--accent-color);
+            color: white;
+            box-shadow: 0 2px 8px rgba(74, 158, 255, 0.3);
+        }
+
+        .category {
+            display: none;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: 24px;
+            background-color: var(--bg-secondary);
+            border-radius: 0;
+            min-height: 70px;
+            justify-content: flex-start;
+        }
+
+        .category.active {
+            display: flex;
+        }
+
+        button[data-particle], #heaterBtn, #coolerBtn, #eraserBtn, #resetBtn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            min-width: 120px;
+            transition: all 0.2s ease;
+            background: var(--bg-tertiary) !important;
+            color: var(--text-primary);
+            box-shadow: 0 2px 8px var(--shadow-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            height: 100px;
+            justify-content: center;
+        }
+
+        button[data-particle]:hover, #heaterBtn:hover, #coolerBtn:hover, #eraserBtn:hover, #resetBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        button[data-particle]:active, #heaterBtn:active, #coolerBtn:active, #eraserBtn:active, #resetBtn:active {
+            transform: translateY(0);
+        }
+
+        /* Remove per-particle button backgrounds */
+        button[data-particle="dirt"],
+        button[data-particle="sand"],
+        button[data-particle="water"],
+        button[data-particle="steam"],
+        button[data-particle="oil"],
+        button[data-particle="magma"],
+        button[data-particle="lightning"],
+        button[data-particle="grass"],
+        button[data-particle="fire"],
+        button[data-particle="smoke"],
+        button[data-particle="cloud"],
+        button[data-particle="obsidian"],
+        button[data-particle="raincloud"] {
+            background: var(--bg-tertiary) !important;
+            color: var(--text-primary);
+        }
+
+        .particle-preview {
+            width: 32px;
+            height: 32px;
+            position: relative;
+            background: none;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .particle-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.12);
+        }
+
+        /* Particle button colors with preview styles */
+        button[data-particle="dirt"] .particle-dot {
+            background: rgb(60, 40, 20);
+        }
+        button[data-particle="sand"] .particle-dot {
+            background: #ffe39f;
+        }
+        button[data-particle="water"] .particle-dot {
+            background: #047AF2;
+        }
+        button[data-particle="steam"] .particle-dot {
+            background: #b3cfe3;
+        }
+        button[data-particle="oil"] .particle-dot {
+            background: #420D04;
+        }
+        button[data-particle="magma"] .particle-dot {
+            background: #ffb347;
+        }
+        button[data-particle="lightning"] .particle-dot {
+            background: #fff700;
+        }
+        button[data-particle="grass"] .particle-dot {
+            background: #4CAF50;
+        }
+        button[data-particle="fire"] .particle-dot {
+            background: #ff4500;
+        }
+        button[data-particle="smoke"] .particle-dot {
+            background: #404040;
+        }
+        button[data-particle="cloud"] .particle-dot {
+            background: #d3d3d3;
+        }
+        button[data-particle="obsidian"] .particle-dot {
+            background: #2d2d2d;
+        }
+        button[data-particle="glass"] .particle-dot {
+            background: #b2ebf2;
+        }
+        button[data-particle="basalt"] .particle-dot {
+            background: #808080;
+        }
+        button[data-particle="raincloud"] .particle-dot {
+            background: #888888;
+        }
+        button[data-particle="mud"] .particle-dot {
+            background: #4b2e13;
+        }
+        button[data-particle="wetsand"] .particle-dot {
+            background: #e0d7b3;
+        }
+        button[data-particle="charcoal"] .particle-dot {
+            background: #1a1a1a;
+        }
+        button[data-particle="deadplant"] .particle-dot {
+            background: #8B4513;
+        }
+        button[data-particle="frozenplant"] .particle-dot {
+            background: #b2f7e6;
+        }
+        button[data-particle="stone"] .particle-dot {
+            background: #808080;
+        }
+        button[data-particle="dirtywater"] .particle-dot {
+            background: #2e8b57;
+        }
+        button[data-particle="ice"] .particle-dot {
+            background: #e0f7fa;
+        }
+        button[data-particle="lava"] .particle-dot {
+            background: #ff4500;
+        }
+
+        /* Tool buttons */
+        #heaterBtn, #coolerBtn, #eraserBtn, #resetBtn {
+            height: 40px;
+            min-width: 80px;
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+        #heaterBtn { background: #ff6b6b; }
+        #coolerBtn { background: #6b9fff; }
+        #resetBtn { background: #ff4444; }
+        #eraserBtn { background: #666; }
+
+        .tools-row {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-start;
+            background: var(--bg-tertiary);
+            border-radius: 0;
+            padding: 16px;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <div id="infoDisplay"></div>
+        <canvas id="gameCanvas"></canvas>
+        <div id="toolbar">
+            <div class="tools-row" style="display: flex; gap: 12px; justify-content: flex-start; background: #232323; border-radius: 10px 10px 0 0; padding: 10px 10px 8px 10px; margin-bottom: 0;">
+                <button id="heaterBtn">Heat</button>
+                <button id="coolerBtn">Cool</button>
+                <button id="eraserBtn">Eraser</button>
+                <button id="resetBtn">Reset</button>
+            </div>
+            <div class="tab-row">
+                <button class="tab active" data-tab="land">Land</button>
+                <button class="tab" data-tab="liquids">Liquids</button>
+                <button class="tab" data-tab="life">Life</button>
+                <button class="tab" data-tab="powders">Powders</button>
+                <button class="tab" data-tab="solids">Solids</button>
+                <button class="tab" data-tab="energy">Energy</button>
+                <button class="tab" data-tab="gases">Gases</button>
+            </div>
+            <div class="category active" data-category="land">
+                <button data-particle="dirt">
+                    <div class="particle-preview">
+                        <div class="particle-dot" style="background:#8B4513; opacity:0.85; left:2px; top:3px;"></div>
+                        <div class="particle-dot" style="background:#8B4513; opacity:0.7; left:14px; top:6px;"></div>
+                        <div class="particle-dot" style="background:#8B4513; opacity:0.9; left:22px; top:12px;"></div>
+                        <div class="particle-dot" style="background:#8B4513; opacity:0.8; left:8px; top:18px;"></div>
+                        <div class="particle-dot" style="background:#8B4513; opacity:1; left:18px; top:22px;"></div>
+                    </div>
+                    Dirt
+                </button>
+                <button data-particle="sand">
+                    <div class="particle-preview">
+                        <div class="particle-dot" style="background:#e6c88e; opacity:0.85; left:3px; top:5px;"></div>
+                        <div class="particle-dot" style="background:#e6c88e; opacity:0.7; left:16px; top:8px;"></div>
+                        <div class="particle-dot" style="background:#e6c88e; opacity:0.9; left:24px; top:15px;"></div>
+                        <div class="particle-dot" style="background:#e6c88e; opacity:0.8; left:10px; top:20px;"></div>
+                        <div class="particle-dot" style="background:#e6c88e; opacity:1; left:20px; top:25px;"></div>
+                    </div>
+                    Sand
+                </button>
+                <button data-particle="grass">
+                    <div class="particle-preview">
+                        <div class="particle-dot" style="background:#4CAF50; opacity:0.85; left:4px; top:4px;"></div>
+                        <div class="particle-dot" style="background:#4CAF50; opacity:0.7; left:15px; top:7px;"></div>
+                        <div class="particle-dot" style="background:#4CAF50; opacity:0.9; left:23px; top:13px;"></div>
+                        <div class="particle-dot" style="background:#4CAF50; opacity:0.8; left:9px; top:19px;"></div>
+                        <div class="particle-dot" style="background:#4CAF50; opacity:1; left:19px; top:23px;"></div>
+                    </div>
+                    Grass
+                </button>
+                <button data-particle="mud">
+                    <div class="particle-preview">
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                    </div>
+                    Mud
+                </button>
+                <button data-particle="wetsand">
+                    <div class="particle-preview">
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                    </div>
+                    Wet Sand
+                </button>
+                <button data-particle="basalt">
+                    <div class="particle-preview">
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                    </div>
+                    Basalt
+                </button>
+            </div>
+            <div class="category" data-category="liquids">
+                <button data-particle="water">
+                    <div class="particle-preview">
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                    </div>
+                    Water
+                </button>
+                <button data-particle="oil">
+                    <div class="particle-preview">
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                    </div>
+                    Oil
+                </button>
+                <button data-particle="dirtywater">
+                    <div class="particle-preview">
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                    </div>
+                    Dirty Water
+                </button>
+                <button data-particle="magma">
+                    <div class="particle-preview">
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                    </div>
+                    Magma
+                </button>
+            </div>
+            <div class="category" data-category="life">
+                <button data-particle="grass">
+                    <div class="particle-preview">
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                    </div>
+                    Grass
+                </button>
+                <button data-particle="deadplant">
+                    <div class="particle-preview">
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                    </div>
+                    Dead Plant
+                </button>
+                <button data-particle="frozenplant">
+                    <div class="particle-preview">
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                    </div>
+                    Frozen Plant
+                </button>
+            </div>
+            <div class="category" data-category="powders">
+                <button data-particle="charcoal">
+                    <div class="particle-preview">
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                    </div>
+                    Charcoal
+                </button>
+            </div>
+            <div class="category" data-category="solids">
+                <button data-particle="stone">
+                    <div class="particle-preview">
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                    </div>
+                    Stone
+                </button>
+                <button data-particle="obsidian">
+                    <div class="particle-preview">
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                    </div>
+                    Obsidian
+                </button>
+                <button data-particle="glass">
+                    <div class="particle-preview">
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                    </div>
+                    Glass
+                </button>
+            </div>
+            <div class="category" data-category="energy">
+                <button data-particle="lightning">
+                    <div class="particle-preview">
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                    </div>
+                    Lightning
+                </button>
+                <button data-particle="fire">
+                    <div class="particle-preview">
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                    </div>
+                    Fire
+                </button>
+            </div>
+            <div class="category" data-category="gases">
+                <button data-particle="smoke">
+                    <div class="particle-preview">
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                    </div>
+                    Smoke
+                </button>
+                <button data-particle="steam">
+                    <div class="particle-preview">
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                    </div>
+                    Steam
+                </button>
+                <button data-particle="cloud">
+                    <div class="particle-preview">
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                    </div>
+                    Cloud
+                </button>
+                <button data-particle="raincloud">
+                    <div class="particle-preview">
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                        <div class="particle-dot"></div>
+                    </div>
+                    Rain Cloud
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="js/game.js"></script>
+    <script>
+    // Tab switching logic
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabs = document.querySelectorAll('.tab');
+        const categories = document.querySelectorAll('.category');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                tabs.forEach(t => t.classList.remove('active'));
+                categories.forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                const cat = tab.getAttribute('data-tab');
+                document.querySelector('.category[data-category="' + cat + '"]').classList.add('active');
+            });
+        });
+    });
+    </script>
+</body>
+</html>
