@@ -19,22 +19,30 @@ class Game {
             14: 'Charcoal',
             15: 'Frozen Plant',
             16: 'Lava',
-            17: 'Stone',
+            17: 'Wall',
             18: 'Obsidian',
             19: 'Magma',
             20: 'Oil',
             21: 'Dirty Water',
             22: 'Basalt',
             23: 'Cloud',
-            24: 'Rain Cloud'
+            24: 'Rain Cloud',
+            25: 'Molten Glass',
+            26: 'Rock',
+            27: 'Snow', // new
+            28: 'Gravel', // new gravel element
+            29: 'Molten Dirt', // add after gravel
+            30: 'Cactus' // cactus element
         };
         this.canvas = document.getElementById('gameCanvas');
         this.ctx = this.canvas.getContext('2d');
         this.infoDisplay = document.getElementById('infoDisplay');
+        this.infoDisplay.textContent = 'ELEM: - | TEMP: -';
+        this.infoDisplay.style.visibility = 'visible';
         
         // Set canvas size
-        this.canvas.width = 800;
-        this.canvas.height = 600;
+        this.canvas.width = 960;
+        this.canvas.height = 540;
         
         // Grid settings
         this.cellSize = 4; // Size of each particle in pixels
@@ -60,42 +68,54 @@ class Game {
             charcoal: 14,
             frozenplant: 15,
             lava: 16,
-            stone: 17,
+            wall: 17,
             obsidian: 18,
             magma: 19,
             oil: 20,
             dirtywater: 21,
             basalt: 22,
             cloud: 23,
-            raincloud: 24
+            raincloud: 24,
+            moltenglass: 25,
+            rock: 26,
+            snow: 27, // new
+            gravel: 28, // new gravel element
+            moltendirt: 29, // add after gravel
+            cactus: 30 // cactus element
         };
         // Particle colors
         this.PARTICLE_COLORS = {
             0: null,
             1: ['rgb(60, 40, 20)', 'rgb(80, 50, 25)', 'rgb(70, 45, 18)', 'rgb(90, 60, 30)', 'rgb(65, 48, 28)', 'rgb(75, 55, 35)'], // dirt
             2: ['#ffe39f', '#ffe08a', '#ffe7b3', '#ffe4a1', '#ffe6a8'], // sand
-            3: ['#047AF2', '#1D84F4', '#1184F4'], // water (all light blue)
+            3: ['#047AF2', '#1184F4', '#046CE4', '#1D84F4'], // water
             4: ['#e0f7fa', '#b2ebf2', '#b3e5fc', '#e1f5fe'], // ice
-            5: ['#b3cfe3', '#a3bed6', '#c7e3f7', '#b8d8f7'], // steam (solid, wiki-like)
-            6: ['#362217', '#442C24', '#2C140C', '#3C2C24', '#443424'], // mud (user specified browns)
+            5: ['#b3cfe3', '#a3bed6', '#c7e3f7', '#b8d8f7'], // steam
+            6: ['#362217', '#442C24', '#2C140C', '#3C2C24', '#443424'], // mud
             7: ['#e0d7b3', '#d2c295', '#c2b280', '#bfa76a'], // wet sand
-            8: ['#b2ebf2', '#e0f7fa', '#c1f0f6', '#aeeeee'], // glass
+            8: ['#a3cfcf', '#b2ebf2', '#c1f0f6', '#d0f7f7', '#b7d9d9'], // glass
             9: ['#fff700', '#fffbe0', '#ffe066', '#fff'], // lightning
             10: ['#4CAF50', '#45a049', '#3d8b40', '#357935', '#2e672a'], // grass
             11: ['#8B4513', '#7a3d10', '#6b3510', '#5c2e0f'], // dead plant
             12: ['#ff4500', '#ff6a00', '#ff8c00', '#ffa500', '#ff7f00'], // fire
-            13: ['#404040', '#303030', '#202020', '#101010'], // smoke (much darker grays)
+            13: ['#404040', '#303030', '#202020', '#101010'], // smoke
             14: ['#1a1a1a', '#262626', '#333333', '#404040'], // charcoal
-            15: ['#b2f7e6', '#a0e6d6', '#c2fff7', '#d0fff0'], // frozen plant (icy green/blue)
+            15: ['#b2f7e6', '#a0e6d6', '#c2fff7', '#d0fff0'], // frozen plant
             16: ['#ff4500', '#ff5500', '#ff6500', '#ff7500', '#ff8500'], // lava
-            17: ['#808080', '#707070', '#606060', '#505050'], // stone
+            17: ['#8C8C8C', '#8C8C8C', '#8C8C8C', '#8C8C8C', '#8C8C8C', '#8C8C8C', '#8C8C8C', '#8C8C8C', '#8C8C8C', '#848484', '#848484', '#848484', '#848484'], // wall
             18: ['#2d2d2d', '#1a1a1a', '#000000'], // obsidian
-            19: ['#ffb347', '#ff8300', '#ff5e13', '#ff2e00', '#ff7e00'], // magma (hotter, more orange/red)
-            20: ['#420D04', '#4C140A', '#541C14', '#4C1C0C', '#340404'], // oil (user provided browns)
-            21: ['#2e8b57', '#3cb371', '#20b2aa', '#48d1cc'], // dirty water (greenish-blue)
+            19: ['#ffb347', '#ff8300', '#ff5e13', '#ff2e00', '#ff7e00'], // magma
+            20: ['#420D04', '#4C140A', '#541C14', '#4C1C0C', '#340404'], // oil
+            21: ['#2e8b57', '#3cb371', '#20b2aa', '#48d1cc'], // dirty water
             22: ['#808080', '#707070', '#606060', '#505050'], // basalt
-            23: ['#d3d3d3', '#c0c0c0', '#e0e0e0', '#f0f0f0'], // cloud (light gray)
-            24: ['#888888', '#666666', '#999999', '#555555'] // rain cloud (dark gray)
+            23: ['#d3d3d3', '#c0c0c0', '#e0e0e0', '#f0f0f0'], // cloud
+            24: ['#888888', '#666666', '#999999', '#555555'], // rain cloud
+            25: ['#ffb347', '#ffae42', '#ff9900', '#ff7f00', '#ffcc80', '#ffd580', '#ff9933', '#ff6600', '#ffb366', '#ffcc66'], // molten glass
+            26: ['#808080', '#707070', '#606060', '#505050', '#404040'], // rock
+            27: ['#ffffff', '#f5f5f5', '#f0f0f0', '#e8e8e8', '#e0e0e0'], // snow (white shades)
+            28: ['#c0c0c0', '#d3d3d3', '#b8b8b8', '#a8a8a8', '#e0e0e0'], // gravel (gray shades)
+            29: ['#b84c1c', '#d2691e', '#c75a1c', '#e07b3c', '#b85a1c'], // molten dirt palette
+            30: ['#2E8B57', '#3CB371', '#4CAF50', '#45a049', '#3d8b40'] // cactus (green shades)
         };
         
         // Initialize grid (store {type, color})
@@ -124,6 +144,67 @@ class Game {
         });
         document.addEventListener('keyup', (e) => {
             if (e.key === 'Shift') this.isShiftDown = false;
+        });
+        // Ensure infoDisplay is updated on load
+        this.update();
+        // Add this near the top of the Game class, after PARTICLE_TYPES:
+        this.CONDUCTIVITY = {
+            wall: 0,
+            glass: 0.08,
+            sand: 0.3,
+            dirt: 0.10,
+            water: 0.5,
+            magma: 0.7,
+            moltenglass: 0.6,
+            basalt: 0.09,
+            obsidian: 0.05,
+            lava: 0.6,
+            fire: 0.3,
+            steam: 0.2,
+            ice: 0.03,
+            cloud: 0.01,
+            raincloud: 0.01,
+            charcoal: 0.15,
+            mud: 0.11,
+            wetsand: 0.13,
+            oil: 0.18,
+            deadplant: 0.08,
+            frozenplant: 0.04,
+            grass: 0.09,
+            smoke: 0.01,
+            lightning: 0.9,
+            dirtwater: 0.3,
+            empty: 0,
+            rock: 0.12,
+            snow: 0.02, // Snow has low conductivity
+            gravel: 0.15 // Gravel has medium conductivity
+        };
+        this.canvas.addEventListener('mouseenter', () => {
+            // Do nothing here, handled in mousemove
+        });
+        this.canvas.addEventListener('mousemove', (e) => {
+            const rect = this.canvas.getBoundingClientRect();
+            // Fix: scale mouse coordinates to canvas size
+            const scaleX = this.canvas.width / rect.width;
+            const scaleY = this.canvas.height / rect.height;
+            this.mouseX = Math.floor((e.clientX - rect.left) * scaleX / this.cellSize);
+            this.mouseY = Math.floor((e.clientY - rect.top) * scaleY / this.cellSize);
+            // Update info display
+            if (this.mouseX >= 0 && this.mouseX < this.cols && this.mouseY >= 0 && this.mouseY < this.rows) {
+                const cell = this.grid[this.mouseX][this.mouseY];
+                if (cell.type !== this.PARTICLE_TYPES.empty) {
+                    this.infoDisplay.style.opacity = '1';
+                    this.infoDisplay.textContent = `ELEM: ${this.PARTICLE_NAMES[cell.type]}  TEMP: ${Math.round(cell.temperature)}°C`;
+                } else {
+                    this.infoDisplay.style.opacity = '0';
+                }
+            } else {
+                this.infoDisplay.style.opacity = '0';
+            }
+        });
+        this.canvas.addEventListener('mouseleave', () => {
+            this.isMouseDown = false;
+            this.infoDisplay.style.opacity = '0';
         });
     }
 
@@ -182,20 +263,22 @@ class Game {
     setupEventListeners() {
         this.canvas.addEventListener('mousemove', (e) => {
             const rect = this.canvas.getBoundingClientRect();
-            this.mouseX = Math.floor((e.clientX - rect.left) / this.cellSize);
-            this.mouseY = Math.floor((e.clientY - rect.top) / this.cellSize);
-            
+            // Fix: scale mouse coordinates to canvas size
+            const scaleX = this.canvas.width / rect.width;
+            const scaleY = this.canvas.height / rect.height;
+            this.mouseX = Math.floor((e.clientX - rect.left) * scaleX / this.cellSize);
+            this.mouseY = Math.floor((e.clientY - rect.top) * scaleY / this.cellSize);
             // Update info display
             if (this.mouseX >= 0 && this.mouseX < this.cols && this.mouseY >= 0 && this.mouseY < this.rows) {
                 const cell = this.grid[this.mouseX][this.mouseY];
                 if (cell.type !== this.PARTICLE_TYPES.empty) {
-                    this.infoDisplay.style.display = 'block';
-                    this.infoDisplay.textContent = `${this.PARTICLE_NAMES[cell.type]} - ${Math.round(cell.temperature)}°C`;
+                    this.infoDisplay.style.opacity = '1';
+                    this.infoDisplay.textContent = `ELEM: ${this.PARTICLE_NAMES[cell.type]}  TEMP: ${Math.round(cell.temperature)}°C`;
                 } else {
-                    this.infoDisplay.style.display = 'none';
+                    this.infoDisplay.style.opacity = '0';
                 }
             } else {
-                this.infoDisplay.style.display = 'none';
+                this.infoDisplay.style.opacity = '0';
             }
         });
 
@@ -209,7 +292,7 @@ class Game {
 
         this.canvas.addEventListener('mouseleave', () => {
             this.isMouseDown = false;
-            this.infoDisplay.style.display = 'none';
+            this.infoDisplay.style.opacity = '0';
         });
     }
 
@@ -332,22 +415,30 @@ class Game {
             if (type === 'cloud') {
                 temperature = 110; // Set initial temperature for cloud as per wiki
             }
-            this.grid[x][y] = { type: this.PARTICLE_TYPES[type], color, temperature, lifetime };
+            if (type === 'snow') {
+                temperature = -5; // Set initial temperature for snow as per wiki
+            }
+            // Assign baseColor for sand
+            if (type === 'sand') {
+                this.grid[x][y] = { type: this.PARTICLE_TYPES[type], color, baseColor: color, temperature, lifetime };
+            } else {
+                this.grid[x][y] = { type: this.PARTICLE_TYPES[type], color, temperature, lifetime };
+            }
         }
     }
 
     update() {
-        // Always update infoDisplay with current cell info
+        // Only update infoDisplay if mouse is over a non-empty cell
         if (this.mouseX >= 0 && this.mouseX < this.cols && this.mouseY >= 0 && this.mouseY < this.rows) {
             const cell = this.grid[this.mouseX][this.mouseY];
             if (cell.type !== this.PARTICLE_TYPES.empty) {
-                this.infoDisplay.style.display = 'block';
-                this.infoDisplay.textContent = `${this.PARTICLE_NAMES[cell.type]} - ${Math.round(cell.temperature)}°C`;
+                this.infoDisplay.style.opacity = '1';
+                this.infoDisplay.textContent = `ELEM: ${this.PARTICLE_NAMES[cell.type]}  TEMP: ${Math.round(cell.temperature)}°C`;
             } else {
-                this.infoDisplay.style.display = 'none';
+                this.infoDisplay.style.opacity = '0';
             }
         } else {
-            this.infoDisplay.style.display = 'none';
+            this.infoDisplay.style.opacity = '0';
         }
         if (this.isMouseDown) {
             // Use square brush area instead of circular
@@ -359,9 +450,12 @@ class Game {
                         this.placeParticle(x, y, this.selectedParticle);
                     } else if (this.selectedTool === 'heater') {
                         if (x >= 0 && x < this.cols && y >= 0 && y < this.rows) {
-                            // Wiki-accurate: +2 to +5°C, or +2 to +32°C with Shift
-                            let delta = this.isShiftDown ? (2 + Math.floor(Math.random() * 31)) : (2 + Math.floor(Math.random() * 4));
-                            this.grid[x][y].temperature += delta;
+                            // Lower delta for more Sandboxels-like heating
+                            let delta = this.isShiftDown ? (2 + Math.floor(Math.random() * 15)) : (2 + Math.floor(Math.random() * 4));
+                            // Only heat if not wall
+                            if (this.grid[x][y].type !== this.PARTICLE_TYPES.wall) {
+                                this.grid[x][y].temperature += delta;
+                            }
                         }
                     } else if (this.selectedTool === 'cooler') {
                         if (x >= 0 && x < this.cols && y >= 0 && y < this.rows) {
@@ -379,24 +473,45 @@ class Game {
         }
 
         // Temperature transfer
+        // Create a copy of the temperature grid
+        let tempGrid = new Array(this.cols).fill(null).map(() => new Array(this.rows).fill(0));
+        for (let x = 0; x < this.cols; x++) {
+            for (let y = 0; y < this.rows; y++) {
+                tempGrid[x][y] = this.grid[x][y].temperature;
+            }
+        }
+        let waterDebugLogged = false;
         for (let x = 0; x < this.cols; x++) {
             for (let y = 0; y < this.rows; y++) {
                 const cell = this.grid[x][y];
-                if (cell.type !== this.PARTICLE_TYPES.empty) {
-                    let sum = cell.temperature;
-                    let count = 1;
-                    for (const [dx, dy] of [[0,1],[0,-1],[1,0],[-1,0]]) {
+                if (cell.type !== this.PARTICLE_TYPES.empty && cell.type !== this.PARTICLE_TYPES.water) {
+                    let typeName = Object.keys(this.PARTICLE_TYPES).find(key => this.PARTICLE_TYPES[key] === cell.type);
+                    let cellConduct = this.CONDUCTIVITY[typeName] !== undefined ? this.CONDUCTIVITY[typeName] : 0.1;
+                    if (typeof cellConduct !== 'number' || isNaN(cellConduct)) cellConduct = 0.1;
+                    if (cellConduct === 0) continue;
+                    if (typeof tempGrid[x][y] !== 'number' || isNaN(tempGrid[x][y])) tempGrid[x][y] = 20;
+                    let sum = 0;
+                    let count = 0;
+                    for (const [dx, dy] of [[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]]) {
                         const nx = x + dx, ny = y + dy;
                         if (nx >= 0 && nx < this.cols && ny >= 0 && ny < this.rows) {
                             const neighbor = this.grid[nx][ny];
                             if (neighbor.type !== this.PARTICLE_TYPES.empty) {
-                                sum += neighbor.temperature;
+                                let nTypeName = Object.keys(this.PARTICLE_TYPES).find(key => this.PARTICLE_TYPES[key] === neighbor.type);
+                                let nConduct = this.CONDUCTIVITY[nTypeName] !== undefined ? this.CONDUCTIVITY[nTypeName] : 0.1;
+                                if (typeof nConduct !== 'number' || isNaN(nConduct)) nConduct = 0.1;
+                                if (nConduct === 0) continue;
+                                if (typeof tempGrid[nx][ny] !== 'number' || isNaN(tempGrid[nx][ny])) tempGrid[nx][ny] = 20;
+                                sum += tempGrid[nx][ny];
                                 count++;
                             }
                         }
                     }
-                    // Even slower heat spread
-                    cell.temperature += (sum/count - cell.temperature) * 0.01; // was 0.03, now 0.01
+                    let heatTransferRate = 0.08;
+                    if (typeof heatTransferRate !== 'number' || isNaN(heatTransferRate)) heatTransferRate = 0.08;
+                    if (count > 0) {
+                        cell.temperature += (sum/count - tempGrid[x][y]) * cellConduct * heatTransferRate;
+                    }
                 }
             }
         }
@@ -440,41 +555,103 @@ class Game {
                 if (cell.type === this.PARTICLE_TYPES.dirt) {
                     // Dirt falls through empty or water (vertical and diagonals, no priority)
                     this.tryMove(x, y, [ [0,1], [-1,1], [1,1] ], [this.PARTICLE_TYPES.empty, this.PARTICLE_TYPES.water]);
-                } else if (cell.type === this.PARTICLE_TYPES.sand) {
-                    // Sand melts to glass at high temp
-                    if (cell.temperature > 1700) {
-                        const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.glass];
-                        cell.type = this.PARTICLE_TYPES.glass;
-                        cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
+                    // Gradually glow from brown to orange/red as it heats up
+                    if (!cell.baseColor) {
+                        const dirtPalette = this.PARTICLE_COLORS[this.PARTICLE_TYPES.dirt];
+                        cell.baseColor = cell.color || dirtPalette[Math.floor(Math.random() * dirtPalette.length)];
+                    }
+                    if (cell.temperature >= 500 && cell.temperature < 1200) {
+                        let t = (cell.temperature - 500) / (1200 - 500); // 0 to 1 for 500-1200°C
+                        if (t < 0.5) {
+                            let t2 = t / 0.5;
+                            cell.color = lerpColor(cell.baseColor, '#ffae42', t2);
+                        } else {
+                            let t2 = (t - 0.5) / 0.5;
+                            cell.color = lerpColor('#ffae42', '#ff3300', t2);
+                        }
                     } else {
-                        this.tryMove(x, y, [ [0,1], [-1,1], [1,1] ], [this.PARTICLE_TYPES.empty, this.PARTICLE_TYPES.water]);
+                        // Normal dirt color
+                        if (cell.baseColor && cell.color !== cell.baseColor && cell.temperature < 500) {
+                            cell.color = cell.baseColor;
+                        }
+                    }
+                    // MELTING: Dirt melts into Molten Dirt at 1200°C
+                    if (cell.temperature >= 1200) {
+                        const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.moltendirt];
+                        cell.type = this.PARTICLE_TYPES.moltendirt;
+                        cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
+                        cell.temperature = 1200;
+                        delete cell.baseColor;
+                    }
+                } else if (cell.type === this.PARTICLE_TYPES.moltendirt) {
+                    // Molten Dirt flows like a liquid (like molten glass)
+                    this.tryMove(x, y, [ [0,1], [-1,1], [1,1], [-1,0], [1,0] ], [this.PARTICLE_TYPES.empty, this.PARTICLE_TYPES.water, this.PARTICLE_TYPES.steam]);
+                    // Vibrant orange/red cycling as it stays hot
+                    if (!cell.baseColor) {
+                        const moltenPalette = this.PARTICLE_COLORS[this.PARTICLE_TYPES.moltendirt];
+                        cell.baseColor = cell.color || moltenPalette[Math.floor(Math.random() * moltenPalette.length)];
+                    }
+                    // Color interpolation for molten dirt (1200°C+)
+                    let t = Math.min((cell.temperature - 1100) / 200, 1); // 0 to 1 for 1100-1300°C
+                    cell.color = lerpColor('#e07b3c', '#b84c1c', t); // orange to deep red
+                    // Cool to rock at ≤ 1100°C
+                    if (cell.temperature <= 1100) {
+                        const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.rock];
+                        cell.type = this.PARTICLE_TYPES.rock;
+                        cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
+                        cell.temperature = 20;
+                        delete cell.baseColor;
+                    }
+                } else if (cell.type === this.PARTICLE_TYPES.sand) {
+                    if (cell.temperature >= 1700) {
+                        // Sand becomes molten glass
+                        const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.moltenglass];
+                        cell.type = this.PARTICLE_TYPES.moltenglass;
+                        cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
+                    } else if (cell.temperature >= 500) {
+                        // Gradually glow from yellow to red as temperature increases
+                        let t = (cell.temperature - 500) / (1700 - 500); // 0 to 1
+                        const sandPalette = this.PARTICLE_COLORS[this.PARTICLE_TYPES.sand];
+                        // Use the original color as the base for interpolation, or assign if missing
+                        if (!cell.baseColor) {
+                            cell.baseColor = cell.color || sandPalette[Math.floor(Math.random() * sandPalette.length)];
+                        }
+                        if (t < 0.5) {
+                            let t2 = t / 0.5;
+                            cell.color = lerpColor(cell.baseColor, '#ffae42', t2);
+                        } else {
+                            let t2 = (t - 0.5) / 0.5;
+                            cell.color = lerpColor('#ffae42', '#ff3300', t2);
+                        }
+                    } else {
+                        // Normal sand color: only assign if missing or if coming down from glowing
+                        if (!cell.baseColor) {
+                            const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.sand];
+                            cell.baseColor = colorArr[Math.floor(Math.random() * colorArr.length)];
+                        }
+                        cell.color = cell.baseColor;
+                    }
+                    // Sand movement
+                    this.tryMove(x, y, [ [0,1], [-1,1], [1,1] ], [this.PARTICLE_TYPES.empty, this.PARTICLE_TYPES.water]);
+                    // If sand just cooled down from glowing, reset baseColor
+                    if (cell.temperature < 500 && cell.baseColor && cell.color !== cell.baseColor) {
+                        cell.color = cell.baseColor;
                     }
                 } else if (cell.type === this.PARTICLE_TYPES.water) {
-                    // Water + Fire = Steam (check both directions)
+                    // Water + Fire = Heat up water (check both directions)
                     for (const [dx, dy] of [[0,1],[0,-1],[1,0],[-1,0],[1,1],[-1,1],[1,-1],[-1,-1]]) {
                         const nx = x + dx;
                         const ny = y + dy;
                         if (nx >= 0 && nx < this.cols && ny >= 0 && ny < this.rows) {
                             const neighbor = this.grid[nx][ny];
                             if (neighbor.type === this.PARTICLE_TYPES.fire) {
-                                const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.steam];
-                                const steamCell = { type: this.PARTICLE_TYPES.steam, color: colorArr[Math.floor(Math.random() * colorArr.length)], temperature: 120, lifetime: null };
-                                if (Math.random() < 0.5) {
-                                    this.grid[x][y] = steamCell;
-                                    this.grid[nx][ny] = { type: this.PARTICLE_TYPES.empty, color: null, temperature: 20, lifetime: null };
-                                } else {
-                                    this.grid[nx][ny] = steamCell;
-                                    this.grid[x][y] = { type: this.PARTICLE_TYPES.empty, color: null, temperature: 20, lifetime: null };
-                                }
-                                return;
-                            } else if (neighbor.type === this.PARTICLE_TYPES.oil) {
-                                // Water + Oil = Dirty Water (extremely slow transformation)
-                                if (Math.random() < 0.0001) { // 0.01% chance per frame to transform (extremely slow)
-                                    const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.dirtywater];
-                                    cell.type = this.PARTICLE_TYPES.dirtywater;
-                                    cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
-                                }
+                                // Heat up water instead of immediate transformation
+                                cell.temperature += 10; // Heat up water when next to fire
                             }
+                            // Fire heats up all adjacent elements
+                            //if (neighbor.type !== this.PARTICLE_TYPES.empty && neighbor.type !== this.PARTICLE_TYPES.fire) {
+                               // neighbor.temperature += 5; // was 20, now 5°C per frame
+                            //}
                         }
                     }
                     if (!this.tryMove(x, y, [ [0,1], [-1,1], [1,1], [-1,0], [1,0] ], [this.PARTICLE_TYPES.empty, this.PARTICLE_TYPES.oil])) {
@@ -483,20 +660,35 @@ class Game {
                             this.tryMove(x, y, [ [jitterDir, 0] ]);
                         }
                     }
+                    // Temperature-based transformations
                     if (cell.temperature < 0) {
                         const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.ice];
                         cell.type = this.PARTICLE_TYPES.ice;
                         cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
-                    } else if (cell.temperature > 100) {
+                    } else if (cell.temperature >= 100) { // Changed from > to >= for consistency
                         const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.steam];
                         cell.type = this.PARTICLE_TYPES.steam;
                         cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
+                        cell.temperature = 120; // Set steam temperature
+                        cell.lifetime = 600 + Math.floor(Math.random() * 300); // Add lifetime for steam
                     }
                 } else if (cell.type === this.PARTICLE_TYPES.ice) {
                     if (cell.temperature > 0) {
                         const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.water];
                         cell.type = this.PARTICLE_TYPES.water;
                         cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
+                    }
+                } else if (cell.type === this.PARTICLE_TYPES.snow) {
+                    // Snow melts at 18°C
+                    if (cell.temperature >= 18) {
+                        cell.type = this.PARTICLE_TYPES.water;
+                        cell.color = this.pickWaterColor(); // Use the same water color function
+                        cell.temperature = 20; // Reset temperature to room temperature
+                    } else {
+                        // Snow falls like sand but slower (60% chance to move)
+                        if (Math.random() < 0.6) {
+                            this.tryMove(x, y, [ [0,1], [-1,1], [1,1] ], [this.PARTICLE_TYPES.empty]); // Removed water from allowed types
+                        }
                     }
                 } else if (cell.type === this.PARTICLE_TYPES.steam) {
                     // --- WIKI-LIKE STEAM LOGIC ---
@@ -617,7 +809,70 @@ class Game {
                         // Wet sand falls through empty or water (vertical and diagonals, no priority)
                         this.tryMove(x, y, [ [0,1], [-1,1], [1,1] ], [this.PARTICLE_TYPES.empty, this.PARTICLE_TYPES.water]);
                     }
+                } else if (cell.type === this.PARTICLE_TYPES.moltenglass) {
+                    // Molten glass flows like a liquid
+                    // If it cools below 1500°C, it becomes glass
+                    if (cell.temperature < 1500) {
+                        const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.glass];
+                        cell.type = this.PARTICLE_TYPES.glass;
+                        cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
+                    } else {
+                        // Vibrant orange/yellow
+                        const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.moltenglass];
+                        cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
+                        // Molten glass flows like magma
+                        this.tryMove(x, y, [ [0,1], [-1,1], [1,1], [-1,0], [1,0] ], [this.PARTICLE_TYPES.empty, this.PARTICLE_TYPES.water, this.PARTICLE_TYPES.steam]);
+                    }
                 } else if (cell.type === this.PARTICLE_TYPES.glass) {
+                    if (cell.temperature > 1500) {
+                        // Glass melts back into molten glass
+                        const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.moltenglass];
+                        cell.type = this.PARTICLE_TYPES.moltenglass;
+                        cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
+                    } else if (cell.temperature > 500) {
+                        // Interpolate from normal glass to orange/red as it heats
+                        let t = Math.min((cell.temperature - 500) / 1200, 1); // 0 to 1 for 500-1700°C
+                        let isEdge = false;
+                        for (const [dx, dy] of [[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]]) {
+                            const nx = x + dx, ny = y + dy;
+                            if (nx >= 0 && nx < this.cols && ny >= 0 && ny < this.rows) {
+                                if (this.grid[nx][ny].type !== this.PARTICLE_TYPES.glass) {
+                                    isEdge = true;
+                                    break;
+                                }
+                            } else {
+                                isEdge = true;
+                                break;
+                            }
+                        }
+                        if (isEdge) {
+                            cell.color = lerpColor('#89A29F', '#ffae42', t); // border glows
+                        } else {
+                            cell.color = lerpColor('#648484', '#ffae42', t); // interior glows
+                        }
+                    } else {
+                        // Normal glass color: #648484, with border #89A29F if on edge, and sparkle pattern #7DA098 inside
+                        let isEdge = false;
+                        for (const [dx, dy] of [[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]]) {
+                            const nx = x + dx, ny = y + dy;
+                            if (nx >= 0 && nx < this.cols && ny >= 0 && ny < this.rows) {
+                                if (this.grid[nx][ny].type !== this.PARTICLE_TYPES.glass) {
+                                    isEdge = true;
+                                    break;
+                                }
+                            } else {
+                                isEdge = true;
+                                break;
+                            }
+                        }
+                        if (isEdge) {
+                            cell.color = '#89A29F';
+                        } else if ((x % 6 === y % 6) && (x % 3 < 2)) {
+                            cell.color = '#7DA098'; // sparkle pattern color
+                        } else {
+                            cell.color = '#648484'; // main glass color
+                        }
+                    }
                     // Glass is immobile
                 } else if (cell.type === this.PARTICLE_TYPES.lightning) {
                     // Lightning: short lifespan, moves fast, interacts
@@ -733,12 +988,15 @@ class Game {
                         const ny = y + dy;
                         if (nx >= 0 && nx < this.cols && ny >= 0 && ny < this.rows) {
                             const neighbor = this.grid[nx][ny];
-                            if (neighbor.type === this.PARTICLE_TYPES.rock && 
-                                cell.temperature >= 200 && cell.temperature <= 300) {
-                                // Convert to charcoal
-                                const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.charcoal];
-                                cell.type = this.PARTICLE_TYPES.charcoal;
-                                cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
+                            if (neighbor.type === this.PARTICLE_TYPES.wall || neighbor.type === this.PARTICLE_TYPES.obsidian) {
+                                // Wall and obsidian are immobile and don't transfer heat
+                                // Wall doesn't melt, but obsidian can turn to lava at high temps
+                                if (neighbor.type === this.PARTICLE_TYPES.obsidian && cell.temperature > 1200) {
+                                    const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.lava];
+                                    cell.type = this.PARTICLE_TYPES.lava;
+                                    cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
+                                    cell.temperature = 1200;
+                                }
                                 break;
                             }
                         }
@@ -943,7 +1201,7 @@ class Game {
                                 
                                 // If cooled enough, convert to basalt/stone immediately
                                 if (cell.temperature < 800) {
-                                    const newType = Math.random() < 0.3 ? this.PARTICLE_TYPES.obsidian : this.PARTICLE_TYPES.stone;
+                                    const newType = Math.random() < 0.3 ? this.PARTICLE_TYPES.obsidian : this.PARTICLE_TYPES.wall;
                                     const colorArr = this.PARTICLE_COLORS[newType];
                                     this.grid[x][y] = {
                                         type: newType,
@@ -976,13 +1234,15 @@ class Game {
                                                 temperature: 20,
                                                 lifetime: null
                                             };
-                                        } else if (neighbor.type === this.PARTICLE_TYPES.stone) {
-                                            this.grid[nx][ny] = {
-                                                type: this.PARTICLE_TYPES.magma,
-                                                color: this.PARTICLE_COLORS[this.PARTICLE_TYPES.magma][Math.floor(Math.random() * this.PARTICLE_COLORS[this.PARTICLE_TYPES.magma].length)],
-                                                temperature: 1200,
-                                                lifetime: null
-                                            };
+                                        } else if (neighbor.type === this.PARTICLE_TYPES.wall || neighbor.type === this.PARTICLE_TYPES.obsidian) {
+                                            // Wall and obsidian are immobile and don't transfer heat
+                                            // Wall doesn't melt, but obsidian can turn to lava at high temps
+                                            if (neighbor.type === this.PARTICLE_TYPES.obsidian && cell.temperature > 1200) {
+                                                const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.lava];
+                                                cell.type = this.PARTICLE_TYPES.lava;
+                                                cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
+                                                cell.temperature = 1200;
+                                            }
                                         }
                                     }
                                 }
@@ -1036,9 +1296,10 @@ class Game {
                         // Fall straight down only
                         this.tryMove(x, y, [[0,1]], [this.PARTICLE_TYPES.empty, this.PARTICLE_TYPES.water]);
                     }
-                } else if (cell.type === this.PARTICLE_TYPES.stone || cell.type === this.PARTICLE_TYPES.obsidian) {
-                    // Stone and obsidian are immobile but can be heated
-                    if (cell.temperature > 1200) {
+                } else if (cell.type === this.PARTICLE_TYPES.wall || cell.type === this.PARTICLE_TYPES.obsidian) {
+                    // Wall and obsidian are immobile and don't transfer heat
+                    // Wall doesn't melt, but obsidian can turn to lava at high temps
+                    if (cell.type === this.PARTICLE_TYPES.obsidian && cell.temperature > 1200) {
                         const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.lava];
                         cell.type = this.PARTICLE_TYPES.lava;
                         cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
@@ -1113,13 +1374,15 @@ class Game {
                                                 temperature: 20,
                                                 lifetime: null
                                             };
-                                        } else if (neighbor.type === this.PARTICLE_TYPES.stone) {
-                                            this.grid[nx][ny] = {
-                                                type: this.PARTICLE_TYPES.magma,
-                                                color: this.PARTICLE_COLORS[this.PARTICLE_TYPES.magma][Math.floor(Math.random() * this.PARTICLE_COLORS[this.PARTICLE_TYPES.magma].length)],
-                                                temperature: 1200,
-                                                lifetime: null
-                                            };
+                                        } else if (neighbor.type === this.PARTICLE_TYPES.wall || neighbor.type === this.PARTICLE_TYPES.obsidian) {
+                                            // Wall and obsidian are immobile and don't transfer heat
+                                            // Wall doesn't melt, but obsidian can turn to lava at high temps
+                                            if (neighbor.type === this.PARTICLE_TYPES.obsidian && cell.temperature > 1200) {
+                                                const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.lava];
+                                                cell.type = this.PARTICLE_TYPES.lava;
+                                                cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
+                                                cell.temperature = 1200;
+                                            }
                                         }
                                     }
                                 }
@@ -1275,6 +1538,213 @@ class Game {
                             }
                         }
                     }
+                } else if (cell.type === this.PARTICLE_TYPES.moltenglass) {
+                    // Molten glass flows like a liquid
+                    // If it cools below 1500°C, it becomes glass
+                    if (cell.temperature < 1500) {
+                        const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.glass];
+                        cell.type = this.PARTICLE_TYPES.glass;
+                        cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
+                    } else {
+                        // Vibrant orange/yellow
+                        const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.moltenglass];
+                        cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
+                        // Molten glass flows like magma
+                        this.tryMove(x, y, [ [0,1], [-1,1], [1,1], [-1,0], [1,0] ], [this.PARTICLE_TYPES.empty, this.PARTICLE_TYPES.water, this.PARTICLE_TYPES.steam]);
+                    }
+                } else if (cell.type === this.PARTICLE_TYPES.glass) {
+                    if (cell.temperature > 1500) {
+                        // Glass melts back into molten glass
+                        const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.moltenglass];
+                        cell.type = this.PARTICLE_TYPES.moltenglass;
+                        cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
+                    } else if (cell.temperature > 500) {
+                        // Interpolate from normal glass to orange/red as it heats
+                        let t = Math.min((cell.temperature - 500) / 1200, 1); // 0 to 1 for 500-1700°C
+                        let isEdge = false;
+                        for (const [dx, dy] of [[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]]) {
+                            const nx = x + dx, ny = y + dy;
+                            if (nx >= 0 && nx < this.cols && ny >= 0 && ny < this.rows) {
+                                if (this.grid[nx][ny].type !== this.PARTICLE_TYPES.glass) {
+                                    isEdge = true;
+                                    break;
+                                }
+                            } else {
+                                isEdge = true;
+                                break;
+                            }
+                        }
+                        if (isEdge) {
+                            cell.color = lerpColor('#89A29F', '#ffae42', t); // border glows
+                        } else {
+                            cell.color = lerpColor('#648484', '#ffae42', t); // interior glows
+                        }
+                    } else {
+                        // Normal glass color: #648484, with border #89A29F if on edge, and sparkle pattern #7DA098 inside
+                        let isEdge = false;
+                        for (const [dx, dy] of [[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]]) {
+                            const nx = x + dx, ny = y + dy;
+                            if (nx >= 0 && nx < this.cols && ny >= 0 && ny < this.rows) {
+                                if (this.grid[nx][ny].type !== this.PARTICLE_TYPES.glass) {
+                                    isEdge = true;
+                                    break;
+                                }
+                            } else {
+                                isEdge = true;
+                                break;
+                            }
+                        }
+                        if (isEdge) {
+                            cell.color = '#89A29F';
+                        } else if ((x % 6 === y % 6) && (x % 3 < 2)) {
+                            cell.color = '#7DA098'; // sparkle pattern color
+                        } else {
+                            cell.color = '#648484'; // main glass color
+                        }
+                    }
+                    // Glass is immobile
+                } else if (cell.type === this.PARTICLE_TYPES.rock) {
+                    // Rock behavior
+                    if (cell.temperature >= 950) {
+                        // Rock melts into Magma at 950°C
+                        const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.magma];
+                        cell.type = this.PARTICLE_TYPES.magma;
+                        cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
+                    } else {
+                        // Rock movement - falls like sand but slower
+                        if (Math.random() < 0.7) { // 70% chance to move each frame
+                            this.tryMove(x, y, [ [0,1], [-1,1], [1,1] ], [this.PARTICLE_TYPES.empty, this.PARTICLE_TYPES.water]);
+                        }
+                    }
+                } else if (cell.type === this.PARTICLE_TYPES.snow) {
+                    // Snow melts at 18°C
+                    if (cell.temperature >= 18) {
+                        cell.type = this.PARTICLE_TYPES.water;
+                        cell.color = this.pickWaterColor(); // Use the same water color function
+                        cell.temperature = 20; // Reset temperature to room temperature
+                    } else {
+                        // Snow falls like sand but slower (60% chance to move)
+                        if (Math.random() < 0.6) {
+                            this.tryMove(x, y, [ [0,1], [-1,1], [1,1] ], [this.PARTICLE_TYPES.empty]); // Removed water from allowed types
+                        }
+                    }
+                } else if (cell.type === this.PARTICLE_TYPES.gravel) {
+                    // Gravel melts into Magma at 950°C
+                    if (cell.temperature >= 950) {
+                        const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.magma];
+                        cell.type = this.PARTICLE_TYPES.magma;
+                        cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
+                    } else {
+                        // Check for Dirty Water filtering
+                        for (const [dx, dy] of [[0,1],[0,-1],[1,0],[-1,0]]) {
+                            const nx = x + dx;
+                            const ny = y + dy;
+                            if (nx >= 0 && nx < this.cols && ny >= 0 && ny < this.rows) {
+                                const neighbor = this.grid[nx][ny];
+                                if (neighbor.type === this.PARTICLE_TYPES.dirtywater) {
+                                    // Convert Dirty Water to clean Water
+                                    const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.water];
+                                    this.grid[nx][ny] = {
+                                        type: this.PARTICLE_TYPES.water,
+                                        color: colorArr[Math.floor(Math.random() * colorArr.length)],
+                                        temperature: neighbor.temperature,
+                                        lifetime: null
+                                    };
+                                }
+                            }
+                        }
+                        // Gravel falls like sand but slower (70% chance to move)
+                        if (Math.random() < 0.7) {
+                            this.tryMove(x, y, [ [0,1], [-1,1], [1,1] ], [this.PARTICLE_TYPES.empty, this.PARTICLE_TYPES.water]);
+                        }
+                    }
+                } else if (cell.type === this.PARTICLE_TYPES.cactus) {
+                    // Realistic cactus: main stem up, short branches, flowers only on main stem tips
+                    if (Math.random() < 0.01) { // 1% chance to grow (faster)
+                        if (!cell.isBranch && y > 0 && this.grid[x][y-1].type === this.PARTICLE_TYPES.empty) {
+                            // Main stem grows up
+                            // Only make a flower if this is the tip (no cactus above)
+                            const isTip = (y-1 === 0 || this.grid[x][y-2].type !== this.PARTICLE_TYPES.cactus);
+                            const makeFlower = isTip && Math.random() < 0.10;
+                            const makeSpike = !makeFlower && Math.random() < 0.10;
+                            const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.cactus];
+                            this.grid[x][y-1] = {
+                                type: this.PARTICLE_TYPES.cactus,
+                                color: colorArr[Math.floor(Math.random() * colorArr.length)],
+                                temperature: cell.temperature,
+                                lifetime: null,
+                                edgeAge: null,
+                                isBranch: false,
+                                isFlower: makeFlower,
+                                isSpike: makeSpike
+                            };
+                            // 10% chance to spawn a branch (left or right)
+                            if (Math.random() < 0.10) {
+                                const dir = Math.random() < 0.5 ? -1 : 1;
+                                const nx = x + dir;
+                                if (nx >= 0 && nx < this.cols && this.grid[nx][y].type === this.PARTICLE_TYPES.empty) {
+                                    // Branch meta: track branch age (how many cells grown)
+                                    this.grid[nx][y] = {
+                                        type: this.PARTICLE_TYPES.cactus,
+                                        color: colorArr[Math.floor(Math.random() * colorArr.length)],
+                                        temperature: cell.temperature,
+                                        lifetime: null,
+                                        edgeAge: null,
+                                        isBranch: true,
+                                        branchAge: 1 // start at 1
+                                    };
+                                }
+                            }
+                        } else if (cell.isBranch) {
+                            // Branches grow sideways for 1-3 cells, then up once, then stop
+                            let maxBranch = cell.branchMax || (2 + Math.floor(Math.random() * 2)); // 2-3
+                            let age = cell.branchAge || 1;
+                            const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.cactus];
+                            if (age < maxBranch) {
+                                // Continue sideways
+                                const dir = (cell.lastDir !== undefined) ? cell.lastDir : (Math.random() < 0.5 ? -1 : 1);
+                                const nx = x + dir;
+                                if (nx >= 0 && nx < this.cols && this.grid[nx][y].type === this.PARTICLE_TYPES.empty) {
+                                    this.grid[nx][y] = {
+                                        type: this.PARTICLE_TYPES.cactus,
+                                        color: colorArr[Math.floor(Math.random() * colorArr.length)],
+                                        temperature: cell.temperature,
+                                        lifetime: null,
+                                        edgeAge: null,
+                                        isBranch: true,
+                                        branchAge: age + 1,
+                                        branchMax: maxBranch,
+                                        lastDir: dir
+                                    };
+                                }
+                            } else if (y > 0 && this.grid[x][y-1].type === this.PARTICLE_TYPES.empty) {
+                                // Go up once, then stop
+                                this.grid[x][y-1] = {
+                                    type: this.PARTICLE_TYPES.cactus,
+                                    color: colorArr[Math.floor(Math.random() * colorArr.length)],
+                                    temperature: cell.temperature,
+                                    lifetime: null,
+                                    edgeAge: null,
+                                    isBranch: true,
+                                    branchAge: age + 1,
+                                    branchMax: maxBranch,
+                                    lastDir: cell.lastDir
+                                };
+                            }
+                        }
+                    }
+                    // Temperature effects
+                    if (cell.temperature < -5) {
+                        // Freeze at very low temperatures
+                        const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.frozenplant];
+                        cell.type = this.PARTICLE_TYPES.frozenplant;
+                        cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
+                    } else if (cell.temperature > 250) {
+                        // Die at high temperatures
+                        const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.deadplant];
+                        cell.type = this.PARTICLE_TYPES.deadplant;
+                        cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
+                    }
                 }
             }
         }
@@ -1287,7 +1757,19 @@ class Game {
             if (nx >= 0 && nx < this.cols && ny >= 0 && ny < this.rows) {
                 const target = this.grid[nx][ny];
                 if (allowedTypes.includes(target.type)) {
-                    // Swap
+                    // Check if Gravel is being smashed (moving into a non-empty cell)
+                    if (this.grid[x][y].type === this.PARTICLE_TYPES.gravel && target.type !== this.PARTICLE_TYPES.empty) {
+                        // Convert Gravel to Sand
+                        const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.sand];
+                        this.grid[x][y] = {
+                            type: this.PARTICLE_TYPES.sand,
+                            color: colorArr[Math.floor(Math.random() * colorArr.length)],
+                            temperature: this.grid[x][y].temperature,
+                            lifetime: null
+                        };
+                        return true;
+                    }
+                    // Normal swap
                     [this.grid[x][y], this.grid[nx][ny]] = [this.grid[nx][ny], this.grid[x][y]];
                     return true;
                 }
@@ -1311,32 +1793,26 @@ class Game {
             for (let y = 0; y < this.rows; y++) {
                 const cell = this.grid[x][y];
                 if (cell.type !== this.PARTICLE_TYPES.empty) {
-                    // Oil: use assigned color
-                    this.ctx.fillStyle = cell.color;
+                    // Custom cactus rendering for flowers and spikes
+                    if (cell.type === this.PARTICLE_TYPES.cactus) {
+                        if (cell.isFlower) {
+                            // Pink/magenta flower (matching screenshot)
+                            this.ctx.fillStyle = ['#e23d8e', '#d13a7a', '#c72e6b', '#ff4fa3'][Math.floor(Math.random()*4)];
+                        } else if (cell.isSpike) {
+                            // White/yellow spike (matching screenshot)
+                            this.ctx.fillStyle = ['#fffbe0', '#fff7b2', '#f7e9a0', '#fff'][Math.floor(Math.random()*4)];
+                        } else {
+                            this.ctx.fillStyle = cell.color;
+                        }
+                    } else {
+                        this.ctx.fillStyle = cell.color;
+                    }
                     this.ctx.fillRect(
                         x * this.cellSize,
                         y * this.cellSize,
                         this.cellSize,
                         this.cellSize
                     );
-                    // Temperature overlay
-                    if (cell.temperature < 0) {
-                        this.ctx.fillStyle = 'rgba(0,150,255,0.25)';
-                        this.ctx.fillRect(
-                            x * this.cellSize,
-                            y * this.cellSize,
-                            this.cellSize,
-                            this.cellSize
-                        );
-                    } else if (cell.temperature > 700) {
-                        this.ctx.fillStyle = 'rgba(255,120,0,0.13)'; // very subtle, glowy orange
-                        this.ctx.fillRect(
-                            x * this.cellSize,
-                            y * this.cellSize,
-                            this.cellSize,
-                            this.cellSize
-                        );
-                    }
                 }
             }
         }
@@ -1410,9 +1886,36 @@ class Game {
             }
         }
     }
+
+    updateInfoDisplay() {
+        if (this.mouseX >= 0 && this.mouseY >= 0 && this.mouseX < this.width && this.mouseY < this.height) {
+            const index = this.mouseY * this.width + this.mouseX;
+            const element = this.grid[index];
+            const temp = this.temperatureGrid[index];
+            if (element) {
+                this.infoDisplay.textContent = `ELEMENT: ${element} | TEMP: ${temp}°C`;
+            } else {
+                this.infoDisplay.textContent = 'ELEMENT: EMPTY | TEMP: 0°C';
+            }
+        } else {
+            this.infoDisplay.textContent = 'ELEMENT: EMPTY | TEMP: 0°C';
+        }
+    }
 }
 
 // Start the game when the page loads
 window.onload = () => {
     new Game();
 }; 
+
+function lerpColor(a, b, t) {
+    // a, b: hex color strings, t: 0-1
+    const ah = a.replace('#', '');
+    const bh = b.replace('#', '');
+    const ar = parseInt(ah.substring(0,2), 16), ag = parseInt(ah.substring(2,4), 16), ab = parseInt(ah.substring(4,6), 16);
+    const br = parseInt(bh.substring(0,2), 16), bg = parseInt(bh.substring(2,4), 16), bb = parseInt(bh.substring(4,6), 16);
+    const rr = Math.round(ar + (br - ar) * t);
+    const rg = Math.round(ag + (bg - ag) * t);
+    const rb = Math.round(ab + (bb - ab) * t);
+    return `#${rr.toString(16).padStart(2,'0')}${rg.toString(16).padStart(2,'0')}${rb.toString(16).padStart(2,'0')}`;
+} 
