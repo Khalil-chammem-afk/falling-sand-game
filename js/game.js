@@ -18,22 +18,21 @@ class Game {
             13: 'Smoke',
             14: 'Charcoal',
             15: 'Frozen Plant',
-            16: 'Lava',
-            17: 'Wall',
-            18: 'Obsidian',
-            19: 'Magma',
-            20: 'Oil',
-            21: 'Dirty Water',
-            22: 'Basalt',
-            23: 'Cloud',
-            24: 'Rain Cloud',
-            25: 'Molten Glass',
-            26: 'Rock',
-            27: 'Snow',
-            28: 'Gravel',
-            29: 'Molten Dirt',
-            30: 'Cactus',
-            31: 'Plasma'
+            16: 'Wall',
+            17: 'Magma',
+            18: 'Oil',
+            19: 'Dirty Water',
+            20: 'Basalt',
+            21: 'Cloud',
+            22: 'Rain Cloud',
+            23: 'Molten Glass',
+            24: 'Rock',
+            25: 'Snow',
+            26: 'Gravel',
+            27: 'Molten Dirt',
+            28: 'Cactus',
+            29: 'Plasma',
+            30: 'Mudstone'
         };
         this.canvas = document.getElementById('gameCanvas');
         this.ctx = this.canvas.getContext('2d');
@@ -68,27 +67,26 @@ class Game {
             smoke: 13,
             charcoal: 14,
             frozenplant: 15,
-            lava: 16,
-            wall: 17,
-            obsidian: 18,
-            magma: 19,
-            oil: 20,
-            dirtywater: 21,
-            basalt: 22,
-            cloud: 23,
-            raincloud: 24,
-            moltenglass: 25,
-            rock: 26,
-            snow: 27,
-            gravel: 28,
-            moltendirt: 29,
-            cactus: 30,
-            plasma: 31
+            wall: 16,
+            magma: 17,
+            oil: 18,
+            dirtywater: 19,
+            basalt: 20,
+            cloud: 21,
+            raincloud: 22,
+            moltenglass: 23,
+            rock: 24,
+            snow: 25,
+            gravel: 26,
+            moltendirt: 27,
+            cactus: 28,
+            plasma: 29,
+            mudstone: 30
         };
         // Particle colors
         this.PARTICLE_COLORS = {
             0: null,
-            1: ['rgb(60, 40, 20)', 'rgb(80, 50, 25)', 'rgb(70, 45, 18)', 'rgb(90, 60, 30)', 'rgb(65, 48, 28)', 'rgb(75, 55, 35)'], // dirt
+            1: ['#3C2814', '#503219', '#462D12', '#5A3C1E', '#41301C', '#4B3723'], // dirt
             2: ['#ffe39f', '#ffe08a', '#ffe7b3', '#ffe4a1', '#ffe6a8'], // sand
             3: ['#047AF2', '#1184F4', '#046CE4', '#1D84F4'], // water
             4: ['#e0f7fa', '#b2ebf2', '#b3e5fc', '#e1f5fe'], // ice
@@ -103,22 +101,21 @@ class Game {
             13: ['#404040', '#303030', '#202020', '#101010'], // smoke
             14: ['#1a1a1a', '#262626', '#333333', '#404040'], // charcoal
             15: ['#b2f7e6', '#a0e6d6', '#c2fff7', '#d0fff0'], // frozen plant
-            16: ['#ff4500', '#ff5500', '#ff6500', '#ff7500', '#ff8500'], // lava
-            17: ['#8C8C8C', '#8C8C8C', '#8C8C8C', '#8C8C8C', '#8C8C8C', '#8C8C8C', '#8C8C8C', '#8C8C8C', '#8C8C8C', '#848484', '#848484', '#848484', '#848484'], // wall
-            18: ['#2d2d2d', '#1a1a1a', '#000000'], // obsidian
-            19: ['#ffb347', '#ff8300', '#ff5e13', '#ff2e00', '#ff7e00'], // magma
-            20: ['#420D04', '#4C140A', '#541C14', '#4C1C0C', '#340404'], // oil
-            21: ['#2e8b57', '#3cb371', '#20b2aa', '#48d1cc'], // dirty water
-            22: ['#808080', '#707070', '#606060', '#505050'], // basalt
-            23: ['#d3d3d3', '#c0c0c0', '#e0e0e0', '#f0f0f0'], // cloud
-            24: ['#888888', '#666666', '#999999', '#555555'], // rain cloud
-            25: ['#ffb347', '#ffae42', '#ff9900', '#ff7f00', '#ffcc80', '#ffd580', '#ff9933', '#ff6600', '#ffb366', '#ffcc66'], // molten glass
-            26: ['#808080', '#707070', '#606060', '#505050', '#404040'], // rock
-            27: ['#ffffff', '#f5f5f5', '#f0f0f0', '#e8e8e8', '#e0e0e0'], // snow (white shades)
-            28: ['#c0c0c0', '#d3d3d3', '#b8b8b8', '#a8a8a8', '#e0e0e0'], // gravel (gray shades)
-            29: ['#b84c1c', '#d2691e', '#c75a1c', '#e07b3c', '#b85a1c'], // molten dirt palette
-            30: ['#2E8B57', '#3CB371', '#4CAF50', '#45a049', '#3d8b40'], // cactus (green shades)
-            31: ['#9b4dca', '#8a2be2', '#9932cc', '#ba55d3', '#9370db'] // plasma (purple shades)
+            16: ['#8C8C8C', '#8C8C8C', '#8C8C8C', '#8C8C8C', '#8C8C8C', '#8C8C8C', '#8C8C8C', '#8C8C8C', '#8C8C8C', '#848484', '#848484', '#848484', '#848484'], // wall
+            17: ['#ffb347', '#ff8300', '#ff5e13', '#ff2e00', '#ff7e00'], // magma
+            18: ['#420D04', '#4C140A', '#541C14', '#4C1C0C', '#340404'], // oil
+            19: ['#2e8b57', '#3cb371', '#20b2aa', '#48d1cc'], // dirty water
+            20: ['#808080', '#707070', '#606060', '#505050'], // basalt
+            21: ['#d3d3d3', '#c0c0c0', '#e0e0e0', '#f0f0f0'], // cloud
+            22: ['#888888', '#666666', '#999999', '#555555'], // rain cloud
+            23: ['#ffb347', '#ff8300', '#ff5e13', '#ff2e00', '#ff7e00'], // molten glass
+            24: ['#808080', '#707070', '#606060', '#505050', '#404040'], // rock
+            25: ['#ffffff', '#f0f0f0', '#e0e0e0', '#d0d0d0'], // snow
+            26: ['#c0c0c0', '#b0b0b0', '#a0a0a0', '#909090'], // gravel
+            27: ['#ffb347', '#ff8300', '#ff5e13', '#ff2e00', '#ff7e00'], // molten dirt
+            28: ['#2e8b57', '#3cb371', '#20b2aa', '#48d1cc'], // cactus
+            29: ['#ff4500', '#ff6a00', '#ff8c00', '#ffa500', '#ff7f00'], // plasma
+            30: ['#3C2814', '#503219', '#462D12', '#5A3C1E', '#41301C', '#4B3723'] // mudstone
         };
         
         // Initialize grid (store {type, color})
@@ -153,14 +150,12 @@ class Game {
         // Add this near the top of the Game class, after PARTICLE_TYPES:
         this.CONDUCTIVITY = {
             wall: 0, // Wall doesn't transfer heat
-            obsidian: 0.1, // Very low conductivity
             water: 0.8, // High conductivity
             steam: 0.3, // Medium conductivity
             smoke: 0.2, // Low conductivity
             fire: 0.4, // Medium conductivity
             plasma: 0.9, // Very high conductivity
             magma: 0.7, // High conductivity
-            lava: 0.7, // High conductivity
             ice: 0.6, // Medium-high conductivity
             glass: 0.3, // Low-medium conductivity
             moltenglass: 0.5, // Medium conductivity
@@ -170,6 +165,7 @@ class Game {
             grass: 0.2, // Low conductivity
             rock: 0.3, // Low-medium conductivity
             basalt: 0.4, // Medium conductivity
+            mudstone: 0.25, // Low-medium conductivity
             default: 0.1 // Default conductivity for other materials
         };
         this.canvas.addEventListener('mouseenter', () => {
@@ -323,39 +319,8 @@ class Game {
                     const t = this.grid[cx][cy].type;
                     if (t !== this.PARTICLE_TYPES.empty && t !== this.PARTICLE_TYPES.steam && t !== this.PARTICLE_TYPES.lightning) {
                         struck = true;
-                        // Impact: affect a small area below the strike
-                        let depth = 3 + Math.floor(Math.random() * 4); // 3-6
-                        let width = 3 + Math.floor(Math.random() * 3); // 3-5
-                        let halfW = Math.floor(width / 2);
-                        for (let d = 0; d < depth; d++) {
-                            let yy = cy + d;
-                            if (yy >= this.rows) break;
-                            for (let wx = -halfW; wx <= halfW; wx++) {
-                                let xx = cx + wx;
-                                if (xx < 0 || xx >= this.cols) continue;
-                                const cell = this.grid[xx][yy];
-                                // Generate fire at impact point
-                                if (d === 0 && wx === 0) {
-                                    const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.fire];
-                                    this.grid[xx][yy] = { 
-                                        type: this.PARTICLE_TYPES.fire, 
-                                        color: colorArr[Math.floor(Math.random() * colorArr.length)],
-                                        temperature: 100,
-                                        lifetime: null
-                                    };
-                                } else if (cell.type === this.PARTICLE_TYPES.water) {
-                                    // Vaporize water: turn to steam
-                                    const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.steam];
-                                    this.grid[xx][yy] = { type: this.PARTICLE_TYPES.steam, color: colorArr[Math.floor(Math.random() * colorArr.length)], temperature: 100, lifetime: null };
-                                } else if (cell.type === this.PARTICLE_TYPES.sand) {
-                                    const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.glass];
-                                    this.grid[xx][yy] = { type: this.PARTICLE_TYPES.glass, color: colorArr[Math.floor(Math.random() * colorArr.length)], temperature: 20, lifetime: null };
-                                } else if (cell.type === this.PARTICLE_TYPES.dirt || cell.type === this.PARTICLE_TYPES.mud) {
-                                    // Char or heat dirt/mud
-                                    this.grid[xx][yy].temperature += 200;
-                                }
-                            }
-                        }
+                        // Apply lightning temperature to struck cell
+                        this.grid[cx][cy].temperature = 30000;
                         break;
                     }
                     // Jaggedness
@@ -633,13 +598,61 @@ class Game {
                     // Color interpolation for molten dirt (1200°C+)
                     let t = Math.min((cell.temperature - 1100) / 200, 1); // 0 to 1 for 1100-1300°C
                     cell.color = lerpColor('#e07b3c', '#b84c1c', t); // orange to deep red
-                    // Cool to rock at ≤ 1100°C
+                    // Cool to mudstone at ≤ 1100°C
                     if (cell.temperature <= 1100) {
-                        const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.rock];
-                        cell.type = this.PARTICLE_TYPES.rock;
-                        cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
-                        cell.temperature = 20;
+                        // 90% chance to become Mudstone, 10% chance to become Rock
+                        if (Math.random() < 0.95) {
+                            const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.mudstone];
+                            cell.type = this.PARTICLE_TYPES.mudstone;
+                            cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
+                        } else {
+                            const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.rock];
+                            cell.type = this.PARTICLE_TYPES.rock;
+                            cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
+                        }
+                        // cell.temperature = 20; // Removed this line to maintain temperature
                         delete cell.baseColor;
+                    }
+                } else if (cell.type === this.PARTICLE_TYPES.mudstone) {
+                    // Mudstone acts like a sturdy powder, falls unless supported left and right by solid elements (including itself).
+
+                    // Check if the space below is empty
+                    if (y < this.rows - 1 && this.grid[x][y + 1].type === this.PARTICLE_TYPES.empty) {
+
+                        let supportedLeft = false;
+                        // Check left neighbor if it exists
+                        if (x > 0) {
+                            const leftCellType = this.grid[x - 1][y].type;
+                            // Check if the left cell is a solid (using a simplified check based on known solids) or Mudstone
+                            if (leftCellType === this.PARTICLE_TYPES.wall ||
+                                leftCellType === this.PARTICLE_TYPES.rock ||
+                                leftCellType === this.PARTICLE_TYPES.basalt ||
+           
+                                leftCellType === this.PARTICLE_TYPES.glass ||
+                                leftCellType === this.PARTICLE_TYPES.mudstone) {
+                                supportedLeft = true;
+                            }
+                        }
+
+                        let supportedRight = false;
+                         // Check right neighbor if it exists
+                        if (x < this.cols - 1) {
+                            const rightCellType = this.grid[x + 1][y].type;
+                             // Check if the right cell is a solid (using a simplified check based on known solids) or Mudstone
+                             if (rightCellType === this.PARTICLE_TYPES.wall ||
+                                 rightCellType === this.PARTICLE_TYPES.rock ||
+                                 rightCellType === this.PARTICLE_TYPES.basalt ||
+                                 rightCellType === this.PARTICLE_TYPES.glass ||
+                                 rightCellType === this.PARTICLE_TYPES.mudstone) {
+                                supportedRight = true;
+                            }
+                        }
+
+                        // If NOT supported both left AND right by solid, the mudstone falls
+                        if (!(supportedLeft && supportedRight)) {
+                             // Try to move down, prioritizing straight down, then diagonals
+                            this.tryMove(x, y, [ [0,1], [-1,1], [1,1] ], [this.PARTICLE_TYPES.empty]);
+                        }
                     }
                 } else if (cell.type === this.PARTICLE_TYPES.sand) {
                     if (cell.temperature >= 1700) {
@@ -854,10 +867,11 @@ class Game {
                         const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.charcoal];
                         cell.type = this.PARTICLE_TYPES.charcoal;
                         cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
-                    } else if (cell.temperature > 100) {
-                        const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.dirt];
-                        cell.type = this.PARTICLE_TYPES.dirt;
+                    } else if (cell.temperature >= 100) { // Harden to Mudstone at 100°C
+                        const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.mudstone];
+                        cell.type = this.PARTICLE_TYPES.mudstone;
                         cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
+                        cell.temperature = 100; // Set temperature upon hardening
                     } else {
                         // Mud falls through empty or water (vertical and diagonals, no priority)
                         this.tryMove(x, y, [ [0,1], [-1,1], [1,1] ], [this.PARTICLE_TYPES.empty, this.PARTICLE_TYPES.water]);
@@ -940,41 +954,35 @@ class Game {
                 } else if (cell.type === this.PARTICLE_TYPES.lightning) {
                     // Lightning: short lifespan, moves fast, interacts
                     cell.lifetime--;
-                    // Interactions
+                    
+                    // Apply high temperature to self
+                    cell.temperature = 30000; // Lightning temperature
+                    
+                    // Interactions based on conductivity
                     for (const [dx, dy] of [[0,1],[0,-1],[1,0],[-1,0],[1,1],[-1,1],[1,-1],[-1,-1]]) {
                         const nx = x + dx;
                         const ny = y + dy;
                         if (nx >= 0 && nx < this.cols && ny >= 0 && ny < this.rows) {
                             const neighbor = this.grid[nx][ny];
-                            if (neighbor.type === this.PARTICLE_TYPES.grass) {
-                                // Convert grass to fire
-                                const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.fire];
-                                this.grid[nx][ny] = { 
-                                    type: this.PARTICLE_TYPES.fire, 
-                                    color: colorArr[Math.floor(Math.random() * colorArr.length)],
-                                    temperature: 100,
-                                    lifetime: null
-                                };
-                            } else if (neighbor.type === this.PARTICLE_TYPES.sand) {
-                                // Sand -> Glass
-                                const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.glass];
-                                neighbor.type = this.PARTICLE_TYPES.glass;
-                                neighbor.color = colorArr[Math.floor(Math.random() * colorArr.length)];
-                            } else if (neighbor.type === this.PARTICLE_TYPES.water) {
-                                // Water -> Steam
-                                const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.steam];
-                                neighbor.type = this.PARTICLE_TYPES.steam;
-                                neighbor.color = colorArr[Math.floor(Math.random() * colorArr.length)];
-                            } else if (neighbor.type === this.PARTICLE_TYPES.dirt || neighbor.type === this.PARTICLE_TYPES.mud) {
-                                // Dirt/Mud -> ignite (for now, just darken or could add fire)
-                                neighbor.temperature += 200;
-                            }
-                            // Spread lightning to conductive (water, etc.)
-                            if ((neighbor.type === this.PARTICLE_TYPES.water || neighbor.type === this.PARTICLE_TYPES.lightning) && Math.random() < 0.5) {
+                            
+                            // Skip empty cells and other lightning
+                            if (neighbor.type === this.PARTICLE_TYPES.empty || 
+                                neighbor.type === this.PARTICLE_TYPES.lightning) continue;
+                            
+                            // Calculate conductivity-based heat transfer
+                            const conductivity = this.CONDUCTIVITY[this.PARTICLE_NAMES[neighbor.type]] || this.CONDUCTIVITY.default;
+                            const heatTransfer = 30000 * conductivity; // Lightning temperature * conductivity
+                            
+                            // Apply heat to neighbor
+                            neighbor.temperature += heatTransfer;
+                            
+                            // Spread lightning based on conductivity
+                            if (Math.random() < conductivity * 0.8) { // 80% of conductivity value
                                 this.placeParticle(nx, ny, 'lightning');
                             }
                         }
                     }
+                    
                     // Move lightning (random fast direction)
                     const dirs = [[0,1],[0,-1],[1,0],[-1,0],[1,1],[-1,1],[1,-1],[-1,-1]];
                     const [dx, dy] = dirs[Math.floor(Math.random() * dirs.length)];
@@ -1004,7 +1012,7 @@ class Game {
                         const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.deadplant];
                         cell.type = this.PARTICLE_TYPES.deadplant;
                         cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
-                    } else {
+                            } else {
                         // Extremely slow upward growth (0.01% chance each frame)
                         if (Math.random() < 0.0001) {
                             const nx = x;
@@ -1051,15 +1059,8 @@ class Game {
                         const ny = y + dy;
                         if (nx >= 0 && nx < this.cols && ny >= 0 && ny < this.rows) {
                             const neighbor = this.grid[nx][ny];
-                            if (neighbor.type === this.PARTICLE_TYPES.wall || neighbor.type === this.PARTICLE_TYPES.obsidian) {
-                                // Wall and obsidian are immobile and don't transfer heat
-                                // Wall doesn't melt, but obsidian can turn to lava at high temps
-                                if (neighbor.type === this.PARTICLE_TYPES.obsidian && cell.temperature > 1200) {
-                                    const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.lava];
-                                    cell.type = this.PARTICLE_TYPES.lava;
-                                    cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
-                                    cell.temperature = 1200;
-                                }
+                            if (neighbor.type === this.PARTICLE_TYPES.wall) {
+                                // Wall is immobile and doesn't transfer heat
                                 break;
                             }
                         }
@@ -1260,116 +1261,7 @@ class Game {
                         cell.type = this.PARTICLE_TYPES.frozenplant;
                         cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
                     }
-                } else if (cell.type === this.PARTICLE_TYPES.lava) {
-                    // Lava physics
-                    // Lava + Water = Stone/Obsidian
-                    for (const [dx, dy] of [[0,1],[0,-1],[1,0],[-1,0],[1,1],[-1,1],[1,-1],[-1,-1]]) {
-                        const nx = x + dx;
-                        const ny = y + dy;
-                        if (nx >= 0 && nx < this.cols && ny >= 0 && ny < this.rows) {
-                            const neighbor = this.grid[nx][ny];
-                            if (neighbor.type === this.PARTICLE_TYPES.water) {
-                                // Create steam above
-                                if (ny > 0 && this.grid[nx][ny-1].type === this.PARTICLE_TYPES.empty) {
-                                    const steamArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.steam];
-                                    this.grid[nx][ny-1] = {
-                                        type: this.PARTICLE_TYPES.steam,
-                                        color: steamArr[Math.floor(Math.random() * steamArr.length)],
-                                        temperature: 120,
-                                        lifetime: 300 + Math.floor(Math.random() * 200)
-                                    };
-                                }
-                                // Magma cools down significantly when touching water
-                                cell.temperature = Math.max(cell.temperature - 400, 20); // Much larger temperature drop
-                                // Remove the water
-                                this.grid[nx][ny] = { type: this.PARTICLE_TYPES.empty, color: null, temperature: 20, lifetime: null };
-                                
-                                // If cooled enough, convert to basalt/stone immediately
-                                if (cell.temperature < 800) {
-                                    const newType = Math.random() < 0.3 ? this.PARTICLE_TYPES.obsidian : this.PARTICLE_TYPES.wall;
-                                    const colorArr = this.PARTICLE_COLORS[newType];
-                                    this.grid[x][y] = {
-                                        type: newType,
-                                        color: colorArr[Math.floor(Math.random() * colorArr.length)],
-                                        temperature: 20,
-                                        lifetime: null
-                                    };
-                                    return; // Skip the rest of the update for this cell
-                                }
-                            }
-                        }
-                    }
-
-                    // Heat up surrounding cells (reduced heat transfer)
-                    for (let dx = -1; dx <= 1; dx++) {
-                        for (let dy = -1; dy <= 1; dy++) {
-                        const nx = x + dx;
-                        const ny = y + dy;
-                        if (nx >= 0 && nx < this.cols && ny >= 0 && ny < this.rows) {
-                            const neighbor = this.grid[nx][ny];
-                                if (neighbor.type !== this.PARTICLE_TYPES.empty) {
-                                    neighbor.temperature = Math.min(neighbor.temperature + 0.2, 1000); // Reduced heat transfer
-                                    
-                                    // Melt certain elements
-                                    if (neighbor.temperature > 100) {
-                                        if (neighbor.type === this.PARTICLE_TYPES.ice) {
-                                            this.grid[nx][ny] = {
-                                                type: this.PARTICLE_TYPES.water,
-                                                color: this.pickWaterColor(),
-                                                temperature: 20,
-                                                lifetime: null
-                                            };
-                                        } else if (neighbor.type === this.PARTICLE_TYPES.wall || neighbor.type === this.PARTICLE_TYPES.obsidian) {
-                                            // Wall and obsidian are immobile and don't transfer heat
-                                            // Wall doesn't melt, but obsidian can turn to lava at high temps
-                                            if (neighbor.type === this.PARTICLE_TYPES.obsidian && cell.temperature > 1200) {
-                                                const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.lava];
-                                                cell.type = this.PARTICLE_TYPES.lava;
-                                                cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
-                                                cell.temperature = 1200;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    // Magma movement (more fluid-like but slower in water)
-                    const directions = [
-                        [0, 1],  // down
-                        [-1, 1], // down-left
-                        [1, 1],  // down-right
-                        [-1, 0], // left
-                        [1, 0]   // right
-                    ];
-                    
-                    // Move more frequently but slower when near water
-                    if (Math.random() < (hasWaterNeighbor ? 0.35 : 0.5)) { // Increased from 0.2/0.4 to 0.35/0.5
-                        // Prioritize downward movement when not near water
-                        if (!hasWaterNeighbor && Math.random() < 0.7) { // 70% chance to prioritize down
-                            this.tryMove(x, y, [[0, 1], [-1, 1], [1, 1]], [this.PARTICLE_TYPES.empty, this.PARTICLE_TYPES.water, this.PARTICLE_TYPES.steam]);
-                        } else {
-                            this.tryMove(x, y, directions, [this.PARTICLE_TYPES.empty, this.PARTICLE_TYPES.water, this.PARTICLE_TYPES.steam]);
-                        }
-                    }
-                    
-                    // Cool down over time (faster cooling)
-                    if (Math.random() < 0.005) { // Increased from 0.001 to 0.005 (0.5% chance to cool)
-                        cell.temperature = Math.max(cell.temperature - 5, 20); // Cool by 5 degrees instead of 1
-                    }
-                    
-                    // Convert to basalt if cooled enough (at 800°C as per wiki)
-                    if (cell.temperature < 800) {
-                        const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.basalt];
-                        this.grid[x][y] = {
-                            type: this.PARTICLE_TYPES.basalt,
-                            color: colorArr[Math.floor(Math.random() * colorArr.length)],
-                            temperature: 20,
-                            lifetime: null
-                        };
-                    }
-                } else if (cell.type === this.PARTICLE_TYPES.basalt) {
+                }  else if (cell.type === this.PARTICLE_TYPES.basalt) {
                     // Basalt is a sturdy powder that falls straight down
                     if (cell.temperature > 1262.5) {
                         // Melt into magma at high temperature
@@ -1381,16 +1273,7 @@ class Game {
                         // Fall straight down only
                         this.tryMove(x, y, [[0,1]], [this.PARTICLE_TYPES.empty, this.PARTICLE_TYPES.water]);
                     }
-                } else if (cell.type === this.PARTICLE_TYPES.wall || cell.type === this.PARTICLE_TYPES.obsidian) {
-                    // Wall and obsidian are immobile and don't transfer heat
-                    // Wall doesn't melt, but obsidian can turn to lava at high temps
-                    if (cell.type === this.PARTICLE_TYPES.obsidian && cell.temperature > 1200) {
-                        const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.lava];
-                        cell.type = this.PARTICLE_TYPES.lava;
-                        cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
-                        cell.temperature = 1200;
-                    }
-                } else if (cell.type === this.PARTICLE_TYPES.magma) {
+                }  else if (cell.type === this.PARTICLE_TYPES.magma) {
                     // Check for water interaction first
                     let hasWaterNeighbor = false;
                     let hasMagmaNeighbor = false;
@@ -1459,16 +1342,7 @@ class Game {
                                                 temperature: 20,
                                                 lifetime: null
                                             };
-                                        } else if (neighbor.type === this.PARTICLE_TYPES.wall || neighbor.type === this.PARTICLE_TYPES.obsidian) {
-                                            // Wall and obsidian are immobile and don't transfer heat
-                                            // Wall doesn't melt, but obsidian can turn to lava at high temps
-                                            if (neighbor.type === this.PARTICLE_TYPES.obsidian && cell.temperature > 1200) {
-                                                const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.lava];
-                                                cell.type = this.PARTICLE_TYPES.lava;
-                                                cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
-                                                cell.temperature = 1200;
-                                            }
-                                        }
+                                        } 
                                     }
                                 }
                             }
@@ -1532,6 +1406,7 @@ class Game {
                     }
                     
                     if (cell.temperature < 800 && !hasWaterNeighbor && (hasBasaltNeighbor || Math.random() < 0.1)) {
+                        if (Math.random() < 0.8) {
                         const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.basalt];
                         this.grid[x][y] = {
                             type: this.PARTICLE_TYPES.basalt,
@@ -1540,7 +1415,17 @@ class Game {
                             lifetime: null
                         };
                     }
-                } else if (cell.type === this.PARTICLE_TYPES.oil) {
+                        else{
+                            const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.rock];
+                            this.grid[x][y] = {
+                                type: this.PARTICLE_TYPES.rock,
+                                color: colorArr[Math.floor(Math.random() * colorArr.length)],
+                                temperature: 20,
+                                lifetime: null
+                            };
+                        }
+                    } 
+                }else if (cell.type === this.PARTICLE_TYPES.oil) {
                     // Oil is more viscous: only move with 25% chance per frame
                     if (Math.random() < 0.25) {
                         if (!this.tryMove(x, y, [ [0,1], [-1,1], [1,1], [-1,0], [1,0] ])) {

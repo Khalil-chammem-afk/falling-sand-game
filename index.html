@@ -315,9 +315,6 @@
         button[data-particle="ice"] {
             background: rgba(224, 247, 250, 0.6) !important;
         }
-        button[data-particle="lava"] {
-            background: rgba(255, 69, 0, 0.6) !important;
-        }
 
         .particle-preview {
             width: 32px;
@@ -419,9 +416,6 @@
         }
         button[data-particle="ice"] .particle-dot {
             background: #e0f7fa;
-        }
-        button[data-particle="lava"] .particle-dot {
-            background: #ff4500;
         }
 
         /* Tool buttons */
@@ -894,6 +888,42 @@
         button[data-particle="plasma"] .particle-dot {
             background: #9b4dca;
         }
+
+        .mudstone-pixel-art {
+            width: 32px;
+            height: 20px;
+            display: grid;
+            grid-template-columns: repeat(8, 4px);
+            grid-template-rows: repeat(5, 4px);
+            margin-bottom: 6px;
+            margin-top: 2px;
+            position: relative;
+        }
+        .mudstone-pixel-art .px {
+            width: 4px;
+            height: 4px;
+        }
+        .mudstone-pixel-art .r1 { grid-row: 1; }
+        .mudstone-pixel-art .r2 { grid-row: 2; }
+        .mudstone-pixel-art .r3 { grid-row: 3; }
+        .mudstone-pixel-art .r4 { grid-row: 4; }
+        .mudstone-pixel-art .r5 { grid-row: 5; }
+        .mudstone-pixel-art .c1 { grid-column: 1; }
+        .mudstone-pixel-art .c2 { grid-column: 2; }
+        .mudstone-pixel-art .c3 { grid-column: 3; }
+        .mudstone-pixel-art .c4 { grid-column: 4; }
+        .mudstone-pixel-art .c5 { grid-column: 5; }
+        .mudstone-pixel-art .c6 { grid-column: 6; }
+        .mudstone-pixel-art .c7 { grid-column: 7; }
+        .mudstone-pixel-art .c8 { grid-column: 8; }
+
+        /* Add mudstone button styles */
+        button[data-particle="mudstone"] {
+            background: rgba(73, 52, 30, 0.6) !important; /* Using the first new color */
+        }
+        button[data-particle="mudstone"] .particle-dot {
+            background: #49341E;
+        }
     </style>
 </head>
 <body>
@@ -1008,6 +1038,16 @@
                         </div>
                         Snow
                     </button>
+                    <button data-particle="mudstone">
+                        <div class="mudstone-pixel-art">
+                            <div class="px r1 c4" style="background:#49341E;"></div>
+                            <div class="px r2 c3" style="background:#442C1B;"></div><div class="px r2 c4" style="background:#3C2714;"></div><div class="px r2 c5" style="background:#543C2C;"></div>
+                            <div class="px r3 c2" style="background:#543C24;"></div><div class="px r3 c3" style="background:#49341E;"></div><div class="px r3 c4" style="background:#442C1B;"></div><div class="px r3 c5" style="background:#3C2714;"></div><div class="px r3 c6" style="background:#543C2C;"></div>
+                            <div class="px r4 c1" style="background:#543C24;"></div><div class="px r4 c2" style="background:#49341E;"></div><div class="px r4 c3" style="background:#442C1B;"></div><div class="px r4 c4" style="background:#3C2714;"></div><div class="px r4 c5" style="background:#543C2C;"></div><div class="px r4 c6" style="background:#543C24;"></div><div class="px r4 c7" style="background:#49341E;"></div>
+                            <div class="px r5 c1" style="background:#442C1B;"></div><div class="px r5 c2" style="background:#3C2714;"></div><div class="px r5 c3" style="background:#543C2C;"></div><div class="px r5 c4" style="background:#543C24;"></div><div class="px r5 c5" style="background:#49341E;"></div><div class="px r5 c6" style="background:#442C1B;"></div><div class="px r5 c7" style="background:#3C2714;"></div><div class="px r5 c8" style="background:#543C2C;"></div>
+                        </div>
+                        Mudstone
+                    </button>
                 </div>
                 <div class="category" data-category="liquids">
                     <button data-particle="water">
@@ -1036,14 +1076,11 @@
                     </button>
                     <button data-particle="magma">
                         <div class="magma-pixel-art">
-                            <div class="px r1 c6" style="background:#ffb347;"></div>
-                            <div class="px r2 c5" style="background:#ff8300;"></div><div class="px r2 c6" style="background:#ff2e00;"></div><div class="px r2 c7" style="background:#ffb347;"></div>
-                            <div class="px r3 c4" style="background:#ffb347;"></div><div class="px r3 c5" style="background:#ff8300;"></div><div class="px r3 c6" style="background:#ff5e13;"></div><div class="px r3 c7" style="background:#ff2e00;"></div><div class="px r3 c8" style="background:#ff7e00;"></div>
-                            <div class="px r4 c3" style="background:#ffb347;"></div><div class="px r4 c4" style="background:#ff8300;"></div><div class="px r4 c5" style="background:#ff5e13;"></div><div class="px r4 c6" style="background:#ff2e00;"></div><div class="px r4 c7" style="background:#ff7e00;"></div><div class="px r4 c8" style="background:#ffb347;"></div><div class="px r4 c9" style="background:#ff8300;"></div>
-                            <div class="px r5 c2" style="background:#ff5e13;"></div><div class="px r5 c3" style="background:#ff2e00;"></div><div class="px r5 c4" style="background:#ff7e00;"></div><div class="px r5 c5" style="background:#ffb347;"></div><div class="px r5 c6" style="background:#ff8300;"></div><div class="px r5 c7" style="background:#ff5e13;"></div><div class="px r5 c8" style="background:#ff2e00;"></div><div class="px r5 c9" style="background:#ff7e00;"></div><div class="px r5 c10" style="background:#ffb347;"></div>
-                            <div class="px r6 c2" style="background:#ff8300;"></div><div class="px r6 c3" style="background:#ff5e13;"></div><div class="px r6 c4" style="background:#ff2e00;"></div><div class="px r6 c5" style="background:#ff7e00;"></div><div class="px r6 c6" style="background:#ffb347;"></div><div class="px r6 c7" style="background:#ff8300;"></div><div class="px r6 c8" style="background:#ff5e13;"></div><div class="px r6 c9" style="background:#ff2e00;"></div><div class="px r6 c10" style="background:#ff7e00;"></div>
-                            <div class="px r7 c3" style="background:#ff5e13;"></div><div class="px r7 c4" style="background:#ff2e00;"></div><div class="px r7 c5" style="background:#ff7e00;"></div><div class="px r7 c6" style="background:#ffb347;"></div><div class="px r7 c7" style="background:#ff8300;"></div><div class="px r7 c8" style="background:#ff5e13;"></div><div class="px r7 c9" style="background:#ff2e00;"></div>
-                            <div class="px r8 c5" style="background:#ffb347;"></div><div class="px r8 c6" style="background:#ff8300;"></div><div class="px r8 c7" style="background:#ff2e00;"></div>
+                            <div class="px r1 c4" style="background:#ffb347;"></div>
+                            <div class="px r2 c3" style="background:#ff8300;"></div><div class="px r2 c4" style="background:#ff5e13;"></div><div class="px r2 c5" style="background:#ff2e00;"></div>
+                            <div class="px r3 c2" style="background:#ff7e00;"></div><div class="px r3 c3" style="background:#ffb347;"></div><div class="px r3 c4" style="background:#ff8300;"></div><div class="px r3 c5" style="background:#ff5e13;"></div><div class="px r3 c6" style="background:#ff2e00;"></div>
+                            <div class="px r4 c1" style="background:#ff7e00;"></div><div class="px r4 c2" style="background:#ffb347;"></div><div class="px r4 c3" style="background:#ff8300;"></div><div class="px r4 c4" style="background:#ff5e13;"></div><div class="px r4 c5" style="background:#ff2e00;"></div><div class="px r4 c6" style="background:#ff7e00;"></div><div class="px r4 c7" style="background:#ffb347;"></div>
+                            <div class="px r5 c1" style="background:#ff8300;"></div><div class="px r5 c2" style="background:#ff5e13;"></div><div class="px r5 c3" style="background:#ff2e00;"></div><div class="px r5 c4" style="background:#ff7e00;"></div><div class="px r5 c5" style="background:#ffb347;"></div><div class="px r5 c6" style="background:#ff8300;"></div><div class="px r5 c7" style="background:#ff5e13;"></div>
                         </div>
                         Magma
                     </button>
@@ -1267,6 +1304,12 @@
             { with: 'water', result: 'mud' },
             { with: '≥ 1200°C', result: 'moltendirt' }
         ],
+        mudstone: [
+            { with: 'Smashed', result: 'dirt' },
+            { with: '≥ 1200°C', result: 'moltendirt' },
+            { with: '≤ -50°C', result: 'permafrost' },
+            { with: 'water', result: 'dirt' }
+        ],
         water: [
             { with: 'dirt', result: 'mud' },
             { with: 'sand', result: 'wetsand' },
@@ -1291,10 +1334,6 @@
         ],
         glass: [
             { with: '≥ 1500°C', result: 'moltenglass' }
-        ],
-        lava: [
-            { with: 'water', result: 'obsidian' },
-            { with: 'water2', result: 'wall' } // random chance
         ],
         magma: [
             { with: 'water', result: 'basalt' }
@@ -1341,8 +1380,9 @@
             { with: 'grass', result: 'fire' }
         ],
         moltendirt: [
-            { with: '≤ 1100°C', result: 'rock' },
-            { with: 'fire', result: 'plasma' } // If you add plasma, otherwise you can use 'fire'
+            { with: '≤ 1100°C', result: 'mudstone' },
+            { with: '≤ 1000°C', result: 'rock' },
+            { with: 'fire', result: 'plasma' }
         ],
         fire: [
             { with: '≥ 7000°C', result: 'plasma' }
