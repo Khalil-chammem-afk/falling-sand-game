@@ -104,7 +104,7 @@
         }
 
         canvas#gameCanvas {
-            width: 960px !important;
+            width: 960px !important; /* CSS size (visual size) */
             height: 540px !important;
             display: block;
             margin: 0 auto;
@@ -506,92 +506,6 @@
         .sand-pixel-art .c5 { grid-column: 5; }
         .sand-pixel-art .c6 { grid-column: 6; }
         .sand-pixel-art .c7 { grid-column: 7; }
-        .sand-pixel-art .c8 { grid-column: 8; }
-
-        .grass-pixel-art {
-            width: 32px;
-            height: 20px;
-            display: grid;
-            grid-template-columns: repeat(8, 4px);
-            grid-template-rows: repeat(5, 4px);
-            margin-bottom: 6px;
-            margin-top: 2px;
-            position: relative;
-        }
-        .grass-pixel-art .px {
-            width: 4px;
-            height: 4px;
-            /* border-radius: 1px; */
-        }
-        .grass-pixel-art .r1 { grid-row: 1; }
-        .grass-pixel-art .r2 { grid-row: 2; }
-        .grass-pixel-art .r3 { grid-row: 3; }
-        .grass-pixel-art .r4 { grid-row: 4; }
-        .grass-pixel-art .r5 { grid-row: 5; }
-        .grass-pixel-art .c1 { grid-column: 1; }
-        .grass-pixel-art .c2 { grid-column: 2; }
-        .grass-pixel-art .c3 { grid-column: 3; }
-        .grass-pixel-art .c4 { grid-column: 4; }
-        .grass-pixel-art .c5 { grid-column: 5; }
-        .grass-pixel-art .c6 { grid-column: 6; }
-        .grass-pixel-art .c7 { grid-column: 7; }
-        .grass-pixel-art .c8 { grid-column: 8; }
-
-        .mud-pixel-art {
-            width: 32px;
-            height: 20px;
-            display: grid;
-            grid-template-columns: repeat(8, 4px);
-            grid-template-rows: repeat(5, 4px);
-            margin-bottom: 6px;
-            margin-top: 2px;
-            position: relative;
-        }
-        .mud-pixel-art .px {
-            width: 4px;
-            height: 4px;
-            /* border-radius: 1px; */
-        }
-        .mud-pixel-art .r1 { grid-row: 1; }
-        .mud-pixel-art .r2 { grid-row: 2; }
-        .mud-pixel-art .r3 { grid-row: 3; }
-        .mud-pixel-art .r4 { grid-row: 4; }
-        .mud-pixel-art .r5 { grid-row: 5; }
-        .mud-pixel-art .c1 { grid-column: 1; }
-        .mud-pixel-art .c2 { grid-column: 2; }
-        .mud-pixel-art .c3 { grid-column: 3; }
-        .mud-pixel-art .c4 { grid-column: 4; }
-        .mud-pixel-art .c5 { grid-column: 5; }
-        .mud-pixel-art .c6 { grid-column: 6; }
-        .mud-pixel-art .c7 { grid-column: 7; }
-        .mud-pixel-art .c8 { grid-column: 8; }
-
-        .wetsand-pixel-art {
-            width: 32px;
-            height: 20px;
-            display: grid;
-            grid-template-columns: repeat(8, 4px);
-            grid-template-rows: repeat(5, 4px);
-            margin-bottom: 6px;
-            margin-top: 2px;
-            position: relative;
-        }
-        .wetsand-pixel-art .px {
-            width: 4px;
-            height: 4px;
-        }
-        .wetsand-pixel-art .r1 { grid-row: 1; }
-        .wetsand-pixel-art .r2 { grid-row: 2; }
-        .wetsand-pixel-art .r3 { grid-row: 3; }
-        .wetsand-pixel-art .r4 { grid-row: 4; }
-        .wetsand-pixel-art .r5 { grid-row: 5; }
-        .wetsand-pixel-art .c1 { grid-column: 1; }
-        .wetsand-pixel-art .c2 { grid-column: 2; }
-        .wetsand-pixel-art .c3 { grid-column: 3; }
-        .wetsand-pixel-art .c4 { grid-column: 4; }
-        .wetsand-pixel-art .c5 { grid-column: 5; }
-        .wetsand-pixel-art .c6 { grid-column: 6; }
-        .wetsand-pixel-art .c7 { grid-column: 7; }
         .wetsand-pixel-art .c8 { grid-column: 8; }
 
         .basalt-pixel-art {
@@ -943,6 +857,43 @@
         .moltendirt-pixel-art .c6 { grid-column: 6; }
         .moltendirt-pixel-art .c7 { grid-column: 7; }
         .moltendirt-pixel-art .c8 { grid-column: 8; }
+
+        /* Add plasma pixel art styles */
+        .plasma-pixel-art {
+            width: 32px;
+            height: 20px;
+            display: grid;
+            grid-template-columns: repeat(8, 4px);
+            grid-template-rows: repeat(5, 4px);
+            margin-bottom: 6px;
+            margin-top: 2px;
+            position: relative;
+        }
+        .plasma-pixel-art .px {
+            width: 4px;
+            height: 4px;
+        }
+        .plasma-pixel-art .r1 { grid-row: 1; }
+        .plasma-pixel-art .r2 { grid-row: 2; }
+        .plasma-pixel-art .r3 { grid-row: 3; }
+        .plasma-pixel-art .r4 { grid-row: 4; }
+        .plasma-pixel-art .r5 { grid-row: 5; }
+        .plasma-pixel-art .c1 { grid-column: 1; }
+        .plasma-pixel-art .c2 { grid-column: 2; }
+        .plasma-pixel-art .c3 { grid-column: 3; }
+        .plasma-pixel-art .c4 { grid-column: 4; }
+        .plasma-pixel-art .c5 { grid-column: 5; }
+        .plasma-pixel-art .c6 { grid-column: 6; }
+        .plasma-pixel-art .c7 { grid-column: 7; }
+        .plasma-pixel-art .c8 { grid-column: 8; }
+
+        /* Add plasma button styles */
+        button[data-particle="plasma"] {
+            background: rgba(155, 77, 202, 0.6) !important;
+        }
+        button[data-particle="plasma"] .particle-dot {
+            background: #9b4dca;
+        }
     </style>
 </head>
 <body>
@@ -1083,19 +1034,6 @@
                         </div>
                         Oil
                     </button>
-                    <button data-particle="dirtywater">
-                        <div class="dirtywater-pixel-art">
-                            <div class="px r1 c6" style="background:#3cb371;"></div>
-                            <div class="px r2 c5" style="background:#20b2aa;"></div><div class="px r2 c6" style="background:#48d1cc;"></div><div class="px r2 c7" style="background:#2e8b57;"></div>
-                            <div class="px r3 c4" style="background:#2e8b57;"></div><div class="px r3 c5" style="background:#3cb371;"></div><div class="px r3 c6" style="background:#20b2aa;"></div><div class="px r3 c7" style="background:#48d1cc;"></div><div class="px r3 c8" style="background:#2e8b57;"></div>
-                            <div class="px r4 c3" style="background:#3cb371;"></div><div class="px r4 c4" style="background:#20b2aa;"></div><div class="px r4 c5" style="background:#48d1cc;"></div><div class="px r4 c6" style="background:#2e8b57;"></div><div class="px r4 c7" style="background:#3cb371;"></div><div class="px r4 c8" style="background:#20b2aa;"></div><div class="px r4 c9" style="background:#48d1cc;"></div>
-                            <div class="px r5 c2" style="background:#2e8b57;"></div><div class="px r5 c3" style="background:#3cb371;"></div><div class="px r5 c4" style="background:#20b2aa;"></div><div class="px r5 c5" style="background:#48d1cc;"></div><div class="px r5 c6" style="background:#2e8b57;"></div><div class="px r5 c7" style="background:#3cb371;"></div><div class="px r5 c8" style="background:#20b2aa;"></div><div class="px r5 c9" style="background:#48d1cc;"></div><div class="px r5 c10" style="background:#2e8b57;"></div>
-                            <div class="px r6 c2" style="background:#3cb371;"></div><div class="px r6 c3" style="background:#20b2aa;"></div><div class="px r6 c4" style="background:#48d1cc;"></div><div class="px r6 c5" style="background:#2e8b57;"></div><div class="px r6 c6" style="background:#3cb371;"></div><div class="px r6 c7" style="background:#20b2aa;"></div><div class="px r6 c8" style="background:#48d1cc;"></div><div class="px r6 c9" style="background:#2e8b57;"></div><div class="px r6 c10" style="background:#3cb371;"></div>
-                            <div class="px r7 c3" style="background:#20b2aa;"></div><div class="px r7 c4" style="background:#48d1cc;"></div><div class="px r7 c5" style="background:#2e8b57;"></div><div class="px r7 c6" style="background:#3cb371;"></div><div class="px r7 c7" style="background:#20b2aa;"></div><div class="px r7 c8" style="background:#48d1cc;"></div><div class="px r7 c9" style="background:#2e8b57;"></div>
-                            <div class="px r8 c5" style="background:#3cb371;"></div><div class="px r8 c6" style="background:#20b2aa;"></div><div class="px r8 c7" style="background:#48d1cc;"></div>
-                        </div>
-                        Dirty Water
-                    </button>
                     <button data-particle="magma">
                         <div class="magma-pixel-art">
                             <div class="px r1 c6" style="background:#ffb347;"></div>
@@ -1109,15 +1047,15 @@
                         </div>
                         Magma
                     </button>
-                    <button data-particle="moltendirt" style="display:none;">
-                        <div class="moltendirt-pixel-art">
-                            <div class="px r1 c1" style="background:#b84c1c;"></div><div class="px r1 c2" style="background:#d2691e;"></div><div class="px r1 c3" style="background:#c75a1c;"></div><div class="px r1 c4" style="background:#e07b3c;"></div><div class="px r1 c5" style="background:#b85a1c;"></div><div class="px r1 c6" style="background:#e07b3c;"></div><div class="px r1 c7" style="background:#c75a1c;"></div><div class="px r1 c8" style="background:#b84c1c;"></div>
-                            <div class="px r2 c1" style="background:#e07b3c;"></div><div class="px r2 c2" style="background:#b84c1c;"></div><div class="px r2 c3" style="background:#d2691e;"></div><div class="px r2 c4" style="background:#c75a1c;"></div><div class="px r2 c5" style="background:#e07b3c;"></div><div class="px r2 c6" style="background:#b85a1c;"></div><div class="px r2 c7" style="background:#d2691e;"></div><div class="px r2 c8" style="background:#c75a1c;"></div>
-                            <div class="px r3 c1" style="background:#c75a1c;"></div><div class="px r3 c2" style="background:#e07b3c;"></div><div class="px r3 c3" style="background:#b85a1c;"></div><div class="px r3 c4" style="background:#d2691e;"></div><div class="px r3 c5" style="background:#c75a1c;"></div><div class="px r3 c6" style="background:#e07b3c;"></div><div class="px r3 c7" style="background:#b84c1c;"></div><div class="px r3 c8" style="background:#d2691e;"></div>
-                            <div class="px r4 c1" style="background:#b85a1c;"></div><div class="px r4 c2" style="background:#c75a1c;"></div><div class="px r4 c3" style="background:#e07b3c;"></div><div class="px r4 c4" style="background:#b84c1c;"></div><div class="px r4 c5" style="background:#d2691e;"></div><div class="px r4 c6" style="background:#c75a1c;"></div><div class="px r4 c7" style="background:#e07b3c;"></div><div class="px r4 c8" style="background:#b85a1c;"></div>
-                            <div class="px r5 c1" style="background:#d2691e;"></div><div class="px r5 c2" style="background:#e07b3c;"></div><div class="px r5 c3" style="background:#b84c1c;"></div><div class="px r5 c4" style="background:#c75a1c;"></div><div class="px r5 c5" style="background:#e07b3c;"></div><div class="px r5 c6" style="background:#b85a1c;"></div><div class="px r5 c7" style="background:#d2691e;"></div><div class="px r5 c8" style="background:#c75a1c;"></div>
+                    <button data-particle="snow">
+                        <div class="snow-pixel-art">
+                            <div class="px r1 c4" style="background:#ffffff;"></div>
+                            <div class="px r2 c3" style="background:#f5f5f5;"></div><div class="px r2 c4" style="background:#f0f0f0;"></div><div class="px r2 c5" style="background:#e8e8e8;"></div>
+                            <div class="px r3 c2" style="background:#e0e0e0;"></div><div class="px r3 c3" style="background:#ffffff;"></div><div class="px r3 c4" style="background:#f5f5f5;"></div><div class="px r3 c5" style="background:#f0f0f0;"></div><div class="px r3 c6" style="background:#e8e8e8;"></div>
+                            <div class="px r4 c1" style="background:#e0e0e0;"></div><div class="px r4 c2" style="background:#ffffff;"></div><div class="px r4 c3" style="background:#f5f5f5;"></div><div class="px r4 c4" style="background:#f0f0f0;"></div><div class="px r4 c5" style="background:#e8e8e8;"></div><div class="px r4 c6" style="background:#e0e0e0;"></div><div class="px r4 c7" style="background:#ffffff;"></div>
+                            <div class="px r5 c1" style="background:#f5f5f5;"></div><div class="px r5 c2" style="background:#f0f0f0;"></div><div class="px r5 c3" style="background:#e8e8e8;"></div><div class="px r5 c4" style="background:#e0e0e0;"></div><div class="px r5 c5" style="background:#ffffff;"></div><div class="px r5 c6" style="background:#f5f5f5;"></div><div class="px r5 c7" style="background:#f0f0f0;"></div><div class="px r5 c8" style="background:#e8e8e8;"></div>
                         </div>
-                        Molten Dirt
+                        Snow
                     </button>
                 </div>
                 <div class="category" data-category="life">
@@ -1226,6 +1164,16 @@
                             <div class="px r5 c1" style="background:#ff0000;"></div><div class="px r5 c2" style="background:#ff0000;"></div><div class="px r5 c3" style="background:#ff0000;"></div><div class="px r5 c4" style="background:#ff0000;"></div><div class="px r5 c5" style="background:#ff0000;"></div><div class="px r5 c6" style="background:#ff0000;"></div><div class="px r5 c7" style="background:#ff0000;"></div>
                         </div>
                         Fire
+                    </button>
+                    <button data-particle="plasma">
+                        <div class="plasma-pixel-art">
+                            <div class="px r1 c4" style="background:#9b4dca;"></div>
+                            <div class="px r2 c3" style="background:#8a2be2;"></div><div class="px r2 c4" style="background:#9932cc;"></div><div class="px r2 c5" style="background:#ba55d3;"></div>
+                            <div class="px r3 c2" style="background:#9370db;"></div><div class="px r3 c3" style="background:#9b4dca;"></div><div class="px r3 c4" style="background:#8a2be2;"></div><div class="px r3 c5" style="background:#9932cc;"></div><div class="px r3 c6" style="background:#ba55d3;"></div>
+                            <div class="px r4 c1" style="background:#9370db;"></div><div class="px r4 c2" style="background:#9b4dca;"></div><div class="px r4 c3" style="background:#8a2be2;"></div><div class="px r4 c4" style="background:#9932cc;"></div><div class="px r4 c5" style="background:#ba55d3;"></div><div class="px r4 c6" style="background:#9370db;"></div><div class="px r4 c7" style="background:#9b4dca;"></div>
+                            <div class="px r5 c1" style="background:#8a2be2;"></div><div class="px r5 c2" style="background:#9932cc;"></div><div class="px r5 c3" style="background:#ba55d3;"></div><div class="px r5 c4" style="background:#9370db;"></div><div class="px r5 c5" style="background:#9b4dca;"></div><div class="px r5 c6" style="background:#8a2be2;"></div><div class="px r5 c7" style="background:#9932cc;"></div>
+                        </div>
+                        Plasma
                     </button>
                 </div>
                 <div class="category" data-category="gases">
@@ -1395,6 +1343,13 @@
         moltendirt: [
             { with: '≤ 1100°C', result: 'rock' },
             { with: 'fire', result: 'plasma' } // If you add plasma, otherwise you can use 'fire'
+        ],
+        fire: [
+            { with: '≥ 7000°C', result: 'plasma' }
+        ],
+        plasma: [
+            { with: '≤ 6000°C', result: 'fire' },
+            { with: '≤ 5000°C', result: 'fire' }
         ]
     };
 
@@ -1503,6 +1458,15 @@
                 updateInfoPanel(this.getAttribute('data-particle'));
             }
         });
+    });
+
+    // Set the canvas internal resolution to 480x270, but keep CSS at 960x540
+    document.addEventListener('DOMContentLoaded', function() {
+        var canvas = document.getElementById('gameCanvas');
+        if (canvas) {
+            canvas.width = 320;
+            canvas.height = 180;
+        }
     });
     </script>
 </body>

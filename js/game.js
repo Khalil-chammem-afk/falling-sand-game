@@ -29,10 +29,11 @@ class Game {
             24: 'Rain Cloud',
             25: 'Molten Glass',
             26: 'Rock',
-            27: 'Snow', // new
-            28: 'Gravel', // new gravel element
-            29: 'Molten Dirt', // add after gravel
-            30: 'Cactus' // cactus element
+            27: 'Snow',
+            28: 'Gravel',
+            29: 'Molten Dirt',
+            30: 'Cactus',
+            31: 'Plasma'
         };
         this.canvas = document.getElementById('gameCanvas');
         this.ctx = this.canvas.getContext('2d');
@@ -78,10 +79,11 @@ class Game {
             raincloud: 24,
             moltenglass: 25,
             rock: 26,
-            snow: 27, // new
-            gravel: 28, // new gravel element
-            moltendirt: 29, // add after gravel
-            cactus: 30 // cactus element
+            snow: 27,
+            gravel: 28,
+            moltendirt: 29,
+            cactus: 30,
+            plasma: 31
         };
         // Particle colors
         this.PARTICLE_COLORS = {
@@ -115,7 +117,8 @@ class Game {
             27: ['#ffffff', '#f5f5f5', '#f0f0f0', '#e8e8e8', '#e0e0e0'], // snow (white shades)
             28: ['#c0c0c0', '#d3d3d3', '#b8b8b8', '#a8a8a8', '#e0e0e0'], // gravel (gray shades)
             29: ['#b84c1c', '#d2691e', '#c75a1c', '#e07b3c', '#b85a1c'], // molten dirt palette
-            30: ['#2E8B57', '#3CB371', '#4CAF50', '#45a049', '#3d8b40'] // cactus (green shades)
+            30: ['#2E8B57', '#3CB371', '#4CAF50', '#45a049', '#3d8b40'], // cactus (green shades)
+            31: ['#9b4dca', '#8a2be2', '#9932cc', '#ba55d3', '#9370db'] // plasma (purple shades)
         };
         
         // Initialize grid (store {type, color})
@@ -149,35 +152,25 @@ class Game {
         this.update();
         // Add this near the top of the Game class, after PARTICLE_TYPES:
         this.CONDUCTIVITY = {
-            wall: 0,
-            glass: 0.08,
-            sand: 0.3,
-            dirt: 0.10,
-            water: 0.5,
-            magma: 0.7,
-            moltenglass: 0.6,
-            basalt: 0.09,
-            obsidian: 0.05,
-            lava: 0.6,
-            fire: 0.3,
-            steam: 0.2,
-            ice: 0.03,
-            cloud: 0.01,
-            raincloud: 0.01,
-            charcoal: 0.15,
-            mud: 0.11,
-            wetsand: 0.13,
-            oil: 0.18,
-            deadplant: 0.08,
-            frozenplant: 0.04,
-            grass: 0.09,
-            smoke: 0.01,
-            lightning: 0.9,
-            dirtwater: 0.3,
-            empty: 0,
-            rock: 0.12,
-            snow: 0.02, // Snow has low conductivity
-            gravel: 0.15 // Gravel has medium conductivity
+            wall: 0, // Wall doesn't transfer heat
+            obsidian: 0.1, // Very low conductivity
+            water: 0.8, // High conductivity
+            steam: 0.3, // Medium conductivity
+            smoke: 0.2, // Low conductivity
+            fire: 0.4, // Medium conductivity
+            plasma: 0.9, // Very high conductivity
+            magma: 0.7, // High conductivity
+            lava: 0.7, // High conductivity
+            ice: 0.6, // Medium-high conductivity
+            glass: 0.3, // Low-medium conductivity
+            moltenglass: 0.5, // Medium conductivity
+            metal: 0.8, // High conductivity
+            sand: 0.2, // Low conductivity
+            dirt: 0.2, // Low conductivity
+            grass: 0.2, // Low conductivity
+            rock: 0.3, // Low-medium conductivity
+            basalt: 0.4, // Medium conductivity
+            default: 0.1 // Default conductivity for other materials
         };
         this.canvas.addEventListener('mouseenter', () => {
             // Do nothing here, handled in mousemove
@@ -246,6 +239,7 @@ class Game {
         if (!this._wheelHandler) {
             this._wheelHandler = (e) => {
                 e.preventDefault();
+                if (this.selectedParticle === 'lightning') return; // Prevent changing brush size for lightning
                 if (e.deltaY < 0) {
                     this.brushSize = Math.min(this.brushSize + 1, 15);
                 } else if (e.deltaY > 0) {
@@ -299,6 +293,7 @@ class Game {
     setupBrushWheel() {
         this.canvas.addEventListener('wheel', (e) => {
             e.preventDefault();
+            if (this.selectedParticle === 'lightning') return; // Prevent changing brush size for lightning
             if (e.deltaY < 0) {
                 this.brushSize = Math.min(this.brushSize + 1, 15);
             } else if (e.deltaY > 0) {
@@ -338,9 +333,9 @@ class Game {
                             for (let wx = -halfW; wx <= halfW; wx++) {
                                 let xx = cx + wx;
                                 if (xx < 0 || xx >= this.cols) continue;
-                                let cell = this.grid[xx][yy];
-                                if (cell.type === this.PARTICLE_TYPES.grass) {
-                                    // Convert grass to fire
+                                const cell = this.grid[xx][yy];
+                                // Generate fire at impact point
+                                if (d === 0 && wx === 0) {
                                     const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.fire];
                                     this.grid[xx][yy] = { 
                                         type: this.PARTICLE_TYPES.fire, 
@@ -418,6 +413,9 @@ class Game {
             if (type === 'snow') {
                 temperature = -5; // Set initial temperature for snow as per wiki
             }
+            if (type === 'plasma') {
+                temperature = 7065; // Set initial temperature for plasma as per wiki
+            }
             // Assign baseColor for sand
             if (type === 'sand') {
                 this.grid[x][y] = { type: this.PARTICLE_TYPES[type], color, baseColor: color, temperature, lifetime };
@@ -442,6 +440,7 @@ class Game {
         }
         if (this.isMouseDown) {
             // Use square brush area instead of circular
+            if (this.selectedParticle === 'lightning') this.brushSize = 1;
             for (let i = -this.brushSize; i <= this.brushSize; i++) {
                 for (let j = -this.brushSize; j <= this.brushSize; j++) {
                     const x = this.mouseX + i;
@@ -480,40 +479,40 @@ class Game {
                 tempGrid[x][y] = this.grid[x][y].temperature;
             }
         }
-        let waterDebugLogged = false;
-        for (let x = 0; x < this.cols; x++) {
+
+        // Gentle, moderately increased heat transfer: 1 pass per frame
+        const passes = 1;
+        for (let pass = 0; pass < passes; pass++) {
+          for (let x = 0; x < this.cols; x++) {
             for (let y = 0; y < this.rows; y++) {
-                const cell = this.grid[x][y];
-                if (cell.type !== this.PARTICLE_TYPES.empty && cell.type !== this.PARTICLE_TYPES.water) {
-                    let typeName = Object.keys(this.PARTICLE_TYPES).find(key => this.PARTICLE_TYPES[key] === cell.type);
-                    let cellConduct = this.CONDUCTIVITY[typeName] !== undefined ? this.CONDUCTIVITY[typeName] : 0.1;
-                    if (typeof cellConduct !== 'number' || isNaN(cellConduct)) cellConduct = 0.1;
-                    if (cellConduct === 0) continue;
-                    if (typeof tempGrid[x][y] !== 'number' || isNaN(tempGrid[x][y])) tempGrid[x][y] = 20;
-                    let sum = 0;
-                    let count = 0;
-                    for (const [dx, dy] of [[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]]) {
-                        const nx = x + dx, ny = y + dy;
-                        if (nx >= 0 && nx < this.cols && ny >= 0 && ny < this.rows) {
-                            const neighbor = this.grid[nx][ny];
-                            if (neighbor.type !== this.PARTICLE_TYPES.empty) {
-                                let nTypeName = Object.keys(this.PARTICLE_TYPES).find(key => this.PARTICLE_TYPES[key] === neighbor.type);
-                                let nConduct = this.CONDUCTIVITY[nTypeName] !== undefined ? this.CONDUCTIVITY[nTypeName] : 0.1;
-                                if (typeof nConduct !== 'number' || isNaN(nConduct)) nConduct = 0.1;
-                                if (nConduct === 0) continue;
-                                if (typeof tempGrid[nx][ny] !== 'number' || isNaN(tempGrid[nx][ny])) tempGrid[nx][ny] = 20;
-                                sum += tempGrid[nx][ny];
-                                count++;
-                            }
-                        }
-                    }
-                    let heatTransferRate = 0.08;
-                    if (typeof heatTransferRate !== 'number' || isNaN(heatTransferRate)) heatTransferRate = 0.08;
-                    if (count > 0) {
-                        cell.temperature += (sum/count - tempGrid[x][y]) * cellConduct * heatTransferRate;
-                    }
-                }
+              const cell = this.grid[x][y];
+              if (cell.type === this.PARTICLE_TYPES.empty) continue;
+              let typeName = Object.keys(this.PARTICLE_TYPES).find(key => this.PARTICLE_TYPES[key] === cell.type);
+              let cellConduct = this.CONDUCTIVITY[typeName] ?? this.CONDUCTIVITY.default;
+              if (cellConduct === 0) continue;
+
+              for (const [dx, dy] of [[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]]) {
+                const nx = x + dx, ny = y + dy;
+                if (nx < 0 || nx >= this.cols || ny < 0 || ny >= this.rows) continue;
+                const neighbor = this.grid[nx][ny];
+                if (neighbor.type === this.PARTICLE_TYPES.empty) continue;
+                let nTypeName = Object.keys(this.PARTICLE_TYPES).find(key => this.PARTICLE_TYPES[key] === neighbor.type);
+                let nConduct = this.CONDUCTIVITY[nTypeName] ?? this.CONDUCTIVITY.default;
+                if (nConduct === 0) continue;
+
+                let baseRate = 0.08;
+                let conduct = Math.max(cellConduct, nConduct);
+                let tempDiff = neighbor.temperature - cell.temperature;
+                let rate = baseRate;
+                if (Math.abs(tempDiff) > 2000) rate *= 2.0;
+                else if (Math.abs(tempDiff) > 1000) rate *= 1.5;
+
+                let diff = tempDiff * rate * conduct;
+                cell.temperature += diff;
+                neighbor.temperature -= diff;
+              }
             }
+          }
         }
 
         // Reactions: water + dirt → mud, water + sand → wet sand
@@ -533,14 +532,54 @@ class Game {
                                 cell.color = mudColor[Math.floor(Math.random() * mudColor.length)];
                                 // Remove the water
                                 this.grid[nx][ny] = { type: this.PARTICLE_TYPES.empty, color: null, temperature: 20, lifetime: null };
-                            } else if ((cell.type === this.PARTICLE_TYPES.water && neighbor.type === this.PARTICLE_TYPES.sand) ||
-                                       (cell.type === this.PARTICLE_TYPES.sand && neighbor.type === this.PARTICLE_TYPES.water)) {
-                                // Water + Sand → Wet Sand
+                            }
+                        }
+                    }
+                }
+                // Sand absorbs water and becomes wetsand (like dirt/mud)
+                if (cell.type === this.PARTICLE_TYPES.sand) {
+                    for (const [dx, dy] of [[0,1],[0,-1],[1,0],[-1,0]]) {
+                        const nx = x + dx, ny = y + dy;
+                        if (nx >= 0 && nx < this.cols && ny >= 0 && ny < this.rows) {
+                            const neighbor = this.grid[nx][ny];
+                            if (neighbor.type === this.PARTICLE_TYPES.water) {
+                                // Sand absorbs water and becomes wetsand
                                 const wetSandColor = this.PARTICLE_COLORS[this.PARTICLE_TYPES.wetsand];
                                 cell.type = this.PARTICLE_TYPES.wetsand;
                                 cell.color = wetSandColor[Math.floor(Math.random() * wetSandColor.length)];
-                                neighbor.type = this.PARTICLE_TYPES.wetsand;
-                                neighbor.color = wetSandColor[Math.floor(Math.random() * wetSandColor.length)];
+                                // Remove the water
+                                this.grid[nx][ny] = { type: this.PARTICLE_TYPES.empty, color: null, temperature: 20, lifetime: null };
+                                break; // Only absorb one water per tick
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Wetsand seeps down into sand below (like mud/dirt)
+        for (let x = 0; x < this.cols; x++) {
+            for (let y = this.rows - 2; y >= 0; y--) { // from second-to-last row up
+                const cell = this.grid[x][y];
+                if (cell.type === this.PARTICLE_TYPES.wetsand) {
+                    const belowCell = this.grid[x][y + 1];
+                    if (belowCell.type === this.PARTICLE_TYPES.sand) {
+                        // If this wetsand was just created (has no age property)
+                        if (!cell.age) {
+                            // Quick initial movement when wetsand is first created
+                            const temp = this.grid[x][y + 1];
+                            this.grid[x][y + 1] = this.grid[x][y];
+                            this.grid[x][y] = temp;
+                            // Set age to start slow seeping phase
+                            this.grid[x][y + 1].age = 1;
+                        } else {
+                            // ALMOST IMPERCEPTIBLY slow seeping through sand (0.01% chance)
+                            if (Math.random() < 0.001) {
+                                const temp = this.grid[x][y + 1];
+                                this.grid[x][y + 1] = this.grid[x][y];
+                                this.grid[x][y] = temp;
+                                // Preserve age for continued slow movement
+                                this.grid[x][y + 1].age = this.grid[x][y].age + 1;
                             }
                         }
                     }
@@ -786,6 +825,30 @@ class Game {
                         }
                     }
                 } else if (cell.type === this.PARTICLE_TYPES.mud) {
+                    // Check if there's dirt below
+                    if (y < this.rows - 1) {
+                        const belowCell = this.grid[x][y + 1];
+                        if (belowCell.type === this.PARTICLE_TYPES.dirt) {
+                            // Check if this mud was just created (has no age property)
+                            if (!cell.age) {
+                                // Quick initial movement when mud is first created
+                                const temp = this.grid[x][y + 1];
+                                this.grid[x][y + 1] = this.grid[x][y];
+                                this.grid[x][y] = temp;
+                                // Set age to start slow seeping phase
+                                this.grid[x][y + 1].age = 1;
+                            } else {
+                                // ALMOST IMPERCEPTIBLY slow seeping through dirt (0.01% chance)
+                                if (Math.random() < 0.001) {
+                                    const temp = this.grid[x][y + 1];
+                                    this.grid[x][y + 1] = this.grid[x][y];
+                                    this.grid[x][y] = temp;
+                                    // Preserve age for continued slow movement
+                                    this.grid[x][y + 1].age = this.grid[x][y].age + 1;
+                                }
+                            }
+                        }
+                    }
                     // Mud chars to charcoal at high temp
                     if (cell.temperature > 300) {
                         const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.charcoal];
@@ -1060,8 +1123,30 @@ class Game {
                                 return; // Only react once per update
                             }
                             // Fire heats up all adjacent elements
+                            // Use ignite threshold for direct heating
+                            const igniteThresholds = {
+                                [this.PARTICLE_TYPES.sand]: 1701,
+                                [this.PARTICLE_TYPES.dirt]: 1201,
+                                [this.PARTICLE_TYPES.grass]: 101,
+                                [this.PARTICLE_TYPES.deadplant]: 301,
+                                [this.PARTICLE_TYPES.oil]: 401,
+                                [this.PARTICLE_TYPES.charcoal]: 401,
+                                [this.PARTICLE_TYPES.frozenplant]: 301,
+                                [this.PARTICLE_TYPES.cactus]: 251,
+                                [this.PARTICLE_TYPES.mud]: 301,
+                                [this.PARTICLE_TYPES.wetsand]: 101,
+                                [this.PARTICLE_TYPES.snow]: 19,
+                                [this.PARTICLE_TYPES.gravel]: 951,
+                                [this.PARTICLE_TYPES.rock]: 951,
+                                [this.PARTICLE_TYPES.cloud]: 101,
+                                [this.PARTICLE_TYPES.raincloud]: 101,
+                                [this.PARTICLE_TYPES.smoke]: 101,
+                                [this.PARTICLE_TYPES.steam]: 101,
+                                [this.PARTICLE_TYPES.fire]: 101
+                            };
                             if (neighbor.type !== this.PARTICLE_TYPES.empty && neighbor.type !== this.PARTICLE_TYPES.fire) {
-                                neighbor.temperature += 5; // was 20, now 5°C per frame
+                                const threshold = igniteThresholds[neighbor.type] || 101;
+                                neighbor.temperature = Math.max(neighbor.temperature, threshold);
                             }
                         }
                     }
@@ -1476,9 +1561,9 @@ class Game {
                     }
                 } else if (cell.type === this.PARTICLE_TYPES.dirtywater) {
                     // Dirty water sinks through water extremely slowly (density 1005 vs 1000)
-                    if (Math.random() < 0.01) { // Only 1% chance to try sinking each frame
+                    if (Math.random() < 0.005) { // Only 0.5% chance to try sinking each frame
                         if (!this.tryMove(x, y, [ [0,1], [-1,1], [1,1] ], [this.PARTICLE_TYPES.empty, this.PARTICLE_TYPES.water])) {
-                            if (Math.random() < 0.02) { // Very slow horizontal movement
+                            if (Math.random() < 0.01) { // Very slow horizontal movement
                                 const jitterDir = Math.random() < 0.5 ? -1 : 1;
                                 this.tryMove(x, y, [ [jitterDir, 0] ]);
                             }
@@ -1745,8 +1830,158 @@ class Game {
                         cell.type = this.PARTICLE_TYPES.deadplant;
                         cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
                     }
+                } else if (cell.type === this.PARTICLE_TYPES.plasma) {
+                    // Set default temperature if not set
+                    if (typeof cell.temperature !== 'number' || isNaN(cell.temperature)) cell.temperature = 7065;
+                    // 0.5% chance to disappear each tick (was 1%)
+                    if (Math.random() < 0.005) {
+                        this.grid[x][y] = { type: this.PARTICLE_TYPES.empty, color: null, temperature: 20, lifetime: null };
+                        continue;
+                    }
+                    // Always ignite flammable neighbors
+                    const flammableTypes = [
+                        this.PARTICLE_TYPES.dirt,
+                        this.PARTICLE_TYPES.sand,
+                        this.PARTICLE_TYPES.grass,
+                        this.PARTICLE_TYPES.deadplant,
+                        this.PARTICLE_TYPES.oil,
+                        this.PARTICLE_TYPES.charcoal,
+                        this.PARTICLE_TYPES.frozenplant,
+                        this.PARTICLE_TYPES.cactus,
+                        this.PARTICLE_TYPES.mud,
+                        this.PARTICLE_TYPES.wetsand,
+                        this.PARTICLE_TYPES.snow,
+                        this.PARTICLE_TYPES.gravel,
+                        this.PARTICLE_TYPES.rock,
+                        this.PARTICLE_TYPES.cloud,
+                        this.PARTICLE_TYPES.raincloud,
+                        this.PARTICLE_TYPES.smoke,
+                        this.PARTICLE_TYPES.steam,
+                        this.PARTICLE_TYPES.fire
+                    ];
+                    // Set transformation thresholds for direct ignition
+                    const igniteThresholds = {
+                        [this.PARTICLE_TYPES.sand]: 1701,
+                        [this.PARTICLE_TYPES.dirt]: 1201,
+                        [this.PARTICLE_TYPES.grass]: 101,
+                        [this.PARTICLE_TYPES.deadplant]: 301,
+                        [this.PARTICLE_TYPES.oil]: 401,
+                        [this.PARTICLE_TYPES.charcoal]: 401,
+                        [this.PARTICLE_TYPES.frozenplant]: 301,
+                        [this.PARTICLE_TYPES.cactus]: 251,
+                        [this.PARTICLE_TYPES.mud]: 301,
+                        [this.PARTICLE_TYPES.wetsand]: 101,
+                        [this.PARTICLE_TYPES.snow]: 19,
+                        [this.PARTICLE_TYPES.gravel]: 951,
+                        [this.PARTICLE_TYPES.rock]: 951,
+                        [this.PARTICLE_TYPES.cloud]: 101,
+                        [this.PARTICLE_TYPES.raincloud]: 101,
+                        [this.PARTICLE_TYPES.smoke]: 101,
+                        [this.PARTICLE_TYPES.steam]: 101,
+                        [this.PARTICLE_TYPES.fire]: 101
+                    };
+                    for (const [dx, dy] of [[0,1],[0,-1],[1,0],[-1,0],[1,1],[-1,1],[1,-1],[-1,-1]]) {
+                        const nx = x + dx;
+                        const ny = y + dy;
+                        if (nx >= 0 && nx < this.cols && ny >= 0 && ny < this.rows) {
+                            const neighbor = this.grid[nx][ny];
+                            if (flammableTypes.includes(neighbor.type)) {
+                                const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.fire];
+                                const threshold = igniteThresholds[neighbor.type] || 101;
+                                this.grid[nx][ny] = {
+                                    type: this.PARTICLE_TYPES.fire,
+                                    color: colorArr[Math.floor(Math.random() * colorArr.length)],
+                                    temperature: Math.max(neighbor.temperature, threshold),
+                                    lifetime: null
+                                };
+                            }
+                        }
+                    }
+                    // Color cycling for glowing effect
+                    if (!cell.baseColor) {
+                        const plasmaPalette = this.PARTICLE_COLORS[this.PARTICLE_TYPES.plasma];
+                        cell.baseColor = cell.color || plasmaPalette[Math.floor(Math.random() * plasmaPalette.length)];
+                    }
+                    // Cycle color for glow (30% chance)
+                    if (Math.random() < 0.3) {
+                        const plasmaPalette = this.PARTICLE_COLORS[this.PARTICLE_TYPES.plasma];
+                        cell.color = plasmaPalette[Math.floor(Math.random() * plasmaPalette.length)];
+                    }
+                    // Gas-like movement: mostly up, sometimes sideways (slowed down further)
+                    let moved = false;
+                    if (Math.random() < 0.08) { // 8% chance to move upward per tick
+                        moved = this.tryMove(x, y, [[0,-1], [-1,-1], [1,-1]], [this.PARTICLE_TYPES.empty, this.PARTICLE_TYPES.steam, this.PARTICLE_TYPES.smoke]);
+                    }
+                    if (!moved && Math.random() < 0.04) { // 4% chance to move sideways per tick
+                        moved = this.tryMove(x, y, [[-1,0], [1,0]], [this.PARTICLE_TYPES.empty, this.PARTICLE_TYPES.steam, this.PARTICLE_TYPES.smoke]);
+                    }
+                    // Cool to fire at ≤6000°C
+                    if (cell.temperature <= 6000) {
+                        const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.fire];
+                        cell.type = this.PARTICLE_TYPES.fire;
+                        cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
+                        cell.temperature = 100;
+                    }
                 }
             }
+        }
+        // Water + Oil → Dirty Water (with random chance, wiki accurate)
+        for (let x = 0; x < this.cols; x++) {
+            for (let y = 0; y < this.rows; y++) {
+                const cell = this.grid[x][y];
+                if (cell.type === this.PARTICLE_TYPES.water) {
+                    for (const [dx, dy] of [[0,1],[0,-1],[1,0],[-1,0]]) {
+                        const nx = x + dx, ny = y + dy;
+                        if (nx >= 0 && nx < this.cols && ny >= 0 && ny < this.rows) {
+                            const neighbor = this.grid[nx][ny];
+                            if (neighbor.type === this.PARTICLE_TYPES.oil) {
+                                if (Math.random() < 0.001) { // 0.1% chance per frame
+                                    const dirtyWaterColor = this.PARTICLE_COLORS[this.PARTICLE_TYPES.dirtywater];
+                                    cell.type = this.PARTICLE_TYPES.dirtywater;
+                                    cell.color = dirtyWaterColor[Math.floor(Math.random() * dirtyWaterColor.length)];
+                                    break; // Only one reaction per frame
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // For each cell (not empty)
+        for (let x = 0; x < this.cols; x++) {
+          for (let y = 0; y < this.rows; y++) {
+            const cell = this.grid[x][y];
+            if (cell.type === this.PARTICLE_TYPES.empty) continue;
+            let typeName = Object.keys(this.PARTICLE_TYPES).find(key => this.PARTICLE_TYPES[key] === cell.type);
+            let cellConduct = this.CONDUCTIVITY[typeName] ?? this.CONDUCTIVITY.default;
+            if (cellConduct === 0) continue;
+
+            // For each neighbor
+            for (const [dx, dy] of [[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]]) {
+              const nx = x + dx, ny = y + dy;
+              if (nx < 0 || nx >= this.cols || ny < 0 || ny >= this.rows) continue;
+              const neighbor = this.grid[nx][ny];
+              if (neighbor.type === this.PARTICLE_TYPES.empty) continue;
+              let nTypeName = Object.keys(this.PARTICLE_TYPES).find(key => this.PARTICLE_TYPES[key] === neighbor.type);
+              let nConduct = this.CONDUCTIVITY[nTypeName] ?? this.CONDUCTIVITY.default;
+              if (nConduct === 0) continue;
+
+              // Diffusive transfer
+              let baseRate = 0.18; // much higher than before
+              let conduct = Math.max(cellConduct, nConduct);
+              let tempDiff = neighbor.temperature - cell.temperature;
+              let rate = baseRate;
+
+              // Optional: burst for extreme differences
+              if (Math.abs(tempDiff) > 1000) rate *= 2;
+              else if (Math.abs(tempDiff) > 500) rate *= 1.5;
+
+              let diff = tempDiff * rate * conduct;
+              cell.temperature += diff;
+              neighbor.temperature -= diff; // Ensures conservation
+            }
+          }
         }
     }
 
@@ -1807,12 +2042,39 @@ class Game {
                     } else {
                         this.ctx.fillStyle = cell.color;
                     }
-                    this.ctx.fillRect(
-                        x * this.cellSize,
-                        y * this.cellSize,
-                        this.cellSize,
-                        this.cellSize
-                    );
+                    // Plus shape for gases, fire, and plasma
+                    if ([
+                        this.PARTICLE_TYPES.steam,
+                        this.PARTICLE_TYPES.smoke,
+                        this.PARTICLE_TYPES.cloud,
+                        this.PARTICLE_TYPES.raincloud,
+                        this.PARTICLE_TYPES.plasma,
+                        this.PARTICLE_TYPES.fire
+                    ].includes(cell.type)) {
+                        const cs = this.cellSize;
+                        const x0 = x * cs, y0 = y * cs;
+                        // Center (fully opaque)
+                        this.ctx.globalAlpha = 1.0;
+                        this.ctx.fillRect(x0, y0, cs, cs);
+                        // Arms (30% opacity)
+                        this.ctx.globalAlpha = 0.30;
+                        // Up
+                        this.ctx.fillRect(x0, y0 - cs, cs, cs);
+                        // Down
+                        this.ctx.fillRect(x0, y0 + cs, cs, cs);
+                        // Left
+                        this.ctx.fillRect(x0 - cs, y0, cs, cs);
+                        // Right
+                        this.ctx.fillRect(x0 + cs, y0, cs, cs);
+                        this.ctx.globalAlpha = 1.0; // Reset alpha
+                    } else {
+                        this.ctx.fillRect(
+                            x * this.cellSize,
+                            y * this.cellSize,
+                            this.cellSize,
+                            this.cellSize
+                        );
+                    }
                 }
             }
         }
