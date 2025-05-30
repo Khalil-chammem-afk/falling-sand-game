@@ -114,7 +114,7 @@ class Game {
             26: ['#c0c0c0', '#b0b0b0', '#a0a0a0', '#909090'], // gravel
             27: ['#ffb347', '#ff8300', '#ff5e13', '#ff2e00', '#ff7e00'], // molten dirt
             28: ['#2e8b57', '#3cb371', '#20b2aa', '#48d1cc'], // cactus
-            29: ['#ff4500', '#ff6a00', '#ff8c00', '#ffa500', '#ff7f00'], // plasma
+            29: ['#9b4dca', '#ffb3ff', '#fff0fa', '#e0b3ff', '#c77dff'], // plasma (purple/pink/white)
             30: ['#3C2814', '#503219', '#462D12', '#5A3C1E', '#41301C', '#4B3723'] // mudstone
         };
         
@@ -456,7 +456,7 @@ class Game {
               let cellConduct = this.CONDUCTIVITY[typeName] ?? this.CONDUCTIVITY.default;
               if (cellConduct === 0) continue;
 
-              for (const [dx, dy] of [[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]]) {
+              for (const [dx, dy] of this.shuffleArray([[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]])) {
                 const nx = x + dx, ny = y + dy;
                 if (nx < 0 || nx >= this.cols || ny < 0 || ny >= this.rows) continue;
                 const neighbor = this.grid[nx][ny];
@@ -486,7 +486,7 @@ class Game {
                 const cell = this.grid[x][y];
                 // Check both water next to dirt and dirt next to water
                 if (cell.type === this.PARTICLE_TYPES.water || cell.type === this.PARTICLE_TYPES.dirt) {
-                    for (const [dx, dy] of [[0,1],[0,-1],[1,0],[-1,0]]) {
+                    for (const [dx, dy] of this.shuffleArray([[0,1],[0,-1],[1,0],[-1,0]])) {
                         const nx = x + dx, ny = y + dy;
                         if (nx >= 0 && nx < this.cols && ny >= 0 && ny < this.rows) {
                             const neighbor = this.grid[nx][ny];
@@ -503,7 +503,7 @@ class Game {
                 }
                 // Sand absorbs water and becomes wetsand (like dirt/mud)
                 if (cell.type === this.PARTICLE_TYPES.sand) {
-                    for (const [dx, dy] of [[0,1],[0,-1],[1,0],[-1,0]]) {
+                    for (const [dx, dy] of this.shuffleArray([[0,1],[0,-1],[1,0],[-1,0]])) {
                         const nx = x + dx, ny = y + dy;
                         if (nx >= 0 && nx < this.cols && ny >= 0 && ny < this.rows) {
                             const neighbor = this.grid[nx][ny];
@@ -691,7 +691,7 @@ class Game {
                     }
                 } else if (cell.type === this.PARTICLE_TYPES.water) {
                     // Water + Fire = Heat up water (check both directions)
-                    for (const [dx, dy] of [[0,1],[0,-1],[1,0],[-1,0],[1,1],[-1,1],[1,-1],[-1,-1]]) {
+                    for (const [dx, dy] of this.shuffleArray([[0,1],[0,-1],[1,0],[-1,0],[1,1],[-1,1],[1,-1],[-1,-1]])) {
                         const nx = x + dx;
                         const ny = y + dy;
                         if (nx >= 0 && nx < this.cols && ny >= 0 && ny < this.rows) {
@@ -1103,15 +1103,13 @@ class Game {
                         cell.color = colorArr[Math.floor(Math.random() * colorArr.length)];
                     }
                 } else if (cell.type === this.PARTICLE_TYPES.fire) {
-                    // Fire physics
                     // Fire + Water = Steam
-                    for (const [dx, dy] of [[0,1],[0,-1],[1,0],[-1,0],[1,1],[-1,1],[1,-1],[-1,-1]]) {
+                    for (const [dx, dy] of this.shuffleArray([[0,1],[0,-1],[1,0],[-1,0],[1,1],[-1,1],[1,-1],[-1,-1]])) {
                         const nx = x + dx;
                         const ny = y + dy;
                         if (nx >= 0 && nx < this.cols && ny >= 0 && ny < this.rows) {
                             const neighbor = this.grid[nx][ny];
                             if (neighbor.type === this.PARTICLE_TYPES.water) {
-                                // Both fire and water disappear, steam appears in one of their places
                                 const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.steam];
                                 const steamCell = { type: this.PARTICLE_TYPES.steam, color: colorArr[Math.floor(Math.random() * colorArr.length)], temperature: 120, lifetime: null };
                                 if (Math.random() < 0.5) {
@@ -1121,96 +1119,85 @@ class Game {
                                     this.grid[nx][ny] = steamCell;
                                     this.grid[x][y] = { type: this.PARTICLE_TYPES.empty, color: null, temperature: 20, lifetime: null };
                                 }
-                                return; // Only react once per update
-                            }
-                            // Fire heats up all adjacent elements
-                            // Use ignite threshold for direct heating
-                            const igniteThresholds = {
-                                [this.PARTICLE_TYPES.sand]: 1701,
-                                [this.PARTICLE_TYPES.dirt]: 1201,
-                                [this.PARTICLE_TYPES.grass]: 101,
-                                [this.PARTICLE_TYPES.deadplant]: 301,
-                                [this.PARTICLE_TYPES.oil]: 401,
-                                [this.PARTICLE_TYPES.charcoal]: 401,
-                                [this.PARTICLE_TYPES.frozenplant]: 301,
-                                [this.PARTICLE_TYPES.cactus]: 251,
-                                [this.PARTICLE_TYPES.mud]: 301,
-                                [this.PARTICLE_TYPES.wetsand]: 101,
-                                [this.PARTICLE_TYPES.snow]: 19,
-                                [this.PARTICLE_TYPES.gravel]: 951,
-                                [this.PARTICLE_TYPES.rock]: 951,
-                                [this.PARTICLE_TYPES.cloud]: 101,
-                                [this.PARTICLE_TYPES.raincloud]: 101,
-                                [this.PARTICLE_TYPES.smoke]: 101,
-                                [this.PARTICLE_TYPES.steam]: 101,
-                                [this.PARTICLE_TYPES.fire]: 101
-                            };
-                            if (neighbor.type !== this.PARTICLE_TYPES.empty && neighbor.type !== this.PARTICLE_TYPES.fire) {
-                                const threshold = igniteThresholds[neighbor.type] || 101;
-                                neighbor.temperature = Math.max(neighbor.temperature, threshold);
+                                return;
                             }
                         }
                     }
-                    if (Math.random() < 0.1) { // 10% chance to move up
-                        if (y > 0 && this.grid[x][y-1].type === this.PARTICLE_TYPES.empty) {
-                            this.grid[x][y-1] = { ...cell };
-                            this.grid[x][y] = { type: this.PARTICLE_TYPES.empty, color: null, temperature: 20, lifetime: null };
-                        }
-                    }
-                    // Fire spreads to flammable materials
-                    for (const [dx, dy] of [[0,1], [0,-1], [1,0], [-1,0], [1,1], [-1,1], [1,-1], [-1,-1]]) {
+                    // Fire spreads to flammable materials (unbiased)
+                    const flammableTypes = [
+                        this.PARTICLE_TYPES.dirt,
+                        this.PARTICLE_TYPES.sand,
+                        this.PARTICLE_TYPES.grass,
+                        this.PARTICLE_TYPES.deadplant,
+                        this.PARTICLE_TYPES.oil,
+                        this.PARTICLE_TYPES.charcoal,
+                        this.PARTICLE_TYPES.frozenplant,
+                        this.PARTICLE_TYPES.cactus,
+                        this.PARTICLE_TYPES.mud,
+                        this.PARTICLE_TYPES.wetsand,
+                        this.PARTICLE_TYPES.snow,
+                        this.PARTICLE_TYPES.gravel,
+                        this.PARTICLE_TYPES.rock,
+                        this.PARTICLE_TYPES.cloud,
+                        this.PARTICLE_TYPES.raincloud,
+                        this.PARTICLE_TYPES.smoke,
+                        this.PARTICLE_TYPES.steam
+                    ];
+                    const igniteChances = {
+                        [this.PARTICLE_TYPES.grass]: 0.008,
+                        [this.PARTICLE_TYPES.deadplant]: 0.01,
+                        [this.PARTICLE_TYPES.oil]: 0.02,
+                        [this.PARTICLE_TYPES.charcoal]: 0.005,
+                        [this.PARTICLE_TYPES.cactus]: 0.008,
+                        [this.PARTICLE_TYPES.wood]: 0.006,
+                        [this.PARTICLE_TYPES.dirt]: 0.001,
+                        [this.PARTICLE_TYPES.sand]: 0.001,
+                        [this.PARTICLE_TYPES.mud]: 0.001,
+                        [this.PARTICLE_TYPES.wetsand]: 0.001,
+                        [this.PARTICLE_TYPES.snow]: 0.002,
+                        [this.PARTICLE_TYPES.gravel]: 0.001,
+                        [this.PARTICLE_TYPES.rock]: 0.0005,
+                        [this.PARTICLE_TYPES.cloud]: 0.0005,
+                        [this.PARTICLE_TYPES.raincloud]: 0.0005,
+                        [this.PARTICLE_TYPES.smoke]: 0.0005,
+                        [this.PARTICLE_TYPES.steam]: 0.0005,
+                        [this.PARTICLE_TYPES.frozenplant]: 0.008
+                    };
+                    for (const [dx, dy] of this.shuffleArray([[0,1],[0,-1],[1,0],[-1,0],[1,1],[-1,1],[1,-1],[-1,-1]])) {
                         const nx = x + dx;
                         const ny = y + dy;
                         if (nx >= 0 && nx < this.cols && ny >= 0 && ny < this.rows) {
                             const neighbor = this.grid[nx][ny];
-                            // Slow fire spread to grass and dead plant (halve the chance)
-                            if (neighbor.type === this.PARTICLE_TYPES.grass && Math.random() < 0.004) { // was 0.008
-                                neighbor.temperature += 50;
-                                if (neighbor.temperature > 100) {
-                                    const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.deadplant];
-                                    this.grid[nx][ny] = { 
-                                        type: this.PARTICLE_TYPES.deadplant, 
-                                        color: colorArr[Math.floor(Math.random() * colorArr.length)],
-                                        temperature: neighbor.temperature,
-                                        lifetime: null
-                                    };
-                                } else {
+                            if (flammableTypes.includes(neighbor.type)) {
+                                const chance = igniteChances[neighbor.type] || 0.001;
+                                if (Math.random() < chance) {
                                     const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.fire];
-                                    this.grid[nx][ny] = { 
-                                        type: this.PARTICLE_TYPES.fire, 
+                                    this.grid[nx][ny] = {
+                                        type: this.PARTICLE_TYPES.fire,
                                         color: colorArr[Math.floor(Math.random() * colorArr.length)],
-                                        temperature: neighbor.temperature,
+                                        temperature: 100,
                                         lifetime: null
                                     };
                                 }
-                            } else if (neighbor.type === this.PARTICLE_TYPES.deadplant && Math.random() < 0.005) { // was 0.01
-                                const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.fire];
-                                this.grid[nx][ny] = { 
-                                    type: this.PARTICLE_TYPES.fire, 
-                                    color: colorArr[Math.floor(Math.random() * colorArr.length)],
-                                    temperature: 100,
-                                    lifetime: null
-                                };
                             }
                         }
                     }
                     // Fire creates smoke
-                    if (Math.random() < 0.01) { // 1% chance
+                    if (Math.random() < 0.01) {
                         const nx = x + (Math.random() < 0.5 ? -1 : 1);
                         const ny = y - 1;
-                        if (nx >= 0 && nx < this.cols && ny >= 0 && ny < this.rows && 
-                            this.grid[nx][ny].type === this.PARTICLE_TYPES.empty) {
+                        if (nx >= 0 && nx < this.cols && ny >= 0 && ny < this.rows && this.grid[nx][ny].type === this.PARTICLE_TYPES.empty) {
                             const colorArr = this.PARTICLE_COLORS[this.PARTICLE_TYPES.smoke];
-                            this.grid[nx][ny] = { 
-                                type: this.PARTICLE_TYPES.smoke, 
+                            this.grid[nx][ny] = {
+                                type: this.PARTICLE_TYPES.smoke,
                                 color: colorArr[Math.floor(Math.random() * colorArr.length)],
                                 temperature: 20,
-                                lifetime: 300 + Math.floor(Math.random() * 200) // 300-500 frames
+                                lifetime: 300 + Math.floor(Math.random() * 200)
                             };
                         }
                     }
-                    // Fire eventually burns out (balanced chance)
-                    if (Math.random() < 0.01) { // Adjusted from 0.008 to 0.01 (1% chance)
+                    // Fire eventually burns out
+                    if (Math.random() < 0.01) {
                         this.grid[x][y] = { type: this.PARTICLE_TYPES.empty, color: null, temperature: 20, lifetime: null };
                     }
                 } else if (cell.type === this.PARTICLE_TYPES.smoke) {

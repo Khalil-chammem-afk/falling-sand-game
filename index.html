@@ -99,7 +99,7 @@
         }
        
         #gameContainer {
-            margin: 0 auto 0 auto;
+            margin: 5px auto 0 auto;
             max-width: 960px;
             width: 960px;
             display: flex;
@@ -116,7 +116,7 @@
             width: 960px !important; /* CSS size (visual size) */
             height: 540px !important;
             display: block;
-            margin: 0 auto;
+            margin:  auto;
             image-rendering: pixelated;
         }
 
@@ -262,7 +262,7 @@
             background: rgba(255, 179, 71, 0.6) !important;
         }
         button[data-particle="lightning"] {
-            background: rgba(255, 247, 0, 0.6) !important;
+            background: rgba(10, 26, 47, 0.85) !important;
         }
         button[data-particle="grass"] {
             background: rgba(76, 175, 80, 0.6) !important;
@@ -280,7 +280,7 @@
             background: rgba(45, 45, 45, 0.6) !important;
         }
         button[data-particle="glass"] {
-            background: rgba(178, 235, 242, 0.6) !important;
+            background: rgba(185, 236, 240, 0.521) !important;
         }
         button[data-particle="basalt"] {
             background: rgba(128, 128, 128, 0.6) !important;
@@ -304,7 +304,7 @@
             background: rgba(224, 215, 179, 0.6) !important;
         }
         button[data-particle="charcoal"] {
-            background: rgba(26, 26, 26, 0.6) !important;
+            background: rgba(18, 18, 18, 0.6) !important;
         }
         button[data-particle="deadplant"] {
             background: rgba(139, 69, 19, 0.6) !important;
@@ -314,108 +314,6 @@
         }
         button[data-particle="cactus"] {
             background: rgba(46, 139, 87, 0.6) !important;
-        }
-        button[data-particle="wall"] {
-            background: rgba(128, 128, 128, 0.6) !important;
-        }
-        button[data-particle="dirtywater"] {
-            background: rgba(46, 139, 87, 0.6) !important;
-        }
-        button[data-particle="ice"] {
-            background: rgba(224, 247, 250, 0.6) !important;
-        }
-
-        .particle-preview {
-            width: 32px;
-            height: 32px;
-            position: relative;
-            background: none;
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .particle-dot {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.12);
-            border: 2px solid #fff;
-            box-sizing: border-box;
-        }
-
-        /* Particle button colors with preview styles */
-        button[data-particle="dirt"] .particle-dot {
-            background: rgb(60, 40, 20);
-        }
-        button[data-particle="sand"] .particle-dot {
-            background: #ffe39f;
-        }
-        button[data-particle="water"] .particle-dot {
-            background: #047AF2;
-        }
-        button[data-particle="steam"] .particle-dot {
-            background: #b3cfe3;
-        }
-        button[data-particle="oil"] .particle-dot {
-            background: #420D04;
-        }
-        button[data-particle="magma"] .particle-dot {
-            background: #ffb347;
-        }
-        button[data-particle="lightning"] .particle-dot {
-            background: #fff700;
-        }
-        button[data-particle="grass"] .particle-dot {
-            background: #4CAF50;
-        }
-        button[data-particle="fire"] .particle-dot {
-            background: #ff4500;
-        }
-        button[data-particle="smoke"] .particle-dot {
-            background: #404040;
-        }
-        button[data-particle="cloud"] .particle-dot {
-            background: #d3d3d3;
-        }
-        button[data-particle="obsidian"] .particle-dot {
-            background: #2d2d2d;
-        }
-        button[data-particle="glass"] .particle-dot {
-            background: #b2ebf2;
-        }
-        button[data-particle="basalt"] .particle-dot {
-            background: #808080;
-        }
-        button[data-particle="rock"] .particle-dot {
-            background: #808080;
-        }
-        button[data-particle="gravel"] .particle-dot {
-            background: #c0c0c0;
-        }
-        button[data-particle="snow"] .particle-dot {
-            background: #ffffff;
-        }
-        button[data-particle="raincloud"] .particle-dot {
-            background: #888888;
-        }
-        button[data-particle="mud"] .particle-dot {
-            background: #4b2e13;
-        }
-        button[data-particle="wetsand"] .particle-dot {
-            background: #e0d7b3;
-        }
-        button[data-particle="charcoal"] .particle-dot {
-            background: #1a1a1a;
-        }
-        button[data-particle="deadplant"] .particle-dot {
-            background: #8B4513;
-        }
-        button[data-particle="frozenplant"] .particle-dot {
-            background: #b2f7e6;
-        }
-        button[data-particle="cactus"] .particle-dot {
-            background: #2e8b57;
         }
         button[data-particle="wall"] .particle-dot {
             background: #808080;
@@ -629,7 +527,7 @@
             display: grid;
             grid-template-columns: repeat(8, 4px);
             grid-template-rows: repeat(5, 4px);
-            margin-bottom: 6px;
+            margin-bottom: 12px;
             margin-top: 2px;
             position: relative;
         }
@@ -657,7 +555,7 @@
             display: grid;
             grid-template-columns: repeat(8, 4px);
             grid-template-rows: repeat(5, 4px);
-            margin-bottom: 6px;
+            margin-bottom: 12px;
             margin-top: 2px;
             position: relative;
         }
@@ -713,7 +611,7 @@
             display: grid;
             grid-template-columns: repeat(8, 4px);
             grid-template-rows: repeat(5, 4px);
-            margin-bottom: 6px;
+            margin-bottom: 12px;
             margin-top: 2px;
             position: relative;
         }
@@ -1133,32 +1031,34 @@
 
         .wall-pixel-art {
             width: 32px;
-            height: 20px;
-            display: grid;
-            grid-template-columns: repeat(8, 4px);
-            grid-template-rows: repeat(5, 4px);
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin-bottom: 6px;
             margin-top: 2px;
             position: relative;
         }
-        .wall-pixel-art .px {
-            width: 4px;
-            height: 4px;
+        .wall-pixel-art-inner {
+            width: 28px;
+            height: 28px;
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-template-rows: repeat(7, 1fr);
         }
-        .wall-pixel-art .r1 { grid-row: 1; }
-        .wall-pixel-art .r2 { grid-row: 2; }
-        .wall-pixel-art .r3 { grid-row: 3; }
-        .wall-pixel-art .r4 { grid-row: 4; }
-        .wall-pixel-art .r5 { grid-row: 5; }
-        .wall-pixel-art .c1 { grid-column: 1; }
-        .wall-pixel-art .c2 { grid-column: 2; }
-        .wall-pixel-art .c3 { grid-column: 3; }
-        .wall-pixel-art .c4 { grid-column: 4; }
-        .wall-pixel-art .c5 { grid-column: 5; }
-        .wall-pixel-art .c6 { grid-column: 6; }
-        .wall-pixel-art .c7 { grid-column: 7; }
-        .wall-pixel-art .c8 { grid-column: 8; }
-
+        /* Wall button background color (no border) */
+        button[data-particle="wall"] {
+            background: rgba(128, 128, 128, 0.6) !important;
+            border: 2px solid var(--border-color) !important;
+        }
+        .wall-pixel-art, .wall-pixel-art-inner {
+            border: none !important;
+            box-shadow: none !important;
+        }
+        .wall-pixel-art-inner > div {
+            border: none !important;
+            box-shadow: none !important;
+        }
         .obsidian-pixel-art {
             width: 32px;
             height: 20px;
@@ -1382,6 +1282,71 @@
         .raincloud-pixel-art .c6 { grid-column: 6; }
         .raincloud-pixel-art .c7 { grid-column: 7; }
         .raincloud-pixel-art .c8 { grid-column: 8; }
+
+        .gas-pixel-art {
+            width: 32px;
+            height: 20px;
+            display: grid;
+            grid-template-columns: repeat(8, 4px);
+            grid-template-rows: repeat(5, 4px);
+            margin-bottom: 6px;
+            margin-top: 2px;
+            position: relative;
+        }
+        .gas-pixel-art .px {
+            width: 4px;
+            height: 4px;
+        }
+        .gas-pixel-art .r1 { grid-row: 1; }
+        .gas-pixel-art .r2 { grid-row: 2; }
+        .gas-pixel-art .r3 { grid-row: 3; }
+        .gas-pixel-art .r4 { grid-row: 4; }
+        .gas-pixel-art .r5 { grid-row: 5; }
+        .gas-pixel-art .c1 { grid-column: 1; }
+        .gas-pixel-art .c2 { grid-column: 2; }
+        .gas-pixel-art .c3 { grid-column: 3; }
+        .gas-pixel-art .c4 { grid-column: 4; }
+        .gas-pixel-art .c5 { grid-column: 5; }
+        .gas-pixel-art .c6 { grid-column: 6; }
+        .gas-pixel-art .c7 { grid-column: 7; }
+        .gas-pixel-art .c8 { grid-column: 8; }
+
+        #disclaimerPanel {
+            width: auto;
+            position: fixed;
+            right: 0;
+            top: 0;
+            z-index: 2;
+            min-width: 220px;
+            max-width: 370px;
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            margin-top: 40px;
+            margin-right: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #disclaimerHeader {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            width: 100%;
+        }
+        .disclaimer-title {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 16px;
+            color: var(--text-primary);
+            margin: 0;
+            text-transform: uppercase;
+        }
+        #disclaimerBody {
+            margin-top: 10px;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -1394,6 +1359,17 @@
             <div id="elementInteractions">
                 <h4>Interactions:</h4>
                 <div class="interaction-list"></div>
+            </div>
+        </div>
+        <!-- Disclaimer Panel on the right -->
+        <div id="disclaimerPanel">
+            <div id="disclaimerHeader">
+                <h3 class="disclaimer-title">Notice</h3>
+            </div>
+            <div id="disclaimerBody">
+                <p style="font-family: 'Arial', monospace; font-size: 16px; color: var(--text-primary); margin: 0;">
+                    This prototype serves as an intentional test of the limitations of AI-based software development. Current issues such as poor performance and bugs highlight the need for structured research into improving the reliability and maintainability of AI-generated code.
+                </p>
             </div>
         </div>
         <div id="gameContainer">
@@ -1510,12 +1486,14 @@
                 <div class="category" data-category="liquids">
                     <button data-particle="water">
                         <div class="water-pixel-art">
-                            <!-- Classic horizontal wave/ripple pattern -->
-                            <div class="px r1 c2" style="background:#1184F4;"></div><div class="px r1 c3" style="background:#047AF2;"></div><div class="px r1 c4" style="background:#1184F4;"></div>
-                            <div class="px r2 c1" style="background:#1D84F4;"></div><div class="px r2 c2" style="background:#1184F4;"></div><div class="px r2 c3" style="background:#047AF2;"></div><div class="px r2 c4" style="background:#1184F4;"></div><div class="px r2 c5" style="background:#1D84F4;"></div>
-                            <div class="px r3 c1" style="background:#047AF2;"></div><div class="px r3 c2" style="background:#1184F4;"></div><div class="px r3 c3" style="background:#1D84F4;"></div><div class="px r3 c4" style="background:#1184F4;"></div><div class="px r3 c5" style="background:#047AF2;"></div><div class="px r3 c6" style="background:#1184F4;"></div><div class="px r3 c7" style="background:#1D84F4;"></div>
-                            <div class="px r4 c2" style="background:#047AF2;"></div><div class="px r4 c3" style="background:#1184F4;"></div><div class="px r4 c4" style="background:#1D84F4;"></div><div class="px r4 c5" style="background:#1184F4;"></div><div class="px r4 c6" style="background:#047AF2;"></div>
-                            <div class="px r5 c3" style="background:#1D84F4;"></div><div class="px r5 c4" style="background:#047AF2;"></div><div class="px r5 c5" style="background:#1184F4;"></div>
+                            <div class="px r1 c6" style="background:#1184F4;"></div>
+                            <div class="px r2 c5" style="background:#1D84F4;"></div><div class="px r2 c6" style="background:#047AF2;"></div><div class="px r2 c7" style="background:#1184F4;"></div>
+                            <div class="px r3 c4" style="background:#047AF2;"></div><div class="px r3 c5" style="background:#1D84F4;"></div><div class="px r3 c6" style="background:#1184F4;"></div><div class="px r3 c7" style="background:#047AF2;"></div><div class="px r3 c8" style="background:#1D84F4;"></div>
+                            <div class="px r4 c3" style="background:#047AF2;"></div><div class="px r4 c4" style="background:#1184F4;"></div><div class="px r4 c5" style="background:#1D84F4;"></div><div class="px r4 c6" style="background:#047AF2;"></div><div class="px r4 c7" style="background:#1D84F4;"></div><div class="px r4 c8" style="background:#1184F4;"></div><div class="px r4 c9" style="background:#047AF2;"></div>
+                            <div class="px r5 c2" style="background:#1D84F4;"></div><div class="px r5 c3" style="background:#047AF2;"></div><div class="px r5 c4" style="background:#1184F4;"></div><div class="px r5 c5" style="background:#1D84F4;"></div><div class="px r5 c6" style="background:#047AF2;"></div><div class="px r5 c7" style="background:#1D84F4;"></div><div class="px r5 c8" style="background:#047AF2;"></div><div class="px r5 c9" style="background:#1184F4;"></div><div class="px r5 c10" style="background:#047AF2;"></div>
+                            <div class="px r6 c2" style="background:#1D84F4;"></div><div class="px r6 c3" style="background:#047AF2;"></div><div class="px r6 c4" style="background:#1184F4;"></div><div class="px r6 c5" style="background:#1D84F4;"></div><div class="px r6 c6" style="background:#047AF2;"></div><div class="px r6 c7" style="background:#1D84F4;"></div><div class="px r6 c8" style="background:#047AF2;"></div><div class="px r6 c9" style="background:#1184F4;"></div><div class="px r6 c10" style="background:#047AF2;"></div>
+                            <div class="px r7 c3" style="background:#047AF2;"></div><div class="px r7 c4" style="background:#1184F4;"></div><div class="px r7 c5" style="background:#1D84F4;"></div><div class="px r7 c6" style="background:#047AF2;"></div><div class="px r7 c7" style="background:#1D84F4;"></div><div class="px r7 c8" style="background:#047AF2;"></div><div class="px r7 c9" style="background:#1184F4;"></div>
+                            <div class="px r8 c5" style="background:#1D84F4;"></div><div class="px r8 c6" style="background:#047AF2;"></div><div class="px r8 c7" style="background:#1184F4;"></div>
                         </div>
                         Water
                     </button>
@@ -1534,23 +1512,16 @@
                     </button>
                     <button data-particle="magma">
                         <div class="magma-pixel-art">
-                            <div class="px r1 c4" style="background:#ffb347;"></div>
-                            <div class="px r2 c3" style="background:#ff8300;"></div><div class="px r2 c4" style="background:#ff5e13;"></div><div class="px r2 c5" style="background:#ff2e00;"></div>
-                            <div class="px r3 c2" style="background:#ff7e00;"></div><div class="px r3 c3" style="background:#ffb347;"></div><div class="px r3 c4" style="background:#ff8300;"></div><div class="px r3 c5" style="background:#ff5e13;"></div><div class="px r3 c6" style="background:#ff2e00;"></div>
-                            <div class="px r4 c1" style="background:#ff7e00;"></div><div class="px r4 c2" style="background:#ffb347;"></div><div class="px r4 c3" style="background:#ff8300;"></div><div class="px r4 c4" style="background:#ff5e13;"></div><div class="px r4 c5" style="background:#ff2e00;"></div><div class="px r4 c6" style="background:#ff7e00;"></div><div class="px r4 c7" style="background:#ffb347;"></div>
-                            <div class="px r5 c1" style="background:#ff8300;"></div><div class="px r5 c2" style="background:#ff5e13;"></div><div class="px r5 c3" style="background:#ff2e00;"></div><div class="px r5 c4" style="background:#ff7e00;"></div><div class="px r5 c5" style="background:#ffb347;"></div><div class="px r5 c6" style="background:#ff8300;"></div><div class="px r5 c7" style="background:#ff5e13;"></div>
+                            <div class="px r1 c6" style="background:#ffb347;"></div>
+                            <div class="px r2 c5" style="background:#ff8300;"></div><div class="px r2 c6" style="background:#ff5e13;"></div><div class="px r2 c7" style="background:#ffb347;"></div>
+                            <div class="px r3 c4" style="background:#ff7e00;"></div><div class="px r3 c5" style="background:#ffb347;"></div><div class="px r3 c6" style="background:#ff8300;"></div><div class="px r3 c7" style="background:#ff5e13;"></div><div class="px r3 c8" style="background:#ff2e00;"></div>
+                            <div class="px r4 c3" style="background:#ff7e00;"></div><div class="px r4 c4" style="background:#ffb347;"></div><div class="px r4 c5" style="background:#ff8300;"></div><div class="px r4 c6" style="background:#ff5e13;"></div><div class="px r4 c7" style="background:#ff2e00;"></div><div class="px r4 c8" style="background:#ff7e00;"></div><div class="px r4 c9" style="background:#ffb347;"></div>
+                            <div class="px r5 c2" style="background:#ff8300;"></div><div class="px r5 c3" style="background:#ff5e13;"></div><div class="px r5 c4" style="background:#ff2e00;"></div><div class="px r5 c5" style="background:#ff7e00;"></div><div class="px r5 c6" style="background:#ffb347;"></div><div class="px r5 c7" style="background:#ff8300;"></div><div class="px r5 c8" style="background:#ff5e13;"></div><div class="px r5 c9" style="background:#ff2e00;"></div>
+                            <div class="px r6 c2" style="background:#ff8300;"></div><div class="px r6 c3" style="background:#ff5e13;"></div><div class="px r6 c4" style="background:#ff2e00;"></div><div class="px r6 c5" style="background:#ff7e00;"></div><div class="px r6 c6" style="background:#ffb347;"></div><div class="px r6 c7" style="background:#ff8300;"></div><div class="px r6 c8" style="background:#ff5e13;"></div><div class="px r6 c9" style="background:#ff2e00;"></div>
+                            <div class="px r7 c3" style="background:#ff5e13;"></div><div class="px r7 c4" style="background:#ffb347;"></div><div class="px r7 c5" style="background:#ff8300;"></div><div class="px r7 c6" style="background:#ff5e13;"></div><div class="px r7 c7" style="background:#ffb347;"></div><div class="px r7 c8" style="background:#ff8300;"></div><div class="px r7 c9" style="background:#ff5e13;"></div>
+                            <div class="px r8 c5" style="background:#ffb347;"></div><div class="px r8 c6" style="background:#ff8300;"></div><div class="px r8 c7" style="background:#ff5e13;"></div>
                         </div>
                         Magma
-                    </button>
-                    <button data-particle="snow">
-                        <div class="snow-pixel-art">
-                            <div class="px r1 c4" style="background:#ffffff;"></div>
-                            <div class="px r2 c3" style="background:#f5f5f5;"></div><div class="px r2 c4" style="background:#f0f0f0;"></div><div class="px r2 c5" style="background:#e8e8e8;"></div>
-                            <div class="px r3 c2" style="background:#e0e0e0;"></div><div class="px r3 c3" style="background:#ffffff;"></div><div class="px r3 c4" style="background:#f5f5f5;"></div><div class="px r3 c5" style="background:#f0f0f0;"></div><div class="px r3 c6" style="background:#e8e8e8;"></div>
-                            <div class="px r4 c1" style="background:#e0e0e0;"></div><div class="px r4 c2" style="background:#ffffff;"></div><div class="px r4 c3" style="background:#f5f5f5;"></div><div class="px r4 c4" style="background:#f0f0f0;"></div><div class="px r4 c5" style="background:#e8e8e8;"></div><div class="px r4 c6" style="background:#e0e0e0;"></div><div class="px r4 c7" style="background:#ffffff;"></div>
-                            <div class="px r5 c1" style="background:#f5f5f5;"></div><div class="px r5 c2" style="background:#f0f0f0;"></div><div class="px r5 c3" style="background:#e8e8e8;"></div><div class="px r5 c4" style="background:#e0e0e0;"></div><div class="px r5 c5" style="background:#ffffff;"></div><div class="px r5 c6" style="background:#f5f5f5;"></div><div class="px r5 c7" style="background:#f0f0f0;"></div><div class="px r5 c8" style="background:#e8e8e8;"></div>
-                        </div>
-                        Snow
                     </button>
                 </div>
                 <div class="category" data-category="life">
@@ -1610,31 +1581,122 @@
                 <div class="category" data-category="solids">
                     <button data-particle="wall">
                         <div class="wall-pixel-art">
-                            <div class="px r1 c4" style="background:#808080;"></div>
-                            <div class="px r2 c3" style="background:#808080;"></div><div class="px r2 c4" style="background:#808080;"></div><div class="px r2 c5" style="background:#808080;"></div>
-                            <div class="px r3 c2" style="background:#808080;"></div><div class="px r3 c3" style="background:#808080;"></div><div class="px r3 c4" style="background:#808080;"></div><div class="px r3 c5" style="background:#808080;"></div><div class="px r3 c6" style="background:#808080;"></div>
-                            <div class="px r4 c1" style="background:#808080;"></div><div class="px r4 c2" style="background:#808080;"></div><div class="px r4 c3" style="background:#808080;"></div><div class="px r4 c4" style="background:#808080;"></div><div class="px r4 c5" style="background:#808080;"></div><div class="px r4 c6" style="background:#808080;"></div><div class="px r4 c7" style="background:#808080;"></div>
-                            <div class="px r5 c1" style="background:#808080;"></div><div class="px r5 c2" style="background:#808080;"></div><div class="px r5 c3" style="background:#808080;"></div><div class="px r5 c4" style="background:#808080;"></div><div class="px r5 c5" style="background:#808080;"></div><div class="px r5 c6" style="background:#808080;"></div><div class="px r5 c7" style="background:#808080;"></div>
+                            <div class="wall-pixel-art-inner">
+                                <!-- 7x7 grid, colors sampled from the provided image -->
+                                <div style="grid-row:1;grid-column:1;background:#7e7e7e;"></div>
+                                <div style="grid-row:1;grid-column:2;background:#8b8b8b;"></div>
+                                <div style="grid-row:1;grid-column:3;background:#8b8b8b;"></div>
+                                <div style="grid-row:1;grid-column:4;background:#8b8b8b;"></div>
+                                <div style="grid-row:1;grid-column:5;background:#8b8b8b;"></div>
+                                <div style="grid-row:1;grid-column:6;background:#8b8b8b;"></div>
+                                <div style="grid-row:1;grid-column:7;background:#7e7e7e;"></div>
+                                <div style="grid-row:2;grid-column:1;background:#8b8b8b;"></div>
+                                <div style="grid-row:2;grid-column:2;background:#7e7e7e;"></div>
+                                <div style="grid-row:2;grid-column:3;background:#8b8b8b;"></div>
+                                <div style="grid-row:2;grid-column:4;background:#8b8b8b;"></div>
+                                <div style="grid-row:2;grid-column:5;background:#8b8b8b;"></div>
+                                <div style="grid-row:2;grid-column:6;background:#7e7e7e;"></div>
+                                <div style="grid-row:2;grid-column:7;background:#8b8b8b;"></div>
+                                <div style="grid-row:3;grid-column:1;background:#8b8b8b;"></div>
+                                <div style="grid-row:3;grid-column:2;background:#8b8b8b;"></div>
+                                <div style="grid-row:3;grid-column:3;background:#7e7e7e;"></div>
+                                <div style="grid-row:3;grid-column:4;background:#8b8b8b;"></div>
+                                <div style="grid-row:3;grid-column:5;background:#7e7e7e;"></div>
+                                <div style="grid-row:3;grid-column:6;background:#8b8b8b;"></div>
+                                <div style="grid-row:3;grid-column:7;background:#8b8b8b;"></div>
+                                <div style="grid-row:4;grid-column:1;background:#8b8b8b;"></div>
+                                <div style="grid-row:4;grid-column:2;background:#8b8b8b;"></div>
+                                <div style="grid-row:4;grid-column:3;background:#8b8b8b;"></div>
+                                <div style="grid-row:4;grid-column:4;background:#7e7e7e;"></div>
+                                <div style="grid-row:4;grid-column:5;background:#8b8b8b;"></div>
+                                <div style="grid-row:4;grid-column:6;background:#8b8b8b;"></div>
+                                <div style="grid-row:4;grid-column:7;background:#8b8b8b;"></div>
+                                <div style="grid-row:5;grid-column:1;background:#8b8b8b;"></div>
+                                <div style="grid-row:5;grid-column:2;background:#7e7e7e;"></div>
+                                <div style="grid-row:5;grid-column:3;background:#8b8b8b;"></div>
+                                <div style="grid-row:5;grid-column:4;background:#8b8b8b;"></div>
+                                <div style="grid-row:5;grid-column:5;background:#7e7e7e;"></div>
+                                <div style="grid-row:5;grid-column:6;background:#8b8b8b;"></div>
+                                <div style="grid-row:5;grid-column:7;background:#8b8b8b;"></div>
+                                <div style="grid-row:6;grid-column:1;background:#8b8b8b;"></div>
+                                <div style="grid-row:6;grid-column:2;background:#8b8b8b;"></div>
+                                <div style="grid-row:6;grid-column:3;background:#7e7e7e;"></div>
+                                <div style="grid-row:6;grid-column:4;background:#8b8b8b;"></div>
+                                <div style="grid-row:6;grid-column:5;background:#8b8b8b;"></div>
+                                <div style="grid-row:6;grid-column:6;background:#8b8b8b;"></div>
+                                <div style="grid-row:6;grid-column:7;background:#8b8b8b;"></div>
+                                <div style="grid-row:7;grid-column:1;background:#7e7e7e;"></div>
+                                <div style="grid-row:7;grid-column:2;background:#8b8b8b;"></div>
+                                <div style="grid-row:7;grid-column:3;background:#8b8b8b;"></div>
+                                <div style="grid-row:7;grid-column:4;background:#8b8b8b;"></div>
+                                <div style="grid-row:7;grid-column:5;background:#8b8b8b;"></div>
+                                <div style="grid-row:7;grid-column:6;background:#8b8b8b;"></div>
+                                <div style="grid-row:7;grid-column:7;background:#7e7e7e;"></div>
+                            </div>
                         </div>
                         Wall
                     </button>
-                    <button data-particle="obsidian">
-                        <div class="obsidian-pixel-art">
-                            <div class="px r1 c4" style="background:#2d2d2d;"></div>
-                            <div class="px r2 c3" style="background:#2d2d2d;"></div><div class="px r2 c4" style="background:#2d2d2d;"></div><div class="px r2 c5" style="background:#2d2d2d;"></div>
-                            <div class="px r3 c2" style="background:#2d2d2d;"></div><div class="px r3 c3" style="background:#2d2d2d;"></div><div class="px r3 c4" style="background:#2d2d2d;"></div><div class="px r3 c5" style="background:#2d2d2d;"></div><div class="px r3 c6" style="background:#2d2d2d;"></div>
-                            <div class="px r4 c1" style="background:#2d2d2d;"></div><div class="px r4 c2" style="background:#2d2d2d;"></div><div class="px r4 c3" style="background:#2d2d2d;"></div><div class="px r4 c4" style="background:#2d2d2d;"></div><div class="px r4 c5" style="background:#2d2d2d;"></div><div class="px r4 c6" style="background:#2d2d2d;"></div><div class="px r4 c7" style="background:#2d2d2d;"></div>
-                            <div class="px r5 c1" style="background:#2d2d2d;"></div><div class="px r5 c2" style="background:#2d2d2d;"></div><div class="px r5 c3" style="background:#2d2d2d;"></div><div class="px r5 c4" style="background:#2d2d2d;"></div><div class="px r5 c5" style="background:#2d2d2d;"></div><div class="px r5 c6" style="background:#2d2d2d;"></div><div class="px r5 c7" style="background:#2d2d2d;"></div>
-                        </div>
-                        Obsidian
-                    </button>
                     <button data-particle="glass">
-                        <div class="glass-pixel-art">
-                            <div class="px r1 c4" style="background:#b2ebf2;"></div>
-                            <div class="px r2 c3" style="background:#b2ebf2;"></div><div class="px r2 c4" style="background:#b2ebf2;"></div><div class="px r2 c5" style="background:#b2ebf2;"></div>
-                            <div class="px r3 c2" style="background:#b2ebf2;"></div><div class="px r3 c3" style="background:#b2ebf2;"></div><div class="px r3 c4" style="background:#b2ebf2;"></div><div class="px r3 c5" style="background:#b2ebf2;"></div><div class="px r3 c6" style="background:#b2ebf2;"></div>
-                            <div class="px r4 c1" style="background:#b2ebf2;"></div><div class="px r4 c2" style="background:#b2ebf2;"></div><div class="px r4 c3" style="background:#b2ebf2;"></div><div class="px r4 c4" style="background:#b2ebf2;"></div><div class="px r4 c5" style="background:#b2ebf2;"></div><div class="px r4 c6" style="background:#b2ebf2;"></div><div class="px r4 c7" style="background:#b2ebf2;"></div>
-                            <div class="px r5 c1" style="background:#b2ebf2;"></div><div class="px r5 c2" style="background:#b2ebf2;"></div><div class="px r5 c3" style="background:#b2ebf2;"></div><div class="px r5 c4" style="background:#b2ebf2;"></div><div class="px r5 c5" style="background:#b2ebf2;"></div><div class="px r5 c6" style="background:#b2ebf2;"></div><div class="px r5 c7" style="background:#b2ebf2;"></div>
+                        <div class="glass-pixel-art" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;margin-bottom:6px;margin-top:2px;position:relative;">
+                            <div style="width:28px;height:28px;display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:repeat(7,1fr);">
+                                <!-- Border -->
+                                <div style="grid-row:1;grid-column:1;background:#83a49c;"></div>
+                                <div style="grid-row:1;grid-column:2;background:#83a49c;"></div>
+                                <div style="grid-row:1;grid-column:3;background:#83a49c;"></div>
+                                <div style="grid-row:1;grid-column:4;background:#83a49c;"></div>
+                                <div style="grid-row:1;grid-column:5;background:#83a49c;"></div>
+                                <div style="grid-row:1;grid-column:6;background:#83a49c;"></div>
+                                <div style="grid-row:1;grid-column:7;background:#83a49c;"></div>
+                                <div style="grid-row:7;grid-column:1;background:#83a49c;"></div>
+                                <div style="grid-row:7;grid-column:2;background:#83a49c;"></div>
+                                <div style="grid-row:7;grid-column:3;background:#83a49c;"></div>
+                                <div style="grid-row:7;grid-column:4;background:#83a49c;"></div>
+                                <div style="grid-row:7;grid-column:5;background:#83a49c;"></div>
+                                <div style="grid-row:7;grid-column:6;background:#83a49c;"></div>
+                                <div style="grid-row:7;grid-column:7;background:#83a49c;"></div>
+                                <div style="grid-row:2;grid-column:1;background:#83a49c;"></div>
+                                <div style="grid-row:3;grid-column:1;background:#83a49c;"></div>
+                                <div style="grid-row:4;grid-column:1;background:#83a49c;"></div>
+                                <div style="grid-row:5;grid-column:1;background:#83a49c;"></div>
+                                <div style="grid-row:6;grid-column:1;background:#83a49c;"></div>
+                                <div style="grid-row:2;grid-column:7;background:#83a49c;"></div>
+                                <div style="grid-row:3;grid-column:7;background:#83a49c;"></div>
+                                <div style="grid-row:4;grid-column:7;background:#83a49c;"></div>
+                                <div style="grid-row:5;grid-column:7;background:#83a49c;"></div>
+                                <div style="grid-row:6;grid-column:7;background:#83a49c;"></div>
+                                <!-- Fill -->
+                                <div style="grid-row:2;grid-column:2;background:#648484;"></div>
+                                <div style="grid-row:2;grid-column:3;background:#648484;"></div>
+                                <div style="grid-row:2;grid-column:4;background:#648484;"></div>
+                                <div style="grid-row:2;grid-column:5;background:#648484;"></div>
+                                <div style="grid-row:2;grid-column:6;background:#648484;"></div>
+                                <div style="grid-row:3;grid-column:2;background:#648484;"></div>
+                                <div style="grid-row:3;grid-column:3;background:#648484;"></div>
+                                <div style="grid-row:3;grid-column:4;background:#648484;"></div>
+                                <div style="grid-row:3;grid-column:5;background:#648484;"></div>
+                                <div style="grid-row:3;grid-column:6;background:#648484;"></div>
+                                <div style="grid-row:4;grid-column:2;background:#648484;"></div>
+                                <div style="grid-row:4;grid-column:3;background:#648484;"></div>
+                                <div style="grid-row:4;grid-column:4;background:#648484;"></div>
+                                <div style="grid-row:4;grid-column:5;background:#648484;"></div>
+                                <div style="grid-row:4;grid-column:6;background:#648484;"></div>
+                                <div style="grid-row:5;grid-column:2;background:#648484;"></div>
+                                <div style="grid-row:5;grid-column:3;background:#648484;"></div>
+                                <div style="grid-row:5;grid-column:4;background:#648484;"></div>
+                                <div style="grid-row:5;grid-column:5;background:#648484;"></div>
+                                <div style="grid-row:5;grid-column:6;background:#648484;"></div>
+                                <div style="grid-row:6;grid-column:2;background:#648484;"></div>
+                                <div style="grid-row:6;grid-column:3;background:#648484;"></div>
+                                <div style="grid-row:6;grid-column:4;background:#648484;"></div>
+                                <div style="grid-row:6;grid-column:5;background:#648484;"></div>
+                                <div style="grid-row:6;grid-column:6;background:#648484;"></div>
+                                <!-- Shine pattern (5 lighter pixels, new color and new positions for corners) -->
+                                <div style="grid-row:2;grid-column:2;background:#7da098;"></div>
+                                <div style="grid-row:3;grid-column:5;background:#7da098;"></div>
+                                <div style="grid-row:4;grid-column:4;background:#7da098;"></div>
+                                <div style="grid-row:5;grid-column:3;background:#7da098;"></div>
+                                <div style="grid-row:6;grid-column:6;background:#7da098;"></div>
+                            </div>
                         </div>
                         Glass
                     </button>
@@ -1642,73 +1704,76 @@
                 <div class="category" data-category="energy">
                     <button data-particle="lightning">
                         <div class="lightning-pixel-art">
-                            <div class="px r1 c4" style="background:#fff700;"></div>
-                            <div class="px r2 c3" style="background:#ffd700;"></div><div class="px r2 c4" style="background:#ffb700;"></div><div class="px r2 c5" style="background:#ff9700;"></div>
-                            <div class="px r3 c2" style="background:#ff7700;"></div><div class="px r3 c3" style="background:#fff700;"></div><div class="px r3 c4" style="background:#ffd700;"></div><div class="px r3 c5" style="background:#ffb700;"></div><div class="px r3 c6" style="background:#ff9700;"></div>
-                            <div class="px r4 c1" style="background:#ff7700;"></div><div class="px r4 c2" style="background:#fff700;"></div><div class="px r4 c3" style="background:#ffd700;"></div><div class="px r4 c4" style="background:#ffb700;"></div><div class="px r4 c5" style="background:#ff9700;"></div><div class="px r4 c6" style="background:#ff7700;"></div><div class="px r4 c7" style="background:#fff700;"></div>
-                            <div class="px r5 c1" style="background:#ffd700;"></div><div class="px r5 c2" style="background:#ffb700;"></div><div class="px r5 c3" style="background:#ff9700;"></div><div class="px r5 c4" style="background:#ff7700;"></div><div class="px r5 c5" style="background:#ffd700;"></div><div class="px r5 c6" style="background:#ffb700;"></div><div class="px r5 c7" style="background:#ff9700;"></div>
+                            <!-- Lightning: pale blue/white, same layout as before -->
+                            <div class="px r1 c4" style="background:#e0f6ff;"></div><div class="px r1 c5" style="background:#e0f6ff;"></div>
+                            <div class="px r2 c3" style="background:#b8e2ff;"></div><div class="px r2 c4" style="background:#e0f6ff;"></div><div class="px r2 c5" style="background:#e0f6ff;"></div><div class="px r2 c6" style="background:#b8e2ff;"></div>
+                            <div class="px r3 c2" style="background:#b8e2ff;"></div><div class="px r3 c3" style="background:#e0f6ff;"></div><div class="px r3 c4" style="background:#b8e2ff;"></div><div class="px r3 c5" style="background:#e0f6ff;"></div><div class="px r3 c6" style="background:#b8e2ff;"></div><div class="px r3 c7" style="background:#b8e2ff;"></div>
+                            <div class="px r4 c3" style="background:#b8e2ff;"></div><div class="px r4 c4" style="background:#e0f6ff;"></div><div class="px r4 c5" style="background:#e0f6ff;"></div><div class="px r4 c6" style="background:#b8e2ff;"></div>
+                            <div class="px r5 c4" style="background:#e0f6ff;"></div><div class="px r5 c5" style="background:#e0f6ff;"></div>
                         </div>
                         Lightning
                     </button>
                     <button data-particle="fire">
                         <div class="fire-pixel-art">
-                            <div class="px r1 c4" style="background:#ff4500;"></div>
-                            <div class="px r2 c3" style="background:#ff2500;"></div><div class="px r2 c4" style="background:#ff0500;"></div><div class="px r2 c5" style="background:#ff0000;"></div>
-                            <div class="px r3 c2" style="background:#ff0000;"></div><div class="px r3 c3" style="background:#ff4500;"></div><div class="px r3 c4" style="background:#ff2500;"></div><div class="px r3 c5" style="background:#ff0500;"></div><div class="px r3 c6" style="background:#ff0000;"></div>
-                            <div class="px r4 c1" style="background:#ff0000;"></div><div class="px r4 c2" style="background:#ff4500;"></div><div class="px r4 c3" style="background:#ff2500;"></div><div class="px r4 c4" style="background:#ff0500;"></div><div class="px r4 c5" style="background:#ff0000;"></div><div class="px r4 c6" style="background:#ff4500;"></div><div class="px r4 c7" style="background:#ff2500;"></div>
-                            <div class="px r5 c1" style="background:#ff0000;"></div><div class="px r5 c2" style="background:#ff0000;"></div><div class="px r5 c3" style="background:#ff0000;"></div><div class="px r5 c4" style="background:#ff0000;"></div><div class="px r5 c5" style="background:#ff0000;"></div><div class="px r5 c6" style="background:#ff0000;"></div><div class="px r5 c7" style="background:#ff0000;"></div>
+                            <!-- Large, bold fire icon filling the 8x5 grid, matching plasma size -->
+                            <div class="px r1 c4" style="background:#ff0000;"></div><div class="px r1 c5" style="background:#ff0000;"></div>
+                            <div class="px r2 c3" style="background:#ff0000;"></div><div class="px r2 c4" style="background:#ff9900;"></div><div class="px r2 c5" style="background:#ff9900;"></div><div class="px r2 c6" style="background:#ff0000;"></div>
+                            <div class="px r3 c2" style="background:#ff0000;"></div><div class="px r3 c3" style="background:#ff9900;"></div><div class="px r3 c4" style="background:#ffff00;"></div><div class="px r3 c5" style="background:#ffff00;"></div><div class="px r3 c6" style="background:#ff9900;"></div><div class="px r3 c7" style="background:#ff0000;"></div>
+                            <div class="px r4 c3" style="background:#ff9900;"></div><div class="px r4 c4" style="background:#ffff00;"></div><div class="px r4 c5" style="background:#ffff00;"></div><div class="px r4 c6" style="background:#ff9900;"></div>
+                            <div class="px r5 c4" style="background:#ffff00;"></div><div class="px r5 c5" style="background:#ffff00;"></div>
                         </div>
                         Fire
                     </button>
                     <button data-particle="plasma">
                         <div class="plasma-pixel-art">
-                            <div class="px r1 c4" style="background:#9b4dca;"></div>
-                            <div class="px r2 c3" style="background:#8a2be2;"></div><div class="px r2 c4" style="background:#9932cc;"></div><div class="px r2 c5" style="background:#ba55d3;"></div>
-                            <div class="px r3 c2" style="background:#9370db;"></div><div class="px r3 c3" style="background:#9b4dca;"></div><div class="px r3 c4" style="background:#8a2be2;"></div><div class="px r3 c5" style="background:#9932cc;"></div><div class="px r3 c6" style="background:#ba55d3;"></div>
-                            <div class="px r4 c1" style="background:#9370db;"></div><div class="px r4 c2" style="background:#9b4dca;"></div><div class="px r4 c3" style="background:#8a2be2;"></div><div class="px r4 c4" style="background:#9932cc;"></div><div class="px r4 c5" style="background:#ba55d3;"></div><div class="px r4 c6" style="background:#9370db;"></div><div class="px r4 c7" style="background:#9b4dca;"></div>
-                            <div class="px r5 c1" style="background:#8a2be2;"></div><div class="px r5 c2" style="background:#9932cc;"></div><div class="px r5 c3" style="background:#ba55d3;"></div><div class="px r5 c4" style="background:#9370db;"></div><div class="px r5 c5" style="background:#9b4dca;"></div><div class="px r5 c6" style="background:#8a2be2;"></div><div class="px r5 c7" style="background:#9932cc;"></div>
+                            <!-- Plasma: starburst, pink and white -->
+                            <div class="px r1 c4" style="background:#ffb3ff;"></div><div class="px r1 c5" style="background:#ffb3ff;"></div>
+                            <div class="px r2 c3" style="background:#ffb3ff;"></div><div class="px r2 c4" style="background:#fff0fa;"></div><div class="px r2 c5" style="background:#fff0fa;"></div><div class="px r2 c6" style="background:#ffb3ff;"></div>
+                            <div class="px r3 c2" style="background:#ffb3ff;"></div><div class="px r3 c3" style="background:#fff0fa;"></div><div class="px r3 c4" style="background:#ffb3ff;"></div><div class="px r3 c5" style="background:#fff0fa;"></div><div class="px r3 c6" style="background:#ffb3ff;"></div><div class="px r3 c7" style="background:#ffb3ff;"></div>
+                            <div class="px r4 c3" style="background:#ffb3ff;"></div><div class="px r4 c4" style="background:#fff0fa;"></div><div class="px r4 c5" style="background:#fff0fa;"></div><div class="px r4 c6" style="background:#ffb3ff;"></div>
+                            <div class="px r5 c4" style="background:#ffb3ff;"></div><div class="px r5 c5" style="background:#ffb3ff;"></div>
                         </div>
                         Plasma
                     </button>
                 </div>
                 <div class="category" data-category="gases">
                     <button data-particle="smoke">
-                        <div class="smoke-pixel-art">
-                            <div class="px r1 c4" style="background:#404040;"></div>
-                            <div class="px r2 c3" style="background:#404040;"></div><div class="px r2 c4" style="background:#404040;"></div><div class="px r2 c5" style="background:#404040;"></div>
-                            <div class="px r3 c2" style="background:#404040;"></div><div class="px r3 c3" style="background:#404040;"></div><div class="px r3 c4" style="background:#404040;"></div><div class="px r3 c5" style="background:#404040;"></div><div class="px r3 c6" style="background:#404040;"></div>
-                            <div class="px r4 c1" style="background:#404040;"></div><div class="px r4 c2" style="background:#404040;"></div><div class="px r4 c3" style="background:#404040;"></div><div class="px r4 c4" style="background:#404040;"></div><div class="px r4 c5" style="background:#404040;"></div><div class="px r4 c6" style="background:#404040;"></div><div class="px r4 c7" style="background:#404040;"></div>
-                            <div class="px r5 c1" style="background:#404040;"></div><div class="px r5 c2" style="background:#404040;"></div><div class="px r5 c3" style="background:#404040;"></div><div class="px r5 c4" style="background:#404040;"></div><div class="px r5 c5" style="background:#404040;"></div><div class="px r5 c6" style="background:#404040;"></div><div class="px r5 c7" style="background:#404040;"></div>
+                        <div class="gas-pixel-art smoke-gas-art">
+                            <div class="px r5 c2" style="background:#606060;"></div><div class="px r5 c3" style="background:#606060;"></div><div class="px r5 c4" style="background:#606060;"></div><div class="px r5 c5" style="background:#606060;"></div><div class="px r5 c6" style="background:#606060;"></div><div class="px r5 c7" style="background:#606060;"></div>
+                            <div class="px r4 c1" style="background:#404040;"></div><div class="px r4 c2" style="background:#888888;"></div><div class="px r4 c3" style="background:#888888;"></div><div class="px r4 c4" style="background:#888888;"></div><div class="px r4 c5" style="background:#888888;"></div><div class="px r4 c6" style="background:#888888;"></div><div class="px r4 c7" style="background:#888888;"></div><div class="px r4 c8" style="background:#404040;"></div>
+                            <div class="px r3 c1" style="background:#404040;"></div><div class="px r3 c2" style="background:#888888;"></div><div class="px r3 c3" style="background:#888888;"></div><div class="px r3 c4" style="background:#888888;"></div><div class="px r3 c5" style="background:#888888;"></div><div class="px r3 c6" style="background:#888888;"></div><div class="px r3 c7" style="background:#888888;"></div><div class="px r3 c8" style="background:#404040;"></div>
+                            <div class="px r2 c2" style="background:#404040;"></div><div class="px r2 c3" style="background:#606060;"></div><div class="px r2 c4" style="background:#888888;"></div><div class="px r2 c5" style="background:#888888;"></div><div class="px r2 c6" style="background:#606060;"></div><div class="px r2 c7" style="background:#404040;"></div>
+                            <div class="px r1 c3" style="background:#404040;"></div><div class="px r1 c4" style="background:#404040;"></div><div class="px r1 c5" style="background:#404040;"></div>
                         </div>
                         Smoke
                     </button>
                     <button data-particle="steam">
-                        <div class="steam-pixel-art">
-                            <div class="px r1 c4" style="background:#b3cfe3;"></div>
-                            <div class="px r2 c3" style="background:#b3cfe3;"></div><div class="px r2 c4" style="background:#b3cfe3;"></div><div class="px r2 c5" style="background:#b3cfe3;"></div>
-                            <div class="px r3 c2" style="background:#b3cfe3;"></div><div class="px r3 c3" style="background:#b3cfe3;"></div><div class="px r3 c4" style="background:#b3cfe3;"></div><div class="px r3 c5" style="background:#b3cfe3;"></div><div class="px r3 c6" style="background:#b3cfe3;"></div>
-                            <div class="px r4 c1" style="background:#b3cfe3;"></div><div class="px r4 c2" style="background:#b3cfe3;"></div><div class="px r4 c3" style="background:#b3cfe3;"></div><div class="px r4 c4" style="background:#b3cfe3;"></div><div class="px r4 c5" style="background:#b3cfe3;"></div><div class="px r4 c6" style="background:#b3cfe3;"></div><div class="px r4 c7" style="background:#b3cfe3;"></div>
-                            <div class="px r5 c1" style="background:#b3cfe3;"></div><div class="px r5 c2" style="background:#b3cfe3;"></div><div class="px r5 c3" style="background:#b3cfe3;"></div><div class="px r5 c4" style="background:#b3cfe3;"></div><div class="px r5 c5" style="background:#b3cfe3;"></div><div class="px r5 c6" style="background:#b3cfe3;"></div><div class="px r5 c7" style="background:#b3cfe3;"></div>
+                        <div class="gas-pixel-art steam-gas-art">
+                            <div class="px r5 c2" style="background:rgba(179,207,227,0.6);"></div><div class="px r5 c3" style="background:rgba(179,207,227,0.6);"></div><div class="px r5 c4" style="background:rgba(179,207,227,0.6);"></div><div class="px r5 c5" style="background:rgba(179,207,227,0.6);"></div><div class="px r5 c6" style="background:rgba(179,207,227,0.6);"></div><div class="px r5 c7" style="background:rgba(179,207,227,0.6);"></div>
+                            <div class="px r4 c1" style="background:#8ba6b8;"></div><div class="px r4 c2" style="background:#b3cfe3;"></div><div class="px r4 c3" style="background:#b3cfe3;"></div><div class="px r4 c4" style="background:#b3cfe3;"></div><div class="px r4 c5" style="background:#b3cfe3;"></div><div class="px r4 c6" style="background:#b3cfe3;"></div><div class="px r4 c7" style="background:#b3cfe3;"></div><div class="px r4 c8" style="background:#8ba6b8;"></div>
+                            <div class="px r3 c1" style="background:#8ba6b8;"></div><div class="px r3 c2" style="background:#b3cfe3;"></div><div class="px r3 c3" style="background:#b3cfe3;"></div><div class="px r3 c4" style="background:#b3cfe3;"></div><div class="px r3 c5" style="background:#b3cfe3;"></div><div class="px r3 c6" style="background:#b3cfe3;"></div><div class="px r3 c7" style="background:#b3cfe3;"></div><div class="px r3 c8" style="background:#8ba6b8;"></div>
+                            <div class="px r2 c2" style="background:#8ba6b8;"></div><div class="px r2 c3" style="background:#b3cfe3;"></div><div class="px r2 c4" style="background:#b3cfe3;"></div><div class="px r2 c5" style="background:#b3cfe3;"></div><div class="px r2 c6" style="background:#b3cfe3;"></div><div class="px r2 c7" style="background:#8ba6b8;"></div>
+                            <div class="px r1 c3" style="background:#8ba6b8;"></div><div class="px r1 c4" style="background:#8ba6b8;"></div><div class="px r1 c5" style="background:#8ba6b8;"></div>
                         </div>
                         Steam
                     </button>
                     <button data-particle="cloud">
-                        <div class="cloud-pixel-art">
-                            <div class="px r1 c4" style="background:#d3d3d3;"></div>
-                            <div class="px r2 c3" style="background:#d3d3d3;"></div><div class="px r2 c4" style="background:#d3d3d3;"></div><div class="px r2 c5" style="background:#d3d3d3;"></div>
-                            <div class="px r3 c2" style="background:#d3d3d3;"></div><div class="px r3 c3" style="background:#d3d3d3;"></div><div class="px r3 c4" style="background:#d3d3d3;"></div><div class="px r3 c5" style="background:#d3d3d3;"></div><div class="px r3 c6" style="background:#d3d3d3;"></div>
-                            <div class="px r4 c1" style="background:#d3d3d3;"></div><div class="px r4 c2" style="background:#d3d3d3;"></div><div class="px r4 c3" style="background:#d3d3d3;"></div><div class="px r4 c4" style="background:#d3d3d3;"></div><div class="px r4 c5" style="background:#d3d3d3;"></div><div class="px r4 c6" style="background:#d3d3d3;"></div><div class="px r4 c7" style="background:#d3d3d3;"></div>
-                            <div class="px r5 c1" style="background:#d3d3d3;"></div><div class="px r5 c2" style="background:#d3d3d3;"></div><div class="px r5 c3" style="background:#d3d3d3;"></div><div class="px r5 c4" style="background:#d3d3d3;"></div><div class="px r5 c5" style="background:#d3d3d3;"></div><div class="px r5 c6" style="background:#d3d3d3;"></div><div class="px r5 c7" style="background:#d3d3d3;"></div>
+                        <div class="gas-pixel-art cloud-gas-art">
+                            <div class="px r5 c2" style="background:rgba(227,227,227,0.6);"></div><div class="px r5 c3" style="background:rgba(227,227,227,0.6);"></div><div class="px r5 c4" style="background:rgba(227,227,227,0.6);"></div><div class="px r5 c5" style="background:rgba(227,227,227,0.6);"></div><div class="px r5 c6" style="background:rgba(227,227,227,0.6);"></div><div class="px r5 c7" style="background:rgba(227,227,227,0.6);"></div>
+                            <div class="px r4 c1" style="background:#a3b1c2;"></div><div class="px r4 c2" style="background:#e6e6e6;"></div><div class="px r4 c3" style="background:#e6e6e6;"></div><div class="px r4 c4" style="background:#e6e6e6;"></div><div class="px r4 c5" style="background:#e6e6e6;"></div><div class="px r4 c6" style="background:#e6e6e6;"></div><div class="px r4 c7" style="background:#e6e6e6;"></div><div class="px r4 c8" style="background:#a3b1c2;"></div>
+                            <div class="px r3 c1" style="background:#a3b1c2;"></div><div class="px r3 c2" style="background:#e6e6e6;"></div><div class="px r3 c3" style="background:#e6e6e6;"></div><div class="px r3 c4" style="background:#e6e6e6;"></div><div class="px r3 c5" style="background:#e6e6e6;"></div><div class="px r3 c6" style="background:#e6e6e6;"></div><div class="px r3 c7" style="background:#e6e6e6;"></div><div class="px r3 c8" style="background:#a3b1c2;"></div>
+                            <div class="px r2 c2" style="background:#a3b1c2;"></div><div class="px r2 c3" style="background:#e6e6e6;"></div><div class="px r2 c4" style="background:#e6e6e6;"></div><div class="px r2 c5" style="background:#e6e6e6;"></div><div class="px r2 c6" style="background:#e6e6e6;"></div><div class="px r2 c7" style="background:#a3b1c2;"></div>
+                            <div class="px r1 c3" style="background:#a3b1c2;"></div><div class="px r1 c4" style="background:#a3b1c2;"></div><div class="px r1 c5" style="background:#a3b1c2;"></div>
                         </div>
                         Cloud
                     </button>
                     <button data-particle="raincloud">
-                        <div class="raincloud-pixel-art">
-                            <div class="px r1 c4" style="background:#888888;"></div>
-                            <div class="px r2 c3" style="background:#888888;"></div><div class="px r2 c4" style="background:#888888;"></div><div class="px r2 c5" style="background:#888888;"></div>
-                            <div class="px r3 c2" style="background:#888888;"></div><div class="px r3 c3" style="background:#888888;"></div><div class="px r3 c4" style="background:#888888;"></div><div class="px r3 c5" style="background:#888888;"></div><div class="px r3 c6" style="background:#888888;"></div>
-                            <div class="px r4 c1" style="background:#888888;"></div><div class="px r4 c2" style="background:#888888;"></div><div class="px r4 c3" style="background:#888888;"></div><div class="px r4 c4" style="background:#888888;"></div><div class="px r4 c5" style="background:#888888;"></div><div class="px r4 c6" style="background:#888888;"></div><div class="px r4 c7" style="background:#888888;"></div>
-                            <div class="px r5 c1" style="background:#888888;"></div><div class="px r5 c2" style="background:#888888;"></div><div class="px r5 c3" style="background:#888888;"></div><div class="px r5 c4" style="background:#888888;"></div><div class="px r5 c5" style="background:#888888;"></div><div class="px r5 c6" style="background:#888888;"></div><div class="px r5 c7" style="background:#888888;"></div>
+                        <div class="gas-pixel-art raincloud-gas-art">
+                            <div class="px r5 c2" style="background:rgba(176,183,198,0.6);"></div><div class="px r5 c3" style="background:rgba(176,183,198,0.6);"></div><div class="px r5 c4" style="background:rgba(176,183,198,0.6);"></div><div class="px r5 c5" style="background:rgba(176,183,198,0.6);"></div><div class="px r5 c6" style="background:rgba(176,183,198,0.6);"></div><div class="px r5 c7" style="background:rgba(176,183,198,0.6);"></div>
+                            <div class="px r4 c1" style="background:#6c7a8a;"></div><div class="px r4 c2" style="background:#b0b7c6;"></div><div class="px r4 c3" style="background:#b0b7c6;"></div><div class="px r4 c4" style="background:#b0b7c6;"></div><div class="px r4 c5" style="background:#b0b7c6;"></div><div class="px r4 c6" style="background:#b0b7c6;"></div><div class="px r4 c7" style="background:#b0b7c6;"></div><div class="px r4 c8" style="background:#6c7a8a;"></div>
+                            <div class="px r3 c1" style="background:#6c7a8a;"></div><div class="px r3 c2" style="background:#b0b7c6;"></div><div class="px r3 c3" style="background:#b0b7c6;"></div><div class="px r3 c4" style="background:#b0b7c6;"></div><div class="px r3 c5" style="background:#b0b7c6;"></div><div class="px r3 c6" style="background:#b0b7c6;"></div><div class="px r3 c7" style="background:#b0b7c6;"></div><div class="px r3 c8" style="background:#6c7a8a;"></div>
+                            <div class="px r2 c2" style="background:#6c7a8a;"></div><div class="px r2 c3" style="background:#b0b7c6;"></div><div class="px r2 c4" style="background:#b0b7c6;"></div><div class="px r2 c5" style="background:#b0b7c6;"></div><div class="px r2 c6" style="background:#b0b7c6;"></div><div class="px r2 c7" style="background:#6c7a8a;"></div>
+                            <div class="px r1 c3" style="background:#6c7a8a;"></div><div class="px r1 c4" style="background:#6c7a8a;"></div><div class="px r1 c5" style="background:#6c7a8a;"></div>
                         </div>
                         Rain Cloud
                     </button>
@@ -1726,6 +1791,61 @@
             <div class="px r5 c1" style="background:#ff9933;"></div><div class="px r5 c2" style="background:#ff6600;"></div><div class="px r5 c3" style="background:#ffb366;"></div><div class="px r5 c4" style="background:#ffcc66;"></div><div class="px r5 c5" style="background:#ffb347;"></div><div class="px r5 c6" style="background:#ffae42;"></div><div class="px r5 c7" style="background:#ff9900;"></div><div class="px r5 c8" style="background:#ff7f00;"></div>
         </div>
         MoltenGlass
+    </button>
+    <!-- Hidden button for Molten Dirt preview -->
+    <button data-particle="moltendirt" style="display:none;">
+        <div class="moltendirt-pixel-art">
+            <div class="px r1 c4" style="background:#a0522d;"></div>
+            <div class="px r2 c3" style="background:#b87333;"></div><div class="px r2 c4" style="background:#c97a56;"></div><div class="px r2 c5" style="background:#a0522d;"></div>
+            <div class="px r3 c2" style="background:#b87333;"></div><div class="px r3 c3" style="background:#c97a56;"></div><div class="px r3 c4" style="background:#a0522d;"></div><div class="px r3 c5" style="background:#b87333;"></div><div class="px r3 c6" style="background:#c97a56;"></div>
+            <div class="px r4 c1" style="background:#a0522d;"></div><div class="px r4 c2" style="background:#b87333;"></div><div class="px r4 c3" style="background:#c97a56;"></div><div class="px r4 c4" style="background:#a0522d;"></div><div class="px r4 c5" style="background:#b87333;"></div><div class="px r4 c6" style="background:#c97a56;"></div><div class="px r4 c7" style="background:#a0522d;"></div>
+            <div class="px r5 c1" style="background:#b87333;"></div><div class="px r5 c2" style="background:#c97a56;"></div><div class="px r5 c3" style="background:#a0522d;"></div><div class="px r5 c4" style="background:#b87333;"></div><div class="px r5 c5" style="background:#c97a56;"></div><div class="px r5 c6" style="background:#a0522d;"></div><div class="px r5 c7" style="background:#b87333;"></div><div class="px r5 c8" style="background:#c97a56;"></div>
+        </div>
+        MoltenDirt
+    </button>
+    <!-- Hidden button for Permafrost preview -->
+    <button data-particle="permafrost" style="display:none;">
+        <div class="permafrost-pixel-art">
+            <div class="px r1 c4" style="background:#b0e0e6;"></div>
+            <div class="px r2 c3" style="background:#cce6ff;"></div><div class="px r2 c4" style="background:#e0ffff;"></div><div class="px r2 c5" style="background:#b0e0e6;"></div>
+            <div class="px r3 c2" style="background:#cce6ff;"></div><div class="px r3 c3" style="background:#e0ffff;"></div><div class="px r3 c4" style="background:#b0e0e6;"></div><div class="px r3 c5" style="background:#cce6ff;"></div><div class="px r3 c6" style="background:#e0ffff;"></div>
+            <div class="px r4 c1" style="background:#b0e0e6;"></div><div class="px r4 c2" style="background:#cce6ff;"></div><div class="px r4 c3" style="background:#e0ffff;"></div><div class="px r4 c4" style="background:#b0e0e6;"></div><div class="px r4 c5" style="background:#cce6ff;"></div><div class="px r4 c6" style="background:#e0ffff;"></div><div class="px r4 c7" style="background:#b0e0e6;"></div>
+            <div class="px r5 c1" style="background:#cce6ff;"></div><div class="px r5 c2" style="background:#e0ffff;"></div><div class="px r5 c3" style="background:#b0e0e6;"></div><div class="px r5 c4" style="background:#cce6ff;"></div><div class="px r5 c5" style="background:#e0ffff;"></div><div class="px r5 c6" style="background:#b0e0e6;"></div><div class="px r5 c7" style="background:#cce6ff;"></div><div class="px r5 c8" style="background:#e0ffff;"></div>
+        </div>
+        Permafrost
+    </button>
+    <!-- Hidden button for Steam preview -->
+    <button data-particle="steam" style="display:none;">
+        <div class="steam-pixel-art steam-gas-art">
+            <div class="px r1 c4" style="background:#b3cfe3;"></div>
+            <div class="px r2 c3" style="background:#b3cfe3;"></div><div class="px r2 c4" style="background:#b3cfe3;"></div><div class="px r2 c5" style="background:#b3cfe3;"></div>
+            <div class="px r3 c2" style="background:#b3cfe3;"></div><div class="px r3 c3" style="background:#b3cfe3;"></div><div class="px r3 c4" style="background:#b3cfe3;"></div><div class="px r3 c5" style="background:#b3cfe3;"></div><div class="px r3 c6" style="background:#b3cfe3;"></div>
+            <div class="px r4 c1" style="background:#b3cfe3;"></div><div class="px r4 c2" style="background:#b3cfe3;"></div><div class="px r4 c3" style="background:#b3cfe3;"></div><div class="px r4 c4" style="background:#b3cfe3;"></div><div class="px r4 c5" style="background:#b3cfe3;"></div><div class="px r4 c6" style="background:#b3cfe3;"></div><div class="px r4 c7" style="background:#b3cfe3;"></div>
+            <div class="px r5 c1" style="background:#b3cfe3;"></div><div class="px r5 c2" style="background:#b3cfe3;"></div><div class="px r5 c3" style="background:#b3cfe3;"></div><div class="px r5 c4" style="background:#b3cfe3;"></div><div class="px r5 c5" style="background:#b3cfe3;"></div><div class="px r5 c6" style="background:#b3cfe3;"></div><div class="px r5 c7" style="background:#b3cfe3;"></div>
+        </div>
+        Steam
+    </button>
+    <!-- Hidden button for Dirty Water preview -->
+    <button data-particle="dirtywater" style="display:none;">
+        <div class="dirtywater-pixel-art">
+            <div class="px r1 c4" style="background:#2e8b57;"></div>
+            <div class="px r2 c3" style="background:#3cb371;"></div><div class="px r2 c4" style="background:#2e8b57;"></div><div class="px r2 c5" style="background:#3cb371;"></div>
+            <div class="px r3 c2" style="background:#2e8b57;"></div><div class="px r3 c3" style="background:#3cb371;"></div><div class="px r3 c4" style="background:#2e8b57;"></div><div class="px r3 c5" style="background:#3cb371;"></div><div class="px r3 c6" style="background:#2e8b57;"></div>
+            <div class="px r4 c1" style="background:#3cb371;"></div><div class="px r4 c2" style="background:#2e8b57;"></div><div class="px r4 c3" style="background:#3cb371;"></div><div class="px r4 c4" style="background:#2e8b57;"></div><div class="px r4 c5" style="background:#3cb371;"></div><div class="px r4 c6" style="background:#2e8b57;"></div><div class="px r4 c7" style="background:#3cb371;"></div>
+            <div class="px r5 c1" style="background:#2e8b57;"></div><div class="px r5 c2" style="background:#3cb371;"></div><div class="px r5 c3" style="background:#2e8b57;"></div><div class="px r5 c4" style="background:#3cb371;"></div><div class="px r5 c5" style="background:#2e8b57;"></div><div class="px r5 c6" style="background:#3cb371;"></div><div class="px r5 c7" style="background:#2e8b57;"></div><div class="px r5 c8" style="background:#3cb371;"></div>
+        </div>
+        DirtyWater
+    </button>
+    <!-- Hidden button for Ice preview -->
+    <button data-particle="ice" style="display:none;">
+        <div class="ice-pixel-art">
+            <div class="px r1 c4" style="background:#e0f7fa;"></div>
+            <div class="px r2 c3" style="background:#b2ebf2;"></div><div class="px r2 c4" style="background:#80deea;"></div><div class="px r2 c5" style="background:#e0f7fa;"></div>
+            <div class="px r3 c2" style="background:#b2ebf2;"></div><div class="px r3 c3" style="background:#80deea;"></div><div class="px r3 c4" style="background:#e0f7fa;"></div><div class="px r3 c5" style="background:#b2ebf2;"></div><div class="px r3 c6" style="background:#80deea;"></div>
+            <div class="px r4 c1" style="background:#e0f7fa;"></div><div class="px r4 c2" style="background:#b2ebf2;"></div><div class="px r4 c3" style="background:#80deea;"></div><div class="px r4 c4" style="background:#e0f7fa;"></div><div class="px r4 c5" style="background:#b2ebf2;"></div><div class="px r4 c6" style="background:#80deea;"></div><div class="px r4 c7" style="background:#e0f7fa;"></div>
+            <div class="px r5 c1" style="background:#b2ebf2;"></div><div class="px r5 c2" style="background:#80deea;"></div><div class="px r5 c3" style="background:#e0f7fa;"></div><div class="px r5 c4" style="background:#b2ebf2;"></div><div class="px r5 c5" style="background:#80deea;"></div><div class="px r5 c6" style="background:#e0f7fa;"></div><div class="px r5 c7" style="background:#b2ebf2;"></div><div class="px r5 c8" style="background:#80deea;"></div>
+        </div>
+        Ice
     </button>
     <script src="js/game.js"></script>
     <script>
